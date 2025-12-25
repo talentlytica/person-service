@@ -1,13 +1,13 @@
 # run rpm test from specs folder
 test:
-	cd specs && npm test
+	make build
+	cd specs && npm run test:no-build
 
 # run rpm test from specs folder without building the docker image
 test-only:
 	cd specs && npm run test:no-build
 
-# build the docker image
+# build the docker image and npm install in the specs folder. Make this the default target
 build:
 	cd source && docker-compose build
-
-# run the docker image
+	cd specs && npm install
