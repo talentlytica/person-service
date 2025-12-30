@@ -5,12 +5,56 @@
 package db
 
 import (
-	"database/sql"
+	"github.com/jackc/pgx/v5/pgtype"
 )
 
 type KeyValue struct {
 	Key       string
 	Value     string
-	CreatedAt sql.NullTime
-	UpdatedAt sql.NullTime
+	CreatedAt pgtype.Timestamp
+	UpdatedAt pgtype.Timestamp
+}
+
+type Person struct {
+	ID        pgtype.UUID
+	ClientID  string
+	CreatedAt pgtype.Timestamp
+	UpdatedAt pgtype.Timestamp
+	DeletedAt pgtype.Timestamp
+}
+
+type PersonAttribute struct {
+	ID             int32
+	PersonID       pgtype.UUID
+	AttributeKey   string
+	EncryptedValue []byte
+	KeyVersion     int32
+	CreatedAt      pgtype.Timestamp
+	UpdatedAt      pgtype.Timestamp
+}
+
+type PersonImage struct {
+	ID                 int32
+	PersonID           pgtype.UUID
+	AttributeKey       string
+	ImageType          string
+	EncryptedImageData []byte
+	KeyVersion         int32
+	MimeType           pgtype.Text
+	FileSize           pgtype.Int8
+	Width              pgtype.Int4
+	Height             pgtype.Int4
+	CreatedAt          pgtype.Timestamp
+	UpdatedAt          pgtype.Timestamp
+}
+
+type RequestLog struct {
+	ID                    int32
+	TraceID               string
+	CallerInfo            string
+	Reason                string
+	EncryptedRequestBody  []byte
+	EncryptedResponseBody []byte
+	KeyVersion            int32
+	CreatedAt             pgtype.Timestamp
 }

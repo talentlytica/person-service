@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"database/sql"
 	"fmt"
 	"log"
 	"net/http"
@@ -10,11 +9,10 @@ import (
 	health "person-service/healthcheck"
 	key_value "person-service/key_value"
 	"strconv"
-	"strings"
 	"time"
 
+	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/labstack/echo/v4"
-	_ "github.com/lib/pq"
 
 	db "person-service/internal/db/generated"
 )
@@ -29,15 +27,6 @@ func setupDb(port string) *db.Queries {
 		log.Fatalln("ERROR: DATABASE_URL environment variable is not set")
 	}
 
-	// Add connection timeout parameters if not present
-	if !strings.Contains(databaseURL, "connect_timeout") {
-		separator := "?"
-		if strings.Contains(databaseURL, "?") {
-			separator = "&"
-		}
-		databaseURL = databaseURL + separator + "connect_timeout=10"
-	}
-
 	// Validate port
 	if _, err := strconv.Atoi(port); err != nil {
 		log.Fatalf("ERROR: Invalid PORT value: %s\n", err)
@@ -45,33 +34,41 @@ func setupDb(port string) *db.Queries {
 
 	fmt.Fprintf(os.Stdout, "INFO: Connecting to database...\n")
 
-	// Initialize database connection with SQLC queries
+	// Initialize database connection with SQLC queries using pgxpool
 	fmt.Fprintf(os.Stdout, "DEBUG: Opening database connection...\n")
-	database, err := sql.Open("postgres", databaseURL)
+
+	// Configure connection pool
+	config, err := pgxpool.ParseConfig(databaseURL)
 	if err != nil {
-		log.Fatalf("ERROR: Failed to open database: %v\n", err)
+		log.Fatalf("ERROR: Failed to parse database URL: %v\n", err)
 	}
-	// Note: database.Close() should be called in main() shutdown, not here
 
-	fmt.Fprintf(os.Stdout, "DEBUG: Setting connection pool parameters...\n")
-	// Set connection timeouts
-	database.SetMaxOpenConns(25)
-	database.SetMaxIdleConns(5)
-	database.SetConnMaxLifetime(5 * time.Minute)
+	// Set connection pool parameters
+	config.MaxConns = 25
+	config.MinConns = 5
+	config.MaxConnLifetime = 5 * time.Minute
+	config.MaxConnIdleTime = 1 * time.Minute
+	config.HealthCheckPeriod = 1 * time.Minute
 
-	fmt.Fprintf(os.Stdout, "DEBUG: Pinging database...\n")
-	// Ping database with timeout
+	// Create connection pool with timeout
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 
-	if err := database.PingContext(ctx); err != nil {
+	pool, err := pgxpool.NewWithConfig(ctx, config)
+	if err != nil {
+		log.Fatalf("ERROR: Failed to create connection pool: %v\n", err)
+	}
+
+	fmt.Fprintf(os.Stdout, "DEBUG: Pinging database...\n")
+	// Ping database
+	if err := pool.Ping(ctx); err != nil {
 		fmt.Fprintf(os.Stderr, "ERROR: Database ping failed: %v\n", err)
 		log.Fatalf("ERROR: Failed to ping database: %v\n", err)
 	}
 
 	fmt.Fprintf(os.Stdout, "DEBUG: Database ping successful!\n")
 
-	queries := db.New(database)
+	queries := db.New(pool)
 	return queries
 }
 

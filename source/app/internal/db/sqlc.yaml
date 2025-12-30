@@ -7,6 +7,7 @@ sql:
       go:
         package: "db"
         out: "generated"
+        sql_package: "pgx/v5"
         emit_prepared_queries: true
         emit_empty_slices: true
 

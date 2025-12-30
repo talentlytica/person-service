@@ -7,7 +7,289 @@ package db
 
 import (
 	"context"
+
+	"github.com/jackc/pgx/v5/pgtype"
 )
+
+type BulkCreatePersonAttributesParams struct {
+	PersonID       pgtype.UUID
+	AttributeKey   string
+	EncryptedValue []byte
+	KeyVersion     int32
+}
+
+const checkTraceIdExists = `-- name: CheckTraceIdExists :one
+SELECT EXISTS(SELECT 1 FROM request_log WHERE trace_id = $1)
+`
+
+// Check if a trace_id already exists (for idempotency)
+func (q *Queries) CheckTraceIdExists(ctx context.Context, traceID string) (bool, error) {
+	row := q.db.QueryRow(ctx, checkTraceIdExists, traceID)
+	var exists bool
+	err := row.Scan(&exists)
+	return exists, err
+}
+
+const countPersonAttributes = `-- name: CountPersonAttributes :one
+SELECT COUNT(*) FROM person_attributes WHERE person_id = $1
+`
+
+// Count attributes for a person
+func (q *Queries) CountPersonAttributes(ctx context.Context, personID pgtype.UUID) (int64, error) {
+	row := q.db.QueryRow(ctx, countPersonAttributes, personID)
+	var count int64
+	err := row.Scan(&count)
+	return count, err
+}
+
+const countPersonImages = `-- name: CountPersonImages :one
+SELECT COUNT(*) FROM person_images WHERE person_id = $1
+`
+
+// Count images for a person
+func (q *Queries) CountPersonImages(ctx context.Context, personID pgtype.UUID) (int64, error) {
+	row := q.db.QueryRow(ctx, countPersonImages, personID)
+	var count int64
+	err := row.Scan(&count)
+	return count, err
+}
+
+const createOrUpdatePersonAttribute = `-- name: CreateOrUpdatePersonAttribute :one
+
+INSERT INTO person_attributes (
+    person_id, 
+    attribute_key, 
+    encrypted_value, 
+    key_version
+) VALUES (
+    $1, 
+    $2, 
+    pgp_sym_encrypt($3, $4), 
+    $5
+)
+ON CONFLICT (person_id, attribute_key) 
+DO UPDATE SET 
+    encrypted_value = pgp_sym_encrypt($3, $4),
+    key_version = $5,
+    updated_at = CURRENT_TIMESTAMP
+RETURNING id, person_id, attribute_key, key_version, created_at, updated_at
+`
+
+type CreateOrUpdatePersonAttributeParams struct {
+	PersonID       pgtype.UUID
+	AttributeKey   string
+	AttributeValue string
+	EncKey         string
+	KeyVersion     int32
+}
+
+type CreateOrUpdatePersonAttributeRow struct {
+	ID           int32
+	PersonID     pgtype.UUID
+	AttributeKey string
+	KeyVersion   int32
+	CreatedAt    pgtype.Timestamp
+	UpdatedAt    pgtype.Timestamp
+}
+
+// ============================================================================
+// PERSON ATTRIBUTES OPERATIONS
+// ============================================================================
+// Create or update a person attribute with encryption
+func (q *Queries) CreateOrUpdatePersonAttribute(ctx context.Context, arg CreateOrUpdatePersonAttributeParams) (CreateOrUpdatePersonAttributeRow, error) {
+	row := q.db.QueryRow(ctx, createOrUpdatePersonAttribute,
+		arg.PersonID,
+		arg.AttributeKey,
+		arg.AttributeValue,
+		arg.EncKey,
+		arg.KeyVersion,
+	)
+	var i CreateOrUpdatePersonAttributeRow
+	err := row.Scan(
+		&i.ID,
+		&i.PersonID,
+		&i.AttributeKey,
+		&i.KeyVersion,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
+
+const createOrUpdatePersonImage = `-- name: CreateOrUpdatePersonImage :one
+
+INSERT INTO person_images (
+    person_id,
+    attribute_key,
+    image_type,
+    encrypted_image_data,
+    key_version,
+    mime_type,
+    file_size,
+    width,
+    height
+) VALUES (
+    $1, 
+    $2, 
+    $3, 
+    pgp_sym_encrypt($4, $5), 
+    $6, 
+    $7, 
+    $8, 
+    $9, 
+    $10
+)
+ON CONFLICT (person_id, attribute_key)
+DO UPDATE SET
+    image_type = $3,
+    encrypted_image_data = pgp_sym_encrypt($4, $5),
+    key_version = $6,
+    mime_type = $7,
+    file_size = $8,
+    width = $9,
+    height = $10,
+    updated_at = CURRENT_TIMESTAMP
+RETURNING id, person_id, attribute_key, image_type, key_version, mime_type, file_size, width, height, created_at, updated_at
+`
+
+type CreateOrUpdatePersonImageParams struct {
+	PersonID     pgtype.UUID
+	AttributeKey string
+	ImageType    string
+	ImageData    string
+	EncKey       string
+	KeyVersion   int32
+	MimeType     pgtype.Text
+	FileSize     pgtype.Int8
+	Width        pgtype.Int4
+	Height       pgtype.Int4
+}
+
+type CreateOrUpdatePersonImageRow struct {
+	ID           int32
+	PersonID     pgtype.UUID
+	AttributeKey string
+	ImageType    string
+	KeyVersion   int32
+	MimeType     pgtype.Text
+	FileSize     pgtype.Int8
+	Width        pgtype.Int4
+	Height       pgtype.Int4
+	CreatedAt    pgtype.Timestamp
+	UpdatedAt    pgtype.Timestamp
+}
+
+// ============================================================================
+// PERSON IMAGES OPERATIONS
+// ============================================================================
+// Create or update a person image with encryption
+func (q *Queries) CreateOrUpdatePersonImage(ctx context.Context, arg CreateOrUpdatePersonImageParams) (CreateOrUpdatePersonImageRow, error) {
+	row := q.db.QueryRow(ctx, createOrUpdatePersonImage,
+		arg.PersonID,
+		arg.AttributeKey,
+		arg.ImageType,
+		arg.ImageData,
+		arg.EncKey,
+		arg.KeyVersion,
+		arg.MimeType,
+		arg.FileSize,
+		arg.Width,
+		arg.Height,
+	)
+	var i CreateOrUpdatePersonImageRow
+	err := row.Scan(
+		&i.ID,
+		&i.PersonID,
+		&i.AttributeKey,
+		&i.ImageType,
+		&i.KeyVersion,
+		&i.MimeType,
+		&i.FileSize,
+		&i.Width,
+		&i.Height,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
+
+const createPerson = `-- name: CreatePerson :one
+
+INSERT INTO person (client_id)
+VALUES ($1)
+RETURNING id, client_id, created_at, updated_at, deleted_at
+`
+
+// ============================================================================
+// PERSON OPERATIONS
+// ============================================================================
+// Create a new person
+func (q *Queries) CreatePerson(ctx context.Context, clientID string) (Person, error) {
+	row := q.db.QueryRow(ctx, createPerson, clientID)
+	var i Person
+	err := row.Scan(
+		&i.ID,
+		&i.ClientID,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+		&i.DeletedAt,
+	)
+	return i, err
+}
+
+const deleteAllPersonAttributes = `-- name: DeleteAllPersonAttributes :exec
+DELETE FROM person_attributes
+WHERE person_id = $1
+`
+
+// Delete all attributes for a person
+func (q *Queries) DeleteAllPersonAttributes(ctx context.Context, personID pgtype.UUID) error {
+	_, err := q.db.Exec(ctx, deleteAllPersonAttributes, personID)
+	return err
+}
+
+const deleteAllPersonImages = `-- name: DeleteAllPersonImages :exec
+DELETE FROM person_images
+WHERE person_id = $1
+`
+
+// Delete all images for a person
+func (q *Queries) DeleteAllPersonImages(ctx context.Context, personID pgtype.UUID) error {
+	_, err := q.db.Exec(ctx, deleteAllPersonImages, personID)
+	return err
+}
+
+const deletePersonAttribute = `-- name: DeletePersonAttribute :exec
+DELETE FROM person_attributes
+WHERE person_id = $1 AND attribute_key = $2
+`
+
+type DeletePersonAttributeParams struct {
+	PersonID     pgtype.UUID
+	AttributeKey string
+}
+
+// Delete a specific attribute for a person
+func (q *Queries) DeletePersonAttribute(ctx context.Context, arg DeletePersonAttributeParams) error {
+	_, err := q.db.Exec(ctx, deletePersonAttribute, arg.PersonID, arg.AttributeKey)
+	return err
+}
+
+const deletePersonImage = `-- name: DeletePersonImage :exec
+DELETE FROM person_images
+WHERE person_id = $1 AND attribute_key = $2
+`
+
+type DeletePersonImageParams struct {
+	PersonID     pgtype.UUID
+	AttributeKey string
+}
+
+// Delete a specific image for a person
+func (q *Queries) DeletePersonImage(ctx context.Context, arg DeletePersonImageParams) error {
+	_, err := q.db.Exec(ctx, deletePersonImage, arg.PersonID, arg.AttributeKey)
+	return err
+}
 
 const deleteValue = `-- name: DeleteValue :exec
 DELETE FROM key_value WHERE key = $1
@@ -15,8 +297,66 @@ DELETE FROM key_value WHERE key = $1
 
 // Delete a value by key
 func (q *Queries) DeleteValue(ctx context.Context, key string) error {
-	_, err := q.exec(ctx, q.deleteValueStmt, deleteValue, key)
+	_, err := q.db.Exec(ctx, deleteValue, key)
 	return err
+}
+
+const getAllPersonAttributes = `-- name: GetAllPersonAttributes :many
+SELECT 
+    id,
+    person_id,
+    attribute_key,
+    pgp_sym_decrypt(encrypted_value, $1) AS attribute_value,
+    key_version,
+    created_at,
+    updated_at
+FROM person_attributes
+WHERE person_id = $2
+ORDER BY attribute_key
+`
+
+type GetAllPersonAttributesParams struct {
+	EncKey   string
+	PersonID pgtype.UUID
+}
+
+type GetAllPersonAttributesRow struct {
+	ID             int32
+	PersonID       pgtype.UUID
+	AttributeKey   string
+	AttributeValue string
+	KeyVersion     int32
+	CreatedAt      pgtype.Timestamp
+	UpdatedAt      pgtype.Timestamp
+}
+
+// Get all decrypted attributes for a person
+func (q *Queries) GetAllPersonAttributes(ctx context.Context, arg GetAllPersonAttributesParams) ([]GetAllPersonAttributesRow, error) {
+	rows, err := q.db.Query(ctx, getAllPersonAttributes, arg.EncKey, arg.PersonID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	items := []GetAllPersonAttributesRow{}
+	for rows.Next() {
+		var i GetAllPersonAttributesRow
+		if err := rows.Scan(
+			&i.ID,
+			&i.PersonID,
+			&i.AttributeKey,
+			&i.AttributeValue,
+			&i.KeyVersion,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
 }
 
 const getKeyValue = `-- name: GetKeyValue :one
@@ -25,7 +365,7 @@ SELECT key, value, created_at, updated_at FROM key_value WHERE key = $1 LIMIT 1
 
 // Retrieve the full key-value record by key
 func (q *Queries) GetKeyValue(ctx context.Context, key string) (KeyValue, error) {
-	row := q.queryRow(ctx, q.getKeyValueStmt, getKeyValue, key)
+	row := q.db.QueryRow(ctx, getKeyValue, key)
 	var i KeyValue
 	err := row.Scan(
 		&i.Key,
@@ -36,16 +376,369 @@ func (q *Queries) GetKeyValue(ctx context.Context, key string) (KeyValue, error)
 	return i, err
 }
 
+const getMultiplePersonAttributes = `-- name: GetMultiplePersonAttributes :many
+SELECT 
+    id,
+    person_id,
+    attribute_key,
+    pgp_sym_decrypt(encrypted_value, $1) AS attribute_value,
+    key_version,
+    created_at,
+    updated_at
+FROM person_attributes
+WHERE person_id = $2 AND attribute_key = ANY($3::citext[])
+ORDER BY attribute_key
+`
+
+type GetMultiplePersonAttributesParams struct {
+	EncKey        string
+	PersonID      pgtype.UUID
+	AttributeKeys []string
+}
+
+type GetMultiplePersonAttributesRow struct {
+	ID             int32
+	PersonID       pgtype.UUID
+	AttributeKey   string
+	AttributeValue string
+	KeyVersion     int32
+	CreatedAt      pgtype.Timestamp
+	UpdatedAt      pgtype.Timestamp
+}
+
+// Get multiple specific attributes for a person (pass array of keys)
+func (q *Queries) GetMultiplePersonAttributes(ctx context.Context, arg GetMultiplePersonAttributesParams) ([]GetMultiplePersonAttributesRow, error) {
+	rows, err := q.db.Query(ctx, getMultiplePersonAttributes, arg.EncKey, arg.PersonID, arg.AttributeKeys)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	items := []GetMultiplePersonAttributesRow{}
+	for rows.Next() {
+		var i GetMultiplePersonAttributesRow
+		if err := rows.Scan(
+			&i.ID,
+			&i.PersonID,
+			&i.AttributeKey,
+			&i.AttributeValue,
+			&i.KeyVersion,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const getPersonAttribute = `-- name: GetPersonAttribute :one
+SELECT 
+    id,
+    person_id,
+    attribute_key,
+    pgp_sym_decrypt(encrypted_value, $1) AS attribute_value,
+    key_version,
+    created_at,
+    updated_at
+FROM person_attributes
+WHERE person_id = $2 AND attribute_key = $3
+LIMIT 1
+`
+
+type GetPersonAttributeParams struct {
+	EncKey       string
+	PersonID     pgtype.UUID
+	AttributeKey string
+}
+
+type GetPersonAttributeRow struct {
+	ID             int32
+	PersonID       pgtype.UUID
+	AttributeKey   string
+	AttributeValue string
+	KeyVersion     int32
+	CreatedAt      pgtype.Timestamp
+	UpdatedAt      pgtype.Timestamp
+}
+
+// Get a single decrypted attribute for a person
+func (q *Queries) GetPersonAttribute(ctx context.Context, arg GetPersonAttributeParams) (GetPersonAttributeRow, error) {
+	row := q.db.QueryRow(ctx, getPersonAttribute, arg.EncKey, arg.PersonID, arg.AttributeKey)
+	var i GetPersonAttributeRow
+	err := row.Scan(
+		&i.ID,
+		&i.PersonID,
+		&i.AttributeKey,
+		&i.AttributeValue,
+		&i.KeyVersion,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
+
+const getPersonByClientId = `-- name: GetPersonByClientId :one
+SELECT id, client_id, created_at, updated_at, deleted_at
+FROM person
+WHERE client_id = $1 AND deleted_at IS NULL
+LIMIT 1
+`
+
+// Get person by client_id
+func (q *Queries) GetPersonByClientId(ctx context.Context, clientID string) (Person, error) {
+	row := q.db.QueryRow(ctx, getPersonByClientId, clientID)
+	var i Person
+	err := row.Scan(
+		&i.ID,
+		&i.ClientID,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+		&i.DeletedAt,
+	)
+	return i, err
+}
+
+const getPersonById = `-- name: GetPersonById :one
+SELECT id, client_id, created_at, updated_at, deleted_at
+FROM person
+WHERE id = $1 AND deleted_at IS NULL
+LIMIT 1
+`
+
+// Get person by internal UUID
+func (q *Queries) GetPersonById(ctx context.Context, id pgtype.UUID) (Person, error) {
+	row := q.db.QueryRow(ctx, getPersonById, id)
+	var i Person
+	err := row.Scan(
+		&i.ID,
+		&i.ClientID,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+		&i.DeletedAt,
+	)
+	return i, err
+}
+
+const getPersonImage = `-- name: GetPersonImage :one
+SELECT 
+    id,
+    person_id,
+    attribute_key,
+    image_type,
+    pgp_sym_decrypt(encrypted_image_data, $1) AS image_data,
+    key_version,
+    mime_type,
+    file_size,
+    width,
+    height,
+    created_at,
+    updated_at
+FROM person_images
+WHERE person_id = $2 AND attribute_key = $3
+LIMIT 1
+`
+
+type GetPersonImageParams struct {
+	EncKey       string
+	PersonID     pgtype.UUID
+	AttributeKey string
+}
+
+type GetPersonImageRow struct {
+	ID           int32
+	PersonID     pgtype.UUID
+	AttributeKey string
+	ImageType    string
+	ImageData    string
+	KeyVersion   int32
+	MimeType     pgtype.Text
+	FileSize     pgtype.Int8
+	Width        pgtype.Int4
+	Height       pgtype.Int4
+	CreatedAt    pgtype.Timestamp
+	UpdatedAt    pgtype.Timestamp
+}
+
+// Get a specific decrypted image for a person
+func (q *Queries) GetPersonImage(ctx context.Context, arg GetPersonImageParams) (GetPersonImageRow, error) {
+	row := q.db.QueryRow(ctx, getPersonImage, arg.EncKey, arg.PersonID, arg.AttributeKey)
+	var i GetPersonImageRow
+	err := row.Scan(
+		&i.ID,
+		&i.PersonID,
+		&i.AttributeKey,
+		&i.ImageType,
+		&i.ImageData,
+		&i.KeyVersion,
+		&i.MimeType,
+		&i.FileSize,
+		&i.Width,
+		&i.Height,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
+
+const getPersonImageMetadata = `-- name: GetPersonImageMetadata :one
+SELECT 
+    id,
+    person_id,
+    attribute_key,
+    image_type,
+    key_version,
+    mime_type,
+    file_size,
+    width,
+    height,
+    created_at,
+    updated_at
+FROM person_images
+WHERE person_id = $1 AND attribute_key = $2
+LIMIT 1
+`
+
+type GetPersonImageMetadataParams struct {
+	PersonID     pgtype.UUID
+	AttributeKey string
+}
+
+type GetPersonImageMetadataRow struct {
+	ID           int32
+	PersonID     pgtype.UUID
+	AttributeKey string
+	ImageType    string
+	KeyVersion   int32
+	MimeType     pgtype.Text
+	FileSize     pgtype.Int8
+	Width        pgtype.Int4
+	Height       pgtype.Int4
+	CreatedAt    pgtype.Timestamp
+	UpdatedAt    pgtype.Timestamp
+}
+
+// Get image metadata without decrypting the image data (for performance)
+func (q *Queries) GetPersonImageMetadata(ctx context.Context, arg GetPersonImageMetadataParams) (GetPersonImageMetadataRow, error) {
+	row := q.db.QueryRow(ctx, getPersonImageMetadata, arg.PersonID, arg.AttributeKey)
+	var i GetPersonImageMetadataRow
+	err := row.Scan(
+		&i.ID,
+		&i.PersonID,
+		&i.AttributeKey,
+		&i.ImageType,
+		&i.KeyVersion,
+		&i.MimeType,
+		&i.FileSize,
+		&i.Width,
+		&i.Height,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
+
+const getPersonWithAttributes = `-- name: GetPersonWithAttributes :one
+
+SELECT 
+    p.id,
+    p.client_id,
+    p.created_at,
+    p.updated_at,
+    p.deleted_at
+FROM person p
+WHERE p.id = $1 AND p.deleted_at IS NULL
+LIMIT 1
+`
+
+// ============================================================================
+// COMBINED OPERATIONS
+// ============================================================================
+// Get person basic info (to be combined with attributes in application layer)
+func (q *Queries) GetPersonWithAttributes(ctx context.Context, id pgtype.UUID) (Person, error) {
+	row := q.db.QueryRow(ctx, getPersonWithAttributes, id)
+	var i Person
+	err := row.Scan(
+		&i.ID,
+		&i.ClientID,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+		&i.DeletedAt,
+	)
+	return i, err
+}
+
+const getRequestLogByTraceId = `-- name: GetRequestLogByTraceId :one
+SELECT 
+    id,
+    trace_id,
+    caller_info,
+    reason,
+    pgp_sym_decrypt(encrypted_request_body, $1) AS request_body,
+    pgp_sym_decrypt(encrypted_response_body, $1) AS response_body,
+    key_version,
+    created_at
+FROM request_log
+WHERE trace_id = $2
+LIMIT 1
+`
+
+type GetRequestLogByTraceIdParams struct {
+	EncKey  string
+	TraceID string
+}
+
+type GetRequestLogByTraceIdRow struct {
+	ID           int32
+	TraceID      string
+	CallerInfo   string
+	Reason       string
+	RequestBody  string
+	ResponseBody string
+	KeyVersion   int32
+	CreatedAt    pgtype.Timestamp
+}
+
+// Retrieve request log by trace_id with decrypted data
+func (q *Queries) GetRequestLogByTraceId(ctx context.Context, arg GetRequestLogByTraceIdParams) (GetRequestLogByTraceIdRow, error) {
+	row := q.db.QueryRow(ctx, getRequestLogByTraceId, arg.EncKey, arg.TraceID)
+	var i GetRequestLogByTraceIdRow
+	err := row.Scan(
+		&i.ID,
+		&i.TraceID,
+		&i.CallerInfo,
+		&i.Reason,
+		&i.RequestBody,
+		&i.ResponseBody,
+		&i.KeyVersion,
+		&i.CreatedAt,
+	)
+	return i, err
+}
+
 const getValue = `-- name: GetValue :one
 SELECT value FROM key_value WHERE key = $1 LIMIT 1
 `
 
 // Retrieve a value by key
 func (q *Queries) GetValue(ctx context.Context, key string) (string, error) {
-	row := q.queryRow(ctx, q.getValueStmt, getValue, key)
+	row := q.db.QueryRow(ctx, getValue, key)
 	var value string
 	err := row.Scan(&value)
 	return value, err
+}
+
+const hardDeletePerson = `-- name: HardDeletePerson :exec
+DELETE FROM person WHERE id = $1
+`
+
+// Hard delete a person (use with caution)
+func (q *Queries) HardDeletePerson(ctx context.Context, id pgtype.UUID) error {
+	_, err := q.db.Exec(ctx, hardDeletePerson, id)
+	return err
 }
 
 const healthCheck = `-- name: HealthCheck :exec
@@ -54,8 +747,328 @@ SELECT 1
 
 // Perform a simple health check query
 func (q *Queries) HealthCheck(ctx context.Context) error {
-	_, err := q.exec(ctx, q.healthCheckStmt, healthCheck)
+	_, err := q.db.Exec(ctx, healthCheck)
 	return err
+}
+
+const insertRequestLog = `-- name: InsertRequestLog :one
+
+INSERT INTO request_log (
+    trace_id, 
+    caller_info, 
+    reason, 
+    encrypted_request_body, 
+    encrypted_response_body, 
+    key_version
+) VALUES (
+    $1, 
+    $2, 
+    $3, 
+    pgp_sym_encrypt($4, $5), 
+    pgp_sym_encrypt($6, $5), 
+    $7
+) RETURNING id, trace_id, created_at
+`
+
+type InsertRequestLogParams struct {
+	TraceID               string
+	CallerInfo            string
+	Reason                string
+	EncryptedRequestBody  string
+	EncKey                string
+	EncryptedResponseBody string
+	KeyVersion            int32
+}
+
+type InsertRequestLogRow struct {
+	ID        int32
+	TraceID   string
+	CreatedAt pgtype.Timestamp
+}
+
+// ============================================================================
+// REQUEST LOG OPERATIONS
+// ============================================================================
+// Insert a new request log entry with encrypted data
+func (q *Queries) InsertRequestLog(ctx context.Context, arg InsertRequestLogParams) (InsertRequestLogRow, error) {
+	row := q.db.QueryRow(ctx, insertRequestLog,
+		arg.TraceID,
+		arg.CallerInfo,
+		arg.Reason,
+		arg.EncryptedRequestBody,
+		arg.EncKey,
+		arg.EncryptedResponseBody,
+		arg.KeyVersion,
+	)
+	var i InsertRequestLogRow
+	err := row.Scan(&i.ID, &i.TraceID, &i.CreatedAt)
+	return i, err
+}
+
+const listAttributeKeys = `-- name: ListAttributeKeys :many
+SELECT DISTINCT attribute_key
+FROM person_attributes
+ORDER BY attribute_key
+`
+
+// List all unique attribute keys used across all persons
+func (q *Queries) ListAttributeKeys(ctx context.Context) ([]string, error) {
+	rows, err := q.db.Query(ctx, listAttributeKeys)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	items := []string{}
+	for rows.Next() {
+		var attribute_key string
+		if err := rows.Scan(&attribute_key); err != nil {
+			return nil, err
+		}
+		items = append(items, attribute_key)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listPersonImages = `-- name: ListPersonImages :many
+SELECT 
+    id,
+    person_id,
+    attribute_key,
+    image_type,
+    key_version,
+    mime_type,
+    file_size,
+    width,
+    height,
+    created_at,
+    updated_at
+FROM person_images
+WHERE person_id = $1
+ORDER BY created_at DESC
+`
+
+type ListPersonImagesRow struct {
+	ID           int32
+	PersonID     pgtype.UUID
+	AttributeKey string
+	ImageType    string
+	KeyVersion   int32
+	MimeType     pgtype.Text
+	FileSize     pgtype.Int8
+	Width        pgtype.Int4
+	Height       pgtype.Int4
+	CreatedAt    pgtype.Timestamp
+	UpdatedAt    pgtype.Timestamp
+}
+
+// List all image metadata for a person (without decrypting)
+func (q *Queries) ListPersonImages(ctx context.Context, personID pgtype.UUID) ([]ListPersonImagesRow, error) {
+	rows, err := q.db.Query(ctx, listPersonImages, personID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	items := []ListPersonImagesRow{}
+	for rows.Next() {
+		var i ListPersonImagesRow
+		if err := rows.Scan(
+			&i.ID,
+			&i.PersonID,
+			&i.AttributeKey,
+			&i.ImageType,
+			&i.KeyVersion,
+			&i.MimeType,
+			&i.FileSize,
+			&i.Width,
+			&i.Height,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listPersonImagesByType = `-- name: ListPersonImagesByType :many
+SELECT 
+    id,
+    person_id,
+    attribute_key,
+    image_type,
+    key_version,
+    mime_type,
+    file_size,
+    width,
+    height,
+    created_at,
+    updated_at
+FROM person_images
+WHERE person_id = $1 AND image_type = $2
+ORDER BY created_at DESC
+`
+
+type ListPersonImagesByTypeParams struct {
+	PersonID  pgtype.UUID
+	ImageType string
+}
+
+type ListPersonImagesByTypeRow struct {
+	ID           int32
+	PersonID     pgtype.UUID
+	AttributeKey string
+	ImageType    string
+	KeyVersion   int32
+	MimeType     pgtype.Text
+	FileSize     pgtype.Int8
+	Width        pgtype.Int4
+	Height       pgtype.Int4
+	CreatedAt    pgtype.Timestamp
+	UpdatedAt    pgtype.Timestamp
+}
+
+// List images of a specific type for a person (without decrypting)
+func (q *Queries) ListPersonImagesByType(ctx context.Context, arg ListPersonImagesByTypeParams) ([]ListPersonImagesByTypeRow, error) {
+	rows, err := q.db.Query(ctx, listPersonImagesByType, arg.PersonID, arg.ImageType)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	items := []ListPersonImagesByTypeRow{}
+	for rows.Next() {
+		var i ListPersonImagesByTypeRow
+		if err := rows.Scan(
+			&i.ID,
+			&i.PersonID,
+			&i.AttributeKey,
+			&i.ImageType,
+			&i.KeyVersion,
+			&i.MimeType,
+			&i.FileSize,
+			&i.Width,
+			&i.Height,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listPersons = `-- name: ListPersons :many
+SELECT id, client_id, created_at, updated_at, deleted_at
+FROM person
+WHERE deleted_at IS NULL
+ORDER BY created_at DESC
+LIMIT $2 OFFSET $1
+`
+
+type ListPersonsParams struct {
+	OffsetCount int32
+	LimitCount  int32
+}
+
+// List all active persons with pagination
+func (q *Queries) ListPersons(ctx context.Context, arg ListPersonsParams) ([]Person, error) {
+	rows, err := q.db.Query(ctx, listPersons, arg.OffsetCount, arg.LimitCount)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	items := []Person{}
+	for rows.Next() {
+		var i Person
+		if err := rows.Scan(
+			&i.ID,
+			&i.ClientID,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+			&i.DeletedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const restorePerson = `-- name: RestorePerson :exec
+UPDATE person
+SET deleted_at = NULL, updated_at = CURRENT_TIMESTAMP
+WHERE id = $1
+`
+
+// Restore a soft-deleted person
+func (q *Queries) RestorePerson(ctx context.Context, id pgtype.UUID) error {
+	_, err := q.db.Exec(ctx, restorePerson, id)
+	return err
+}
+
+const searchPersonsByAttribute = `-- name: SearchPersonsByAttribute :many
+SELECT DISTINCT
+    p.id,
+    p.client_id,
+    p.created_at,
+    p.updated_at
+FROM person p
+JOIN person_attributes pa ON p.id = pa.person_id
+WHERE pa.attribute_key = $1
+    AND pgp_sym_decrypt(pa.encrypted_value, $2) = $3
+    AND p.deleted_at IS NULL
+`
+
+type SearchPersonsByAttributeParams struct {
+	AttributeKey   string
+	EncKey         string
+	AttributeValue []byte
+}
+
+type SearchPersonsByAttributeRow struct {
+	ID        pgtype.UUID
+	ClientID  string
+	CreatedAt pgtype.Timestamp
+	UpdatedAt pgtype.Timestamp
+}
+
+// Search persons by a specific decrypted attribute value (note: performance intensive)
+func (q *Queries) SearchPersonsByAttribute(ctx context.Context, arg SearchPersonsByAttributeParams) ([]SearchPersonsByAttributeRow, error) {
+	rows, err := q.db.Query(ctx, searchPersonsByAttribute, arg.AttributeKey, arg.EncKey, arg.AttributeValue)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	items := []SearchPersonsByAttributeRow{}
+	for rows.Next() {
+		var i SearchPersonsByAttributeRow
+		if err := rows.Scan(
+			&i.ID,
+			&i.ClientID,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
 }
 
 const setValue = `-- name: SetValue :exec
@@ -70,6 +1083,35 @@ type SetValueParams struct {
 
 // Set a value by key
 func (q *Queries) SetValue(ctx context.Context, arg SetValueParams) error {
-	_, err := q.exec(ctx, q.setValueStmt, setValue, arg.Key, arg.Value)
+	_, err := q.db.Exec(ctx, setValue, arg.Key, arg.Value)
+	return err
+}
+
+const softDeletePerson = `-- name: SoftDeletePerson :exec
+UPDATE person
+SET deleted_at = CURRENT_TIMESTAMP, updated_at = CURRENT_TIMESTAMP
+WHERE id = $1 AND deleted_at IS NULL
+`
+
+// Soft delete a person
+func (q *Queries) SoftDeletePerson(ctx context.Context, id pgtype.UUID) error {
+	_, err := q.db.Exec(ctx, softDeletePerson, id)
+	return err
+}
+
+const updatePersonClientId = `-- name: UpdatePersonClientId :exec
+UPDATE person
+SET client_id = $1, updated_at = CURRENT_TIMESTAMP
+WHERE id = $2 AND deleted_at IS NULL
+`
+
+type UpdatePersonClientIdParams struct {
+	NewClientID string
+	ID          pgtype.UUID
+}
+
+// Update person's client_id
+func (q *Queries) UpdatePersonClientId(ctx context.Context, arg UpdatePersonClientIdParams) error {
+	_, err := q.db.Exec(ctx, updatePersonClientId, arg.NewClientID, arg.ID)
 	return err
 }

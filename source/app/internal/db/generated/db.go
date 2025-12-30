@@ -6,123 +6,28 @@ package db
 
 import (
 	"context"
-	"database/sql"
-	"fmt"
+
+	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgconn"
 )
 
 type DBTX interface {
-	ExecContext(context.Context, string, ...interface{}) (sql.Result, error)
-	PrepareContext(context.Context, string) (*sql.Stmt, error)
-	QueryContext(context.Context, string, ...interface{}) (*sql.Rows, error)
-	QueryRowContext(context.Context, string, ...interface{}) *sql.Row
+	Exec(context.Context, string, ...interface{}) (pgconn.CommandTag, error)
+	Query(context.Context, string, ...interface{}) (pgx.Rows, error)
+	QueryRow(context.Context, string, ...interface{}) pgx.Row
+	CopyFrom(ctx context.Context, tableName pgx.Identifier, columnNames []string, rowSrc pgx.CopyFromSource) (int64, error)
 }
 
 func New(db DBTX) *Queries {
 	return &Queries{db: db}
 }
 
-func Prepare(ctx context.Context, db DBTX) (*Queries, error) {
-	q := Queries{db: db}
-	var err error
-	if q.deleteValueStmt, err = db.PrepareContext(ctx, deleteValue); err != nil {
-		return nil, fmt.Errorf("error preparing query DeleteValue: %w", err)
-	}
-	if q.getKeyValueStmt, err = db.PrepareContext(ctx, getKeyValue); err != nil {
-		return nil, fmt.Errorf("error preparing query GetKeyValue: %w", err)
-	}
-	if q.getValueStmt, err = db.PrepareContext(ctx, getValue); err != nil {
-		return nil, fmt.Errorf("error preparing query GetValue: %w", err)
-	}
-	if q.healthCheckStmt, err = db.PrepareContext(ctx, healthCheck); err != nil {
-		return nil, fmt.Errorf("error preparing query HealthCheck: %w", err)
-	}
-	if q.setValueStmt, err = db.PrepareContext(ctx, setValue); err != nil {
-		return nil, fmt.Errorf("error preparing query SetValue: %w", err)
-	}
-	return &q, nil
-}
-
-func (q *Queries) Close() error {
-	var err error
-	if q.deleteValueStmt != nil {
-		if cerr := q.deleteValueStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing deleteValueStmt: %w", cerr)
-		}
-	}
-	if q.getKeyValueStmt != nil {
-		if cerr := q.getKeyValueStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing getKeyValueStmt: %w", cerr)
-		}
-	}
-	if q.getValueStmt != nil {
-		if cerr := q.getValueStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing getValueStmt: %w", cerr)
-		}
-	}
-	if q.healthCheckStmt != nil {
-		if cerr := q.healthCheckStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing healthCheckStmt: %w", cerr)
-		}
-	}
-	if q.setValueStmt != nil {
-		if cerr := q.setValueStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing setValueStmt: %w", cerr)
-		}
-	}
-	return err
-}
-
-func (q *Queries) exec(ctx context.Context, stmt *sql.Stmt, query string, args ...interface{}) (sql.Result, error) {
-	switch {
-	case stmt != nil && q.tx != nil:
-		return q.tx.StmtContext(ctx, stmt).ExecContext(ctx, args...)
-	case stmt != nil:
-		return stmt.ExecContext(ctx, args...)
-	default:
-		return q.db.ExecContext(ctx, query, args...)
-	}
-}
-
-func (q *Queries) query(ctx context.Context, stmt *sql.Stmt, query string, args ...interface{}) (*sql.Rows, error) {
-	switch {
-	case stmt != nil && q.tx != nil:
-		return q.tx.StmtContext(ctx, stmt).QueryContext(ctx, args...)
-	case stmt != nil:
-		return stmt.QueryContext(ctx, args...)
-	default:
-		return q.db.QueryContext(ctx, query, args...)
-	}
-}
-
-func (q *Queries) queryRow(ctx context.Context, stmt *sql.Stmt, query string, args ...interface{}) *sql.Row {
-	switch {
-	case stmt != nil && q.tx != nil:
-		return q.tx.StmtContext(ctx, stmt).QueryRowContext(ctx, args...)
-	case stmt != nil:
-		return stmt.QueryRowContext(ctx, args...)
-	default:
-		return q.db.QueryRowContext(ctx, query, args...)
-	}
-}
-
 type Queries struct {
-	db              DBTX
-	tx              *sql.Tx
-	deleteValueStmt *sql.Stmt
-	getKeyValueStmt *sql.Stmt
-	getValueStmt    *sql.Stmt
-	healthCheckStmt *sql.Stmt
-	setValueStmt    *sql.Stmt
+	db DBTX
 }
 
-func (q *Queries) WithTx(tx *sql.Tx) *Queries {
+func (q *Queries) WithTx(tx pgx.Tx) *Queries {
 	return &Queries{
-		db:              tx,
-		tx:              tx,
-		deleteValueStmt: q.deleteValueStmt,
-		getKeyValueStmt: q.getKeyValueStmt,
-		getValueStmt:    q.getValueStmt,
-		healthCheckStmt: q.healthCheckStmt,
-		setValueStmt:    q.setValueStmt,
+		db: tx,
 	}
 }
