@@ -63,7 +63,7 @@ class TestEnvironment {
     // Docker automatically maps this to a random available port on the host (e.g., 32769, 32770, etc.)
     // This avoids conflicts with your local PostgreSQL on port 5432.
     // For container-to-container communication within the network, the service uses postgres-db:5432
-    this.postgresContainer = await new PostgreSqlContainer('postgres:16-alpine')
+    this.postgresContainer = await new PostgreSqlContainer('postgres:18-alpine')
       .withDatabase('testdb')
       .withUsername('testuser')
       .withPassword('testpass')
