@@ -139,6 +139,7 @@ class TestEnvironment {
     try {
       const container = new GenericContainer('source-person-service:latest')
         .withEnvironment({ DATABASE_URL: databaseUrl })
+        .withEnvironment({ ENCRYPTION_KEY_1: 'test-encryption-key-12345' })
         .withExposedPorts(servicePort)
         .withDefaultLogDriver()
         .withNetwork(this.network)

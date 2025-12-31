@@ -8,6 +8,8 @@
 import {
   sendGetRequest,
   sendPostRequest,
+  sendPutRequest,
+  sendDeleteRequest,
   sendGetRequestWithTimeout,
   sendConcurrentGetRequests,
   parseJsonResponse,
@@ -53,6 +55,28 @@ export async function sendGet(ctx, path) {
  */
 export async function sendPost(ctx, path, body = {}) {
   ctx.response = await sendPostRequest(path, body);
+  ctx.responseData = null; // Clear cached response data
+}
+
+/**
+ * Step helper: Send PUT request and store in context
+ * @param {Object} ctx - Test context
+ * @param {string} path - API endpoint path
+ * @param {Object} body - Request body
+ */
+export async function sendPut(ctx, path, body = {}) {
+  ctx.response = await sendPutRequest(path, body);
+  ctx.responseData = null; // Clear cached response data
+}
+
+/**
+ * Step helper: Send DELETE request and store in context
+ * @param {Object} ctx - Test context
+ * @param {string} path - API endpoint path
+ * @param {Object} body - Request body (optional)
+ */
+export async function sendDelete(ctx, path, body = null) {
+  ctx.response = await sendDeleteRequest(path, body);
   ctx.responseData = null; // Clear cached response data
 }
 

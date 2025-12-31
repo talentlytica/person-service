@@ -78,6 +78,53 @@ export async function sendPostRequest(path, body = {}, options = {}) {
 }
 
 /**
+ * Send a PUT request to the service
+ * @param {string} path - API endpoint path
+ * @param {Object} body - Request body (will be JSON stringified)
+ * @param {Object} options - Fetch options (optional)
+ * @returns {Promise<Response>} Fetch response
+ */
+export async function sendPutRequest(path, body = {}, options = {}) {
+  const serviceUrl = getServiceUrl();
+  const url = `${serviceUrl}${path}`;
+  return await fetch(url, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers
+    },
+    body: JSON.stringify(body),
+    ...options
+  });
+}
+
+/**
+ * Send a DELETE request to the service
+ * @param {string} path - API endpoint path
+ * @param {Object} body - Request body (will be JSON stringified, optional)
+ * @param {Object} options - Fetch options (optional)
+ * @returns {Promise<Response>} Fetch response
+ */
+export async function sendDeleteRequest(path, body = null, options = {}) {
+  const serviceUrl = getServiceUrl();
+  const url = `${serviceUrl}${path}`;
+  const fetchOptions = {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers
+    },
+    ...options
+  };
+  
+  if (body !== null) {
+    fetchOptions.body = JSON.stringify(body);
+  }
+  
+  return await fetch(url, fetchOptions);
+}
+
+/**
  * Send multiple concurrent GET requests
  * @param {string} path - API endpoint path
  * @param {number} count - Number of concurrent requests

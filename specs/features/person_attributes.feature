@@ -262,3 +262,48 @@ Feature: Person Attributes Management
     Then the response status should be 201
     And the person should have 2 attributes with key "email"
 
+  # Database Encryption Verification
+
+  Scenario: Attribute value is stored encrypted in database
+    Given a person exists with the following details:
+      | name           | clientId   |
+      | Secure User    | 1515151515 |
+    When I send a POST request to "/persons/{personId}/attributes" with:
+      | key      | value                 |
+      | password | my-secret-password123 |
+    And the request meta contains:
+      | caller  | reason          | traceId                              |
+      | user123 | add password    | 171e8400-e29b-41d4-a716-446655440012 |
+    Then the response status should be 201
+    And the raw database value for attribute "password" should not equal "my-secret-password123"
+    And the raw database value should be encrypted bytes
+
+  Scenario: Key version is stored correctly for each attribute
+    Given a person exists with the following details:
+      | name            | clientId   |
+      | Version User    | 1616161616 |
+    When I send a POST request to "/persons/{personId}/attributes" with:
+      | key   | value             |
+      | email | version@test.com  |
+    And the request meta contains:
+      | caller  | reason       | traceId                              |
+      | user123 | add email    | 181e8400-e29b-41d4-a716-446655440013 |
+    Then the response status should be 201
+    And the database should have key_version 1 for the attribute "email"
+
+  Scenario: Decryption works correctly on retrieval
+    Given a person exists with the following details:
+      | name             | clientId   |
+      | Decrypt User     | 1717171717 |
+    When I send a POST request to "/persons/{personId}/attributes" with:
+      | key    | value                          |
+      | secret | this-is-sensitive-information  |
+    And the request meta contains:
+      | caller  | reason     | traceId                              |
+      | user123 | add secret | 191e8400-e29b-41d4-a716-446655440014 |
+    Then the response status should be 201
+    When I send a GET request to "/persons/{personId}/attributes"
+    Then the response status should be 200
+    And the attribute "secret" should have value "this-is-sensitive-information"
+    And the raw database value for attribute "secret" should not equal "this-is-sensitive-information"
+
