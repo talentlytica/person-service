@@ -27,14 +27,14 @@ DELETE FROM key_value WHERE key = sqlc.arg(key);
 -- Insert a new request log entry with encrypted data
 INSERT INTO request_log (
     trace_id, 
-    caller_info, 
+    caller, 
     reason, 
     encrypted_request_body, 
     encrypted_response_body, 
     key_version
 ) VALUES (
     sqlc.arg(trace_id), 
-    sqlc.arg(caller_info), 
+    sqlc.arg(caller), 
     sqlc.arg(reason), 
     pgp_sym_encrypt(sqlc.arg(encrypted_request_body), sqlc.arg(enc_key)), 
     pgp_sym_encrypt(sqlc.arg(encrypted_response_body), sqlc.arg(enc_key)), 
@@ -46,7 +46,7 @@ INSERT INTO request_log (
 SELECT 
     id,
     trace_id,
-    caller_info,
+    caller,
     reason,
     pgp_sym_decrypt(encrypted_request_body, sqlc.arg(enc_key)) AS request_body,
     pgp_sym_decrypt(encrypted_response_body, sqlc.arg(enc_key)) AS response_body,

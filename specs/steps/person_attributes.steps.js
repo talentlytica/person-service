@@ -1031,7 +1031,7 @@ defineFeature(feature, (test) => {
   // Scenario: Add multiple attributes with same key to same person
   // NOTE: Due to UNIQUE constraint on (person_id, attribute_key), 
   // adding an attribute with existing key will UPDATE it, not create a duplicate
-  test('Add multiple attributes with same key to same person', ({ given, when, then, and }) => {
+  test('Add multiple attributes with same key to same person (upsert behavior)', ({ given, when, then, and }) => {
     setupBackground({ given, and });
 
     given(/^a person exists with the following details:$/, async (table) => {

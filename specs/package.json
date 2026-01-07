@@ -4,7 +4,7 @@
   "description": "Integration test suite for Person Service using Testcontainers",
   "type": "module",
   "scripts": {
-    "docker:build": "docker-compose -f ../source/docker-compose.yml build",
+    "docker:build": "docker compose -f ../source/docker-compose.yml build",
     "pretest": "npm run docker:build",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand",
     "test:no-build": "node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand",

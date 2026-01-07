@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS key_value (
 CREATE TABLE IF NOT EXISTS request_log (
     id SERIAL PRIMARY KEY,
     trace_id VARCHAR(255) UNIQUE NOT NULL, -- for idempotency check
-    caller_info VARCHAR(512) NOT NULL,
+    caller VARCHAR(512) NOT NULL,
     reason VARCHAR(512) NOT NULL,
     encrypted_request_body BYTEA, -- encrypted using pgp_sym_encrypt
     encrypted_response_body BYTEA, -- encrypted using pgp_sym_encrypt

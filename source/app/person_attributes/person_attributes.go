@@ -121,6 +121,28 @@ func (h *PersonAttributesHandler) CreateAttribute(c echo.Context) error {
 		})
 	}
 
+	// Log the request to audit log (request_log table)
+	if req.Meta != nil && req.Meta.TraceID != "" {
+		// Serialize request body and response for audit
+		requestBody := fmt.Sprintf(`{"key":"%s","value":"%s"}`, req.Key, req.Value)
+		responseBody := ""  // Will be populated after getting the attribute
+		
+		_, logErr := h.queries.InsertRequestLog(ctx, db.InsertRequestLogParams{
+			TraceID:                req.Meta.TraceID,
+			Caller:                 req.Meta.Caller,
+			Reason:                 req.Meta.Reason,
+			EncryptedRequestBody:   requestBody,
+			EncryptedResponseBody:  responseBody,
+			EncKey:                 h.encryptionKey,
+			KeyVersion:             h.keyVersion,
+		})
+		
+		if logErr != nil {
+			// Log the error but don't fail the request
+			fmt.Fprintf(os.Stderr, "WARNING: Failed to insert request log: %v\n", logErr)
+		}
+	}
+
 	// Get the created attribute with decrypted value
 	attribute, err := h.queries.GetPersonAttribute(ctx, db.GetPersonAttributeParams{
 		PersonID:     personID,

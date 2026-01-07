@@ -22,5 +22,5 @@ serve-coverage:
 
 # build the docker image and npm install in the specs folder. Make this the default target
 build:
-	cd source && docker-compose build
+	cd source && docker compose build
 	cd specs && npm install

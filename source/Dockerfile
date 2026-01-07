@@ -3,18 +3,16 @@
 # Stage 1: Builder
 FROM golang:1.24-alpine AS builder
 
-# Install build dependencies
-RUN apk add --no-cache git
-
 # Set working directory
 WORKDIR /build
 
 # Copy go mod files from app directory
 COPY app/go.mod app/go.sum ./app/
+COPY app/vendor ./app/vendor
 
-# Download dependencies
+# Download dependencies (skip if using vendor)
 WORKDIR /build/app
-RUN go mod download
+# RUN go mod download - not needed when using vendor
 
 # Copy source code
 WORKDIR /build
@@ -22,13 +20,13 @@ COPY app/ ./app/
 
 # Ensure go.sum is up to date and build the binary
 WORKDIR /build/app
-RUN go mod tidy && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -cover -o /build/person-service .
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -mod=vendor -cover -o /build/person-service .
 
 # Stage 2: Runtime
 FROM alpine:3.18
 
-# Install runtime dependencies (ca-certificates for HTTPS)
-RUN apk add --no-cache ca-certificates
+# Copy ca-certificates from builder (avoids needing apk add which has network issues)
+COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 
 # Create non-root user for security
 RUN addgroup -g 1000 appuser && \
