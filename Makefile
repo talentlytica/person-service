@@ -1,3 +1,24 @@
+# install all dependencies required to run docker compose up
+install:
+	@echo "Checking and installing dependencies..."
+	@command -v docker >/dev/null 2>&1 || { echo "Docker is required but not installed. Visit https://docs.docker.com/get-docker/"; exit 1; }
+	@command -v docker compose >/dev/null 2>&1 || { echo "Docker Compose is required but not installed. Visit https://docs.docker.com/compose/install/"; exit 1; }
+	@command -v go >/dev/null 2>&1 || { echo "Go 1.24+ is required but not installed. Visit https://golang.org/dl/"; exit 1; }
+	@command -v node >/dev/null 2>&1 || { echo "Node.js is required but not installed. Visit https://nodejs.org/"; exit 1; }
+	@command -v npm >/dev/null 2>&1 || { echo "npm is required but not installed. Visit https://docs.npmjs.com/getting-started"; exit 1; }
+	@command -v python3 >/dev/null 2>&1 || { echo "Python3 is required but not installed. Visit https://www.python.org/downloads/"; exit 1; }
+	@echo "✓ All system dependencies are installed"
+	cd source/app && go mod download
+	cd specs && npm install
+	@echo "✓ Project dependencies installed successfully"
+	@echo ""
+	@echo "Dependencies installed:"
+	@echo "  - Docker & Docker Compose"
+	@echo "  - Go modules"
+	@echo "  - npm packages"
+	@echo ""
+	@echo "Ready to run: make build"
+
 # run rpm test from specs folder
 test:
 	make build
