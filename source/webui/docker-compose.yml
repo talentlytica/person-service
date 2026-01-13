@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  person-service:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    container_name: person-service
+    ports:
+      - "3000:3000"
+    env_file:
+      - ../.env
+    restart: unless-stopped
+
+  webui:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: person-service-webui
+    ports:
+      - "8000:80"
+    depends_on:
+      - person-service
+    restart: unless-stopped

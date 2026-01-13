@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Person Attributes UI</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Person Attributes</h1>
+    <div class="controls">
+      <input id="personId" placeholder="Person ID (UUID)" />
+      <input id="apiBase" placeholder="API base (e.g. http://localhost:8080/)" />
+      <button id="loadBtn">Load</button>
+    </div>
+
+    <div id="message" class="message"></div>
+
+    <div id="attributesSection" class="hidden">
+      <form id="createForm" class="create-form">
+        <input id="newKey" placeholder="Key" required />
+        <input id="newValue" placeholder="Value" />
+        <button type="submit">Create</button>
+      </form>
+
+      <ul id="attributesList" class="attributes"></ul>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

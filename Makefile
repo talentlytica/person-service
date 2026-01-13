@@ -58,3 +58,14 @@ serve-coverage:
 build:
 	cd source && docker compose build
 	cd specs && npm install
+
+# Start the backend and the web UI (nginx proxy) for local development
+.PHONY: webui webui-down webui-logs
+webui:
+	docker compose -f source/webui/docker-compose.yml up --build -d
+
+webui-down:
+	docker compose -f source/webui/docker-compose.yml down
+
+webui-logs:
+	docker compose -f source/webui/docker-compose.yml logs -f
