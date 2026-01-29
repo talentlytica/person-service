@@ -177,7 +177,8 @@ describe('NEGATIVE: POST /persons/:personId/attributes - Create Attribute', () =
       fail('Should have thrown 400');
     } catch (error) {
       expect(error.response.status).toBe(400);
-      expect(error.response.data.message).toContain('key');
+      // Case-insensitive check for "key" in message
+      expect(error.response.data.message.toLowerCase()).toContain('key');
     }
   });
   

@@ -18,11 +18,21 @@ class CustomReporter {
 
   onRunComplete(contexts, results) {
     const outputPath = path.join(__dirname, 'test-results.json');
-    
-    // Save test results
-    fs.writeFileSync(outputPath, JSON.stringify(results, null, 2), 'utf8');
-    
-    console.log('\n📊 Test results saved to: test-results.json');
+    const seen = new WeakSet();
+    const replacer = (key, value) => {
+      if (typeof value === 'object' && value !== null) {
+        if (seen.has(value)) return undefined;
+        seen.add(value);
+      }
+      if (key === 'req' || key === 'res' || key === 'request' || key === 'response') return undefined;
+      return value;
+    };
+    try {
+      fs.writeFileSync(outputPath, JSON.stringify(results, replacer, 2), 'utf8');
+      console.log('\n📊 Test results saved to: test-results.json');
+    } catch (err) {
+      console.warn('\n⚠️ Could not save test-results.json:', err.message);
+    }
   }
 }
 

@@ -1,14 +1,14 @@
 {
-  "numFailedTestSuites": 0,
-  "numFailedTests": 0,
-  "numPassedTestSuites": 1,
-  "numPassedTests": 5,
+  "numFailedTestSuites": 7,
+  "numFailedTests": 21,
+  "numPassedTestSuites": 16,
+  "numPassedTests": 198,
   "numPendingTestSuites": 0,
   "numPendingTests": 0,
   "numRuntimeErrorTestSuites": 0,
   "numTodoTests": 0,
-  "numTotalTestSuites": 1,
-  "numTotalTests": 5,
+  "numTotalTestSuites": 23,
+  "numTotalTests": 219,
   "openHandles": [],
   "snapshot": {
     "added": 0,
@@ -26,9 +26,2353 @@
     "unmatched": 0,
     "updated": 0
   },
-  "startTime": 1768930226109,
+  "startTime": 1769661894017,
   "success": false,
   "testResults": [
+    {
+      "leaks": false,
+      "numFailingTests": 1,
+      "numPassingTests": 7,
+      "numPendingTests": 0,
+      "numTodoTests": 0,
+      "openHandles": [],
+      "perfStats": {
+        "end": 1769661895314,
+        "runtime": 1208,
+        "slow": false,
+        "start": 1769661894106
+      },
+      "skipped": false,
+      "snapshot": {
+        "added": 0,
+        "fileDeleted": false,
+        "matched": 0,
+        "unchecked": 0,
+        "uncheckedKeys": [],
+        "unmatched": 0,
+        "updated": 0
+      },
+      "testFilePath": "C:\\RepoGit\\person-service - v2\\Test\\API_Tests\\specification_tests\\person_attributes_security_spec.test.js",
+      "testResults": [
+        {
+          "ancestorTitles": [
+            "SPECIFICATION: Person Attributes - Security & Edge Cases"
+          ],
+          "duration": 90,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "SPECIFICATION: Person Attributes - Security & Edge Cases SPEC: Should prevent SQL injection in attribute key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 6,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "SPEC: Should prevent SQL injection in attribute key"
+        },
+        {
+          "ancestorTitles": [
+            "SPECIFICATION: Person Attributes - Security & Edge Cases"
+          ],
+          "duration": 58,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "SPECIFICATION: Person Attributes - Security & Edge Cases SPEC: Should sanitize XSS payloads in values",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "SPEC: Should sanitize XSS payloads in values"
+        },
+        {
+          "ancestorTitles": [
+            "SPECIFICATION: Person Attributes - Security & Edge Cases"
+          ],
+          "duration": 8,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "SPECIFICATION: Person Attributes - Security & Edge Cases SPEC: Should handle extremely long attribute keys",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "SPEC: Should handle extremely long attribute keys"
+        },
+        {
+          "ancestorTitles": [
+            "SPECIFICATION: Person Attributes - Security & Edge Cases"
+          ],
+          "duration": 72,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "SPECIFICATION: Person Attributes - Security & Edge Cases SPEC: Should handle extremely long attribute values",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "SPEC: Should handle extremely long attribute values"
+        },
+        {
+          "ancestorTitles": [
+            "SPECIFICATION: Person Attributes - Security & Edge Cases"
+          ],
+          "duration": 121,
+          "failureDetails": [
+            {
+              "message": "Request failed with status code 500",
+              "name": "AxiosError",
+              "code": "ERR_BAD_RESPONSE",
+              "config": {
+                "transitional": {
+                  "silentJSONParsing": true,
+                  "forcedJSONParsing": true,
+                  "clarifyTimeoutError": false
+                },
+                "adapter": [
+                  "xhr",
+                  "http",
+                  "fetch"
+                ],
+                "transformRequest": [
+                  null
+                ],
+                "transformResponse": [
+                  null
+                ],
+                "timeout": 10000,
+                "xsrfCookieName": "XSRF-TOKEN",
+                "xsrfHeaderName": "X-XSRF-TOKEN",
+                "maxContentLength": -1,
+                "maxBodyLength": -1,
+                "env": {},
+                "headers": {
+                  "Accept": "application/json, text/plain, */*",
+                  "Content-Type": "application/json",
+                  "x-api-key": "person-service-key-82aca3c8-8e5d-42d4-9b00-7bc2f3077a58",
+                  "User-Agent": "axios/1.13.2",
+                  "Content-Length": "129",
+                  "Accept-Encoding": "gzip, compress, deflate, br"
+                },
+                "baseURL": "http://localhost:3000",
+                "method": "post",
+                "url": "/persons/dae3aead-26e7-4f0f-b2a0-7c26eea19b71/attributes",
+                "data": "{\"key\":\"null-byte\",\"value\":\"test\\u0000null\",\"meta\":{\"caller\":\"test\",\"reason\":\"special-char-test\",\"traceId\":\"test-1769661895158\"}}",
+                "allowAbsoluteUrls": true
+              },
+              "status": 500
+            }
+          ],
+          "failureMessages": [
+            "AxiosError: Request failed with status code 500\n    at settle (C:\\RepoGit\\person-service - v2\\Test\\node_modules\\axios\\lib\\core\\settle.js:19:12)\n    at IncomingMessage.handleStreamEnd (C:\\RepoGit\\person-service - v2\\Test\\node_modules\\axios\\lib\\adapters\\http.js:793:11)\n    at IncomingMessage.emit (node:events:530:35)\n    at endReadableNT (node:internal/streams/readable:1698:12)\n    at processTicksAndRejections (node:internal/process/task_queues:90:21)\n    at Axios.request (C:\\RepoGit\\person-service - v2\\Test\\node_modules\\axios\\lib\\core\\Axios.js:45:41)\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at Object.<anonymous> (C:\\RepoGit\\person-service - v2\\Test\\API_Tests\\specification_tests\\person_attributes_security_spec.test.js:282:24)"
+          ],
+          "fullName": "SPECIFICATION: Person Attributes - Security & Edge Cases SPEC: Should handle Unicode and special characters",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 6,
+          "retryReasons": [],
+          "status": "failed",
+          "title": "SPEC: Should handle Unicode and special characters"
+        },
+        {
+          "ancestorTitles": [
+            "SPECIFICATION: Person Attributes - Security & Edge Cases"
+          ],
+          "duration": 30,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "SPECIFICATION: Person Attributes - Security & Edge Cases SPEC: Should prevent accessing other person's attributes",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "SPEC: Should prevent accessing other person's attributes"
+        },
+        {
+          "ancestorTitles": [
+            "SPECIFICATION: Person Attributes - Security & Edge Cases"
+          ],
+          "duration": 20,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "SPECIFICATION: Person Attributes - Security & Edge Cases SPEC: Should handle duplicate attribute keys correctly",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "SPEC: Should handle duplicate attribute keys correctly"
+        },
+        {
+          "ancestorTitles": [
+            "SPECIFICATION: Person Attributes - Security & Edge Cases"
+          ],
+          "duration": 86,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "SPECIFICATION: Person Attributes - Security & Edge Cases SPEC: Should handle null and empty values appropriately",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "SPEC: Should handle null and empty values appropriately"
+        }
+      ],
+      "failureMessage": "  ● SPECIFICATION: Person Attributes - Security & Edge Cases › SPEC: Should handle Unicode and special characters\n\n    AxiosError: Request failed with status code 500\n\n      280 |       console.log(`🔵 Testing ${testCase.key}: ${testCase.value.substring(0, 20)}...`);\n      281 |       \n    > 282 |       const response = await apiClient.post(`/persons/${testPersonId}/attributes`, {\n          |                        ^\n      283 |         key: testCase.key,\n      284 |         value: testCase.value,\n      285 |         meta: {\n\n      at settle (node_modules/axios/lib/core/settle.js:19:12)\n      at IncomingMessage.handleStreamEnd (node_modules/axios/lib/adapters/http.js:793:11)\n      at Axios.request (node_modules/axios/lib/core/Axios.js:45:41)\n      at Object.<anonymous> (API_Tests/specification_tests/person_attributes_security_spec.test.js:282:24)\n"
+    },
+    {
+      "leaks": false,
+      "numFailingTests": 2,
+      "numPassingTests": 18,
+      "numPendingTests": 0,
+      "numTodoTests": 0,
+      "openHandles": [],
+      "perfStats": {
+        "end": 1769661895674,
+        "runtime": 354,
+        "slow": false,
+        "start": 1769661895320
+      },
+      "skipped": false,
+      "snapshot": {
+        "added": 0,
+        "fileDeleted": false,
+        "matched": 0,
+        "unchecked": 0,
+        "uncheckedKeys": [],
+        "unmatched": 0,
+        "updated": 0
+      },
+      "testFilePath": "C:\\RepoGit\\person-service - v2\\Test\\API_Tests\\negative_tests\\PUT_persons_personId_attributes_attributeId_negative.test.js",
+      "testResults": [
+        {
+          "ancestorTitles": [
+            "NEGATIVE: PUT /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 14,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: PUT /persons/:personId/attributes/:attributeId Should reject request without API key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject request without API key"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: PUT /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: PUT /persons/:personId/attributes/:attributeId Should reject request with invalid API key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject request with invalid API key"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: PUT /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 4,
+          "failureDetails": [
+            {
+              "matcherResult": {
+                "actual": 400,
+                "expected": 404,
+                "message": "expect(received).toBe(expected) // Object.is equality\n\nExpected: 404\nReceived: 400",
+                "name": "toBe",
+                "pass": false
+              }
+            }
+          ],
+          "failureMessages": [
+            "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 404\nReceived: 400\n    at Object.<anonymous> (C:\\RepoGit\\person-service - v2\\Test\\API_Tests\\negative_tests\\PUT_persons_personId_attributes_attributeId_negative.test.js:111:37)\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)"
+          ],
+          "fullName": "NEGATIVE: PUT /persons/:personId/attributes/:attributeId Should return 404 for non-existent personId",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "failed",
+          "title": "Should return 404 for non-existent personId"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: PUT /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 2,
+          "failureDetails": [
+            {
+              "matcherResult": {
+                "actual": 400,
+                "expected": 404,
+                "message": "expect(received).toBe(expected) // Object.is equality\n\nExpected: 404\nReceived: 400",
+                "name": "toBe",
+                "pass": false
+              }
+            }
+          ],
+          "failureMessages": [
+            "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 404\nReceived: 400\n    at Object.<anonymous> (C:\\RepoGit\\person-service - v2\\Test\\API_Tests\\negative_tests\\PUT_persons_personId_attributes_attributeId_negative.test.js:123:37)\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)"
+          ],
+          "fullName": "NEGATIVE: PUT /persons/:personId/attributes/:attributeId Should return 404 for non-existent attributeId",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "failed",
+          "title": "Should return 404 for non-existent attributeId"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: PUT /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: PUT /persons/:personId/attributes/:attributeId Should reject invalid UUID format for personId",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject invalid UUID format for personId"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: PUT /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: PUT /persons/:personId/attributes/:attributeId Should reject invalid UUID format for attributeId",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject invalid UUID format for attributeId"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: PUT /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: PUT /persons/:personId/attributes/:attributeId Should reject request without body",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject request without body"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: PUT /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: PUT /persons/:personId/attributes/:attributeId Should reject empty body",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject empty body"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: PUT /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 3,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: PUT /persons/:personId/attributes/:attributeId Should reject request without value field",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject request without value field"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: PUT /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: PUT /persons/:personId/attributes/:attributeId Should reject empty string as value",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject empty string as value"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: PUT /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 5,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: PUT /persons/:personId/attributes/:attributeId Should reject null as value",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject null as value"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: PUT /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: PUT /persons/:personId/attributes/:attributeId Should reject whitespace-only value",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject whitespace-only value"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: PUT /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: PUT /persons/:personId/attributes/:attributeId Should reject number as value",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject number as value"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: PUT /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: PUT /persons/:personId/attributes/:attributeId Should reject object as value",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject object as value"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: PUT /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: PUT /persons/:personId/attributes/:attributeId Should reject array as value",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject array as value"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: PUT /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 6,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: PUT /persons/:personId/attributes/:attributeId Should reject invalid JSON",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject invalid JSON"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: PUT /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: PUT /persons/:personId/attributes/:attributeId Should handle wrong Content-Type",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should handle wrong Content-Type"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: PUT /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 6,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: PUT /persons/:personId/attributes/:attributeId Should handle or reject extremely long value",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should handle or reject extremely long value"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: PUT /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 3,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: PUT /persons/:personId/attributes/:attributeId Should reject POST method on PUT endpoint",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject POST method on PUT endpoint"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: PUT /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: PUT /persons/:personId/attributes/:attributeId Should reject PATCH method",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject PATCH method"
+        }
+      ],
+      "failureMessage": "  ● NEGATIVE: PUT /persons/:personId/attributes/:attributeId › Should return 404 for non-existent personId\n\n    expect(received).toBe(expected) // Object.is equality\n\n    Expected: 404\n    Received: 400\n\n      109 |       fail('Should have thrown 404');\n      110 |     } catch (error) {\n    > 111 |       expect(error.response.status).toBe(404);\n          |                                     ^\n      112 |     }\n      113 |   });\n      114 |   \n\n      at Object.<anonymous> (API_Tests/negative_tests/PUT_persons_personId_attributes_attributeId_negative.test.js:111:37)\n\n  ● NEGATIVE: PUT /persons/:personId/attributes/:attributeId › Should return 404 for non-existent attributeId\n\n    expect(received).toBe(expected) // Object.is equality\n\n    Expected: 404\n    Received: 400\n\n      121 |       fail('Should have thrown 404');\n      122 |     } catch (error) {\n    > 123 |       expect(error.response.status).toBe(404);\n          |                                     ^\n      124 |     }\n      125 |   });\n      126 |   \n\n      at Object.<anonymous> (API_Tests/negative_tests/PUT_persons_personId_attributes_attributeId_negative.test.js:123:37)\n"
+    },
+    {
+      "leaks": false,
+      "numFailingTests": 3,
+      "numPassingTests": 15,
+      "numPendingTests": 0,
+      "numTodoTests": 0,
+      "openHandles": [],
+      "perfStats": {
+        "end": 1769661896060,
+        "runtime": 381,
+        "slow": false,
+        "start": 1769661895679
+      },
+      "skipped": false,
+      "snapshot": {
+        "added": 0,
+        "fileDeleted": false,
+        "matched": 0,
+        "unchecked": 0,
+        "uncheckedKeys": [],
+        "unmatched": 0,
+        "updated": 0
+      },
+      "testFilePath": "C:\\RepoGit\\person-service - v2\\Test\\API_Tests\\negative_tests\\POST_api_key-value_negative.test.js",
+      "testResults": [
+        {
+          "ancestorTitles": [
+            "NEGATIVE: POST /api/key-value - Create/Update Key-Value"
+          ],
+          "duration": 17,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: POST /api/key-value - Create/Update Key-Value Should reject request with missing key field",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject request with missing key field"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: POST /api/key-value - Create/Update Key-Value"
+          ],
+          "duration": 3,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: POST /api/key-value - Create/Update Key-Value Should reject request with missing value field",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject request with missing value field"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: POST /api/key-value - Create/Update Key-Value"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: POST /api/key-value - Create/Update Key-Value Should reject completely empty request body",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject completely empty request body"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: POST /api/key-value - Create/Update Key-Value"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: POST /api/key-value - Create/Update Key-Value Should reject empty string as key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject empty string as key"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: POST /api/key-value - Create/Update Key-Value"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: POST /api/key-value - Create/Update Key-Value Should reject empty string as value",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject empty string as value"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: POST /api/key-value - Create/Update Key-Value"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: POST /api/key-value - Create/Update Key-Value Should reject null as key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject null as key"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: POST /api/key-value - Create/Update Key-Value"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: POST /api/key-value - Create/Update Key-Value Should reject null as value",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject null as value"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: POST /api/key-value - Create/Update Key-Value"
+          ],
+          "duration": 4,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: POST /api/key-value - Create/Update Key-Value Should reject number as key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject number as key"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: POST /api/key-value - Create/Update Key-Value"
+          ],
+          "duration": 4,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: POST /api/key-value - Create/Update Key-Value Should reject object as key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject object as key"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: POST /api/key-value - Create/Update Key-Value"
+          ],
+          "duration": 3,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: POST /api/key-value - Create/Update Key-Value Should reject array as key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject array as key"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: POST /api/key-value - Create/Update Key-Value"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: POST /api/key-value - Create/Update Key-Value Should reject boolean as key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject boolean as key"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: POST /api/key-value - Create/Update Key-Value"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: POST /api/key-value - Create/Update Key-Value Should reject invalid JSON",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject invalid JSON"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: POST /api/key-value - Create/Update Key-Value"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: POST /api/key-value - Create/Update Key-Value Should reject wrong Content-Type",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject wrong Content-Type"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: POST /api/key-value - Create/Update Key-Value"
+          ],
+          "duration": 7,
+          "failureDetails": [
+            {
+              "matcherResult": {
+                "message": "expect(received).toContain(expected) // indexOf\n\nExpected value: 500\nReceived array: [400, 413]",
+                "pass": false
+              }
+            }
+          ],
+          "failureMessages": [
+            "Error: expect(received).toContain(expected) // indexOf\n\nExpected value: 500\nReceived array: [400, 413]\n    at Object.<anonymous> (C:\\RepoGit\\person-service - v2\\Test\\API_Tests\\negative_tests\\POST_api_key-value_negative.test.js:240:26)\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)"
+          ],
+          "fullName": "NEGATIVE: POST /api/key-value - Create/Update Key-Value Should handle or reject extremely long key (10KB)",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "failed",
+          "title": "Should handle or reject extremely long key (10KB)"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: POST /api/key-value - Create/Update Key-Value"
+          ],
+          "duration": 16,
+          "failureDetails": [
+            {
+              "matcherResult": {
+                "message": "expect(received).toContain(expected) // indexOf\n\nExpected value: 500\nReceived array: [400, 413]",
+                "pass": false
+              }
+            }
+          ],
+          "failureMessages": [
+            "Error: expect(received).toContain(expected) // indexOf\n\nExpected value: 500\nReceived array: [400, 413]\n    at Object.<anonymous> (C:\\RepoGit\\person-service - v2\\Test\\API_Tests\\negative_tests\\POST_api_key-value_negative.test.js:256:26)\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)"
+          ],
+          "fullName": "NEGATIVE: POST /api/key-value - Create/Update Key-Value Should handle or reject extremely long value (1MB)",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "failed",
+          "title": "Should handle or reject extremely long value (1MB)"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: POST /api/key-value - Create/Update Key-Value"
+          ],
+          "duration": 5,
+          "failureDetails": [
+            {}
+          ],
+          "failureMessages": [
+            "TypeError: Cannot read properties of undefined (reading 'status')\n    at Object.<anonymous> (C:\\RepoGit\\person-service - v2\\Test\\API_Tests\\negative_tests\\POST_api_key-value_negative.test.js:268:29)\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)"
+          ],
+          "fullName": "NEGATIVE: POST /api/key-value - Create/Update Key-Value Should reject key with only whitespace",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "failed",
+          "title": "Should reject key with only whitespace"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: POST /api/key-value - Create/Update Key-Value"
+          ],
+          "duration": 10,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: POST /api/key-value - Create/Update Key-Value Should handle or reject key with special characters",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should handle or reject key with special characters"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: POST /api/key-value - Create/Update Key-Value"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: POST /api/key-value - Create/Update Key-Value Should handle extra fields in request body",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should handle extra fields in request body"
+        }
+      ],
+      "failureMessage": "  ● NEGATIVE: POST /api/key-value - Create/Update Key-Value › Should handle or reject extremely long key (10KB)\n\n    expect(received).toContain(expected) // indexOf\n\n    Expected value: 500\n    Received array: [400, 413]\n\n      238 |     } catch (error) {\n      239 |       // Should reject with 400 or 413 (Payload Too Large)\n    > 240 |       expect([400, 413]).toContain(error.response.status);\n          |                          ^\n      241 |     }\n      242 |   });\n      243 |   \n\n      at Object.<anonymous> (API_Tests/negative_tests/POST_api_key-value_negative.test.js:240:26)\n\n  ● NEGATIVE: POST /api/key-value - Create/Update Key-Value › Should handle or reject extremely long value (1MB)\n\n    expect(received).toContain(expected) // indexOf\n\n    Expected value: 500\n    Received array: [400, 413]\n\n      254 |     } catch (error) {\n      255 |       // Should reject\n    > 256 |       expect([400, 413]).toContain(error.response.status);\n          |                          ^\n      257 |     }\n      258 |   });\n      259 |   \n\n      at Object.<anonymous> (API_Tests/negative_tests/POST_api_key-value_negative.test.js:256:26)\n\n  ● NEGATIVE: POST /api/key-value - Create/Update Key-Value › Should reject key with only whitespace\n\n    TypeError: Cannot read properties of undefined (reading 'status')\n\n      266 |       fail('Should have thrown error');\n      267 |     } catch (error) {\n    > 268 |       expect(error.response.status).toBe(400);\n          |                             ^\n      269 |     }\n      270 |   });\n      271 |   \n\n      at Object.<anonymous> (API_Tests/negative_tests/POST_api_key-value_negative.test.js:268:29)\n"
+    },
+    {
+      "leaks": false,
+      "numFailingTests": 6,
+      "numPassingTests": 13,
+      "numPendingTests": 0,
+      "numTodoTests": 0,
+      "openHandles": [],
+      "perfStats": {
+        "end": 1769661896421,
+        "runtime": 357,
+        "slow": false,
+        "start": 1769661896064
+      },
+      "skipped": false,
+      "snapshot": {
+        "added": 0,
+        "fileDeleted": false,
+        "matched": 0,
+        "unchecked": 0,
+        "uncheckedKeys": [],
+        "unmatched": 0,
+        "updated": 0
+      },
+      "testFilePath": "C:\\RepoGit\\person-service - v2\\Test\\API_Tests\\negative_tests\\DELETE_persons_personId_attributes_attributeId_negative.test.js",
+      "testResults": [
+        {
+          "ancestorTitles": [
+            "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 14,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId Should reject request without API key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject request without API key"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId Should reject request with invalid API key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject request with invalid API key"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 4,
+          "failureDetails": [
+            {
+              "matcherResult": {
+                "actual": 400,
+                "expected": 404,
+                "message": "expect(received).toBe(expected) // Object.is equality\n\nExpected: 404\nReceived: 400",
+                "name": "toBe",
+                "pass": false
+              }
+            }
+          ],
+          "failureMessages": [
+            "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 404\nReceived: 400\n    at Object.<anonymous> (C:\\RepoGit\\person-service - v2\\Test\\API_Tests\\negative_tests\\DELETE_persons_personId_attributes_attributeId_negative.test.js:107:37)\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)"
+          ],
+          "fullName": "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId Should return 404 for non-existent personId",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "failed",
+          "title": "Should return 404 for non-existent personId"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 2,
+          "failureDetails": [
+            {
+              "matcherResult": {
+                "actual": 400,
+                "expected": 404,
+                "message": "expect(received).toBe(expected) // Object.is equality\n\nExpected: 404\nReceived: 400",
+                "name": "toBe",
+                "pass": false
+              }
+            }
+          ],
+          "failureMessages": [
+            "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 404\nReceived: 400\n    at Object.<anonymous> (C:\\RepoGit\\person-service - v2\\Test\\API_Tests\\negative_tests\\DELETE_persons_personId_attributes_attributeId_negative.test.js:118:37)\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)"
+          ],
+          "fullName": "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId Should return 404 for non-existent attributeId",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "failed",
+          "title": "Should return 404 for non-existent attributeId"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 2,
+          "failureDetails": [
+            {
+              "matcherResult": {
+                "actual": 400,
+                "expected": 404,
+                "message": "expect(received).toBe(expected) // Object.is equality\n\nExpected: 404\nReceived: 400",
+                "name": "toBe",
+                "pass": false
+              }
+            }
+          ],
+          "failureMessages": [
+            "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 404\nReceived: 400\n    at Object.<anonymous> (C:\\RepoGit\\person-service - v2\\Test\\API_Tests\\negative_tests\\DELETE_persons_personId_attributes_attributeId_negative.test.js:130:37)\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)"
+          ],
+          "fullName": "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId Should handle DELETE of already deleted attribute (idempotent)",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "failed",
+          "title": "Should handle DELETE of already deleted attribute (idempotent)"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 3,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId Should reject invalid UUID format for personId",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject invalid UUID format for personId"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId Should reject invalid UUID format for attributeId",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject invalid UUID format for attributeId"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 5,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId Should reject both IDs with invalid format",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject both IDs with invalid format"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId Should reject empty personId",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject empty personId"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId Should reject empty attributeId",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject empty attributeId"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 3,
+          "failureDetails": [
+            {
+              "matcherResult": {
+                "actual": 400,
+                "expected": 404,
+                "message": "expect(received).toBe(expected) // Object.is equality\n\nExpected: 404\nReceived: 400",
+                "name": "toBe",
+                "pass": false
+              }
+            }
+          ],
+          "failureMessages": [
+            "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 404\nReceived: 400\n    at Object.<anonymous> (C:\\RepoGit\\person-service - v2\\Test\\API_Tests\\negative_tests\\DELETE_persons_personId_attributes_attributeId_negative.test.js:219:37)\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)"
+          ],
+          "fullName": "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId Should ignore request body on DELETE",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "failed",
+          "title": "Should ignore request body on DELETE"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId Should handle SQL injection in personId",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should handle SQL injection in personId"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId Should handle SQL injection in attributeId",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should handle SQL injection in attributeId"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId Should prevent path traversal",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should prevent path traversal"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId Should handle XSS payload in IDs",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should handle XSS payload in IDs"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId Should reject POST method on DELETE endpoint",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject POST method on DELETE endpoint"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId Should reject PATCH method",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject PATCH method"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 5,
+          "failureDetails": [
+            {
+              "matcherResult": {
+                "actual": 400,
+                "expected": 404,
+                "message": "expect(received).toBe(expected) // Object.is equality\n\nExpected: 404\nReceived: 400",
+                "name": "toBe",
+                "pass": false
+              }
+            }
+          ],
+          "failureMessages": [
+            "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 404\nReceived: 400\n    at C:\\RepoGit\\person-service - v2\\Test\\API_Tests\\negative_tests\\DELETE_persons_personId_attributes_attributeId_negative.test.js:314:47\n    at Array.forEach (<anonymous>)\n    at Object.<anonymous> (C:\\RepoGit\\person-service - v2\\Test\\API_Tests\\negative_tests\\DELETE_persons_personId_attributes_attributeId_negative.test.js:312:13)\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)"
+          ],
+          "fullName": "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId Should handle multiple concurrent DELETEs of same attribute",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "failed",
+          "title": "Should handle multiple concurrent DELETEs of same attribute"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 2,
+          "failureDetails": [
+            {
+              "matcherResult": {
+                "actual": 400,
+                "expected": 404,
+                "message": "expect(received).toBe(expected) // Object.is equality\n\nExpected: 404\nReceived: 400",
+                "name": "toBe",
+                "pass": false
+              }
+            }
+          ],
+          "failureMessages": [
+            "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 404\nReceived: 400\n    at Object.<anonymous> (C:\\RepoGit\\person-service - v2\\Test\\API_Tests\\negative_tests\\DELETE_persons_personId_attributes_attributeId_negative.test.js:336:37)\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)"
+          ],
+          "fullName": "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId Should ignore invalid Content-Type header on DELETE",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "failed",
+          "title": "Should ignore invalid Content-Type header on DELETE"
+        }
+      ],
+      "failureMessage": "  ● NEGATIVE: DELETE /persons/:personId/attributes/:attributeId › Should return 404 for non-existent personId\n\n    expect(received).toBe(expected) // Object.is equality\n\n    Expected: 404\n    Received: 400\n\n      105 |       fail('Should have thrown 404');\n      106 |     } catch (error) {\n    > 107 |       expect(error.response.status).toBe(404);\n          |                                     ^\n      108 |     }\n      109 |   });\n      110 |   \n\n      at Object.<anonymous> (API_Tests/negative_tests/DELETE_persons_personId_attributes_attributeId_negative.test.js:107:37)\n\n  ● NEGATIVE: DELETE /persons/:personId/attributes/:attributeId › Should return 404 for non-existent attributeId\n\n    expect(received).toBe(expected) // Object.is equality\n\n    Expected: 404\n    Received: 400\n\n      116 |       fail('Should have thrown 404');\n      117 |     } catch (error) {\n    > 118 |       expect(error.response.status).toBe(404);\n          |                                     ^\n      119 |     }\n      120 |   });\n      121 |   \n\n      at Object.<anonymous> (API_Tests/negative_tests/DELETE_persons_personId_attributes_attributeId_negative.test.js:118:37)\n\n  ● NEGATIVE: DELETE /persons/:personId/attributes/:attributeId › Should handle DELETE of already deleted attribute (idempotent)\n\n    expect(received).toBe(expected) // Object.is equality\n\n    Expected: 404\n    Received: 400\n\n      128 |       fail('Should have thrown 404');\n      129 |     } catch (error) {\n    > 130 |       expect(error.response.status).toBe(404);\n          |                                     ^\n      131 |     }\n      132 |     \n      133 |     // Second delete (still doesn't exist)\n\n      at Object.<anonymous> (API_Tests/negative_tests/DELETE_persons_personId_attributes_attributeId_negative.test.js:130:37)\n\n  ● NEGATIVE: DELETE /persons/:personId/attributes/:attributeId › Should ignore request body on DELETE\n\n    expect(received).toBe(expected) // Object.is equality\n\n    Expected: 404\n    Received: 400\n\n      217 |     } catch (error) {\n      218 |       // Body should be ignored, returns 404 because attribute doesn't exist\n    > 219 |       expect(error.response.status).toBe(404);\n          |                                     ^\n      220 |     }\n      221 |   });\n      222 |   \n\n      at Object.<anonymous> (API_Tests/negative_tests/DELETE_persons_personId_attributes_attributeId_negative.test.js:219:37)\n\n  ● NEGATIVE: DELETE /persons/:personId/attributes/:attributeId › Should handle multiple concurrent DELETEs of same attribute\n\n    expect(received).toBe(expected) // Object.is equality\n\n    Expected: 404\n    Received: 400\n\n      312 |     results.forEach(result => {\n      313 |       if (result.status === 'rejected') {\n    > 314 |         expect(result.reason.response.status).toBe(404);\n          |                                               ^\n      315 |       }\n      316 |     });\n      317 |   });\n\n      at API_Tests/negative_tests/DELETE_persons_personId_attributes_attributeId_negative.test.js:314:47\n          at Array.forEach (<anonymous>)\n      at Object.<anonymous> (API_Tests/negative_tests/DELETE_persons_personId_attributes_attributeId_negative.test.js:312:13)\n\n  ● NEGATIVE: DELETE /persons/:personId/attributes/:attributeId › Should ignore invalid Content-Type header on DELETE\n\n    expect(received).toBe(expected) // Object.is equality\n\n    Expected: 404\n    Received: 400\n\n      334 |     } catch (error) {\n      335 |       // Should ignore Content-Type, return 404 (doesn't exist)\n    > 336 |       expect(error.response.status).toBe(404);\n          |                                     ^\n      337 |     }\n      338 |   });\n      339 | });\n\n      at Object.<anonymous> (API_Tests/negative_tests/DELETE_persons_personId_attributes_attributeId_negative.test.js:336:37)\n"
+    },
+    {
+      "leaks": false,
+      "numFailingTests": 4,
+      "numPassingTests": 12,
+      "numPendingTests": 0,
+      "numTodoTests": 0,
+      "openHandles": [],
+      "perfStats": {
+        "end": 1769661896726,
+        "runtime": 301,
+        "slow": false,
+        "start": 1769661896425
+      },
+      "skipped": false,
+      "snapshot": {
+        "added": 0,
+        "fileDeleted": false,
+        "matched": 0,
+        "unchecked": 0,
+        "uncheckedKeys": [],
+        "unmatched": 0,
+        "updated": 0
+      },
+      "testFilePath": "C:\\RepoGit\\person-service - v2\\Test\\API_Tests\\negative_tests\\GET_persons_personId_attributes_attributeId_negative.test.js",
+      "testResults": [
+        {
+          "ancestorTitles": [
+            "NEGATIVE: GET /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 14,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: GET /persons/:personId/attributes/:attributeId Should reject request without API key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject request without API key"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: GET /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: GET /persons/:personId/attributes/:attributeId Should reject request with invalid API key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject request with invalid API key"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: GET /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 3,
+          "failureDetails": [
+            {
+              "matcherResult": {
+                "actual": 400,
+                "expected": 404,
+                "message": "expect(received).toBe(expected) // Object.is equality\n\nExpected: 404\nReceived: 400",
+                "name": "toBe",
+                "pass": false
+              }
+            }
+          ],
+          "failureMessages": [
+            "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 404\nReceived: 400\n    at Object.<anonymous> (C:\\RepoGit\\person-service - v2\\Test\\API_Tests\\negative_tests\\GET_persons_personId_attributes_attributeId_negative.test.js:94:37)\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)"
+          ],
+          "fullName": "NEGATIVE: GET /persons/:personId/attributes/:attributeId Should return 404 for non-existent personId",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "failed",
+          "title": "Should return 404 for non-existent personId"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: GET /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 1,
+          "failureDetails": [
+            {
+              "matcherResult": {
+                "actual": 400,
+                "expected": 404,
+                "message": "expect(received).toBe(expected) // Object.is equality\n\nExpected: 404\nReceived: 400",
+                "name": "toBe",
+                "pass": false
+              }
+            }
+          ],
+          "failureMessages": [
+            "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 404\nReceived: 400\n    at Object.<anonymous> (C:\\RepoGit\\person-service - v2\\Test\\API_Tests\\negative_tests\\GET_persons_personId_attributes_attributeId_negative.test.js:105:37)\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)"
+          ],
+          "fullName": "NEGATIVE: GET /persons/:personId/attributes/:attributeId Should return 404 for non-existent attributeId",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "failed",
+          "title": "Should return 404 for non-existent attributeId"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: GET /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 3,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: GET /persons/:personId/attributes/:attributeId Should reject invalid UUID format for personId",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject invalid UUID format for personId"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: GET /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: GET /persons/:personId/attributes/:attributeId Should reject invalid UUID format for attributeId",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject invalid UUID format for attributeId"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: GET /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: GET /persons/:personId/attributes/:attributeId Should reject both IDs with invalid format",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject both IDs with invalid format"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: GET /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: GET /persons/:personId/attributes/:attributeId Should reject empty personId",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject empty personId"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: GET /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: GET /persons/:personId/attributes/:attributeId Should reject empty attributeId",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject empty attributeId"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: GET /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: GET /persons/:personId/attributes/:attributeId Should reject POST method on GET endpoint",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject POST method on GET endpoint"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: GET /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: GET /persons/:personId/attributes/:attributeId Should reject PATCH method",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject PATCH method"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: GET /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: GET /persons/:personId/attributes/:attributeId Should handle SQL injection in personId",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should handle SQL injection in personId"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: GET /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: GET /persons/:personId/attributes/:attributeId Should handle SQL injection in attributeId",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should handle SQL injection in attributeId"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: GET /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: GET /persons/:personId/attributes/:attributeId Should prevent path traversal",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should prevent path traversal"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: GET /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 2,
+          "failureDetails": [
+            {
+              "message": "Request failed with status code 400",
+              "name": "AxiosError",
+              "code": "ERR_BAD_REQUEST",
+              "config": {
+                "transitional": {
+                  "silentJSONParsing": true,
+                  "forcedJSONParsing": true,
+                  "clarifyTimeoutError": false
+                },
+                "adapter": [
+                  "xhr",
+                  "http",
+                  "fetch"
+                ],
+                "transformRequest": [
+                  null
+                ],
+                "transformResponse": [
+                  null
+                ],
+                "timeout": 0,
+                "xsrfCookieName": "XSRF-TOKEN",
+                "xsrfHeaderName": "X-XSRF-TOKEN",
+                "maxContentLength": -1,
+                "maxBodyLength": -1,
+                "env": {},
+                "headers": {
+                  "Accept": "application/json, text/plain, */*",
+                  "Content-Type": "application/json",
+                  "x-api-key": "person-service-key-82aca3c8-8e5d-42d4-9b00-7bc2f3077a58",
+                  "User-Agent": "axios/1.13.2",
+                  "Content-Length": "21",
+                  "Accept-Encoding": "gzip, compress, deflate, br"
+                },
+                "data": "{\"unexpected\":\"body\"}",
+                "method": "get",
+                "url": "http://localhost:3000/persons/550e8400-e29b-41d4-a716-446655440000/attributes/660e8400-e29b-41d4-a716-446655440000",
+                "allowAbsoluteUrls": true
+              },
+              "status": 400
+            }
+          ],
+          "failureMessages": [
+            "AxiosError: Request failed with status code 400\n    at settle (C:\\RepoGit\\person-service - v2\\Test\\node_modules\\axios\\lib\\core\\settle.js:19:12)\n    at IncomingMessage.handleStreamEnd (C:\\RepoGit\\person-service - v2\\Test\\node_modules\\axios\\lib\\adapters\\http.js:793:11)\n    at IncomingMessage.emit (node:events:530:35)\n    at endReadableNT (node:internal/streams/readable:1698:12)\n    at processTicksAndRejections (node:internal/process/task_queues:90:21)\n    at Axios.request (C:\\RepoGit\\person-service - v2\\Test\\node_modules\\axios\\lib\\core\\Axios.js:45:41)\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at Object.<anonymous> (C:\\RepoGit\\person-service - v2\\Test\\API_Tests\\negative_tests\\GET_persons_personId_attributes_attributeId_negative.test.js:234:22)"
+          ],
+          "fullName": "NEGATIVE: GET /persons/:personId/attributes/:attributeId Should ignore request body on GET",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "failed",
+          "title": "Should ignore request body on GET"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: GET /persons/:personId/attributes/:attributeId"
+          ],
+          "duration": 7,
+          "failureDetails": [
+            {
+              "matcherResult": {
+                "message": "expect(received).toContain(expected) // indexOf\n\nExpected value: 400\nReceived array: [404, 406]",
+                "pass": false
+              }
+            }
+          ],
+          "failureMessages": [
+            "Error: expect(received).toContain(expected) // indexOf\n\nExpected value: 400\nReceived array: [404, 406]\n    at Object.<anonymous> (C:\\RepoGit\\person-service - v2\\Test\\API_Tests\\negative_tests\\GET_persons_personId_attributes_attributeId_negative.test.js:257:28)\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)"
+          ],
+          "fullName": "NEGATIVE: GET /persons/:personId/attributes/:attributeId Should handle invalid Accept header",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "failed",
+          "title": "Should handle invalid Accept header"
+        }
+      ],
+      "failureMessage": "  ● NEGATIVE: GET /persons/:personId/attributes/:attributeId › Should return 404 for non-existent personId\n\n    expect(received).toBe(expected) // Object.is equality\n\n    Expected: 404\n    Received: 400\n\n      92 |       fail('Should have thrown 404');\n      93 |     } catch (error) {\n    > 94 |       expect(error.response.status).toBe(404);\n         |                                     ^\n      95 |     }\n      96 |   });\n      97 |   \n\n      at Object.<anonymous> (API_Tests/negative_tests/GET_persons_personId_attributes_attributeId_negative.test.js:94:37)\n\n  ● NEGATIVE: GET /persons/:personId/attributes/:attributeId › Should return 404 for non-existent attributeId\n\n    expect(received).toBe(expected) // Object.is equality\n\n    Expected: 404\n    Received: 400\n\n      103 |       fail('Should have thrown 404');\n      104 |     } catch (error) {\n    > 105 |       expect(error.response.status).toBe(404);\n          |                                     ^\n      106 |     }\n      107 |   });\n      108 |   \n\n      at Object.<anonymous> (API_Tests/negative_tests/GET_persons_personId_attributes_attributeId_negative.test.js:105:37)\n\n  ● NEGATIVE: GET /persons/:personId/attributes/:attributeId › Should ignore request body on GET\n\n    AxiosError: Request failed with status code 400\n\n      232 |   \n      233 |   test('Should ignore request body on GET', async () => {\n    > 234 |     const response = await axios.get(\n          |                      ^\n      235 |       `${BASE_URL}/persons/550e8400-e29b-41d4-a716-446655440000/attributes/660e8400-e29b-41d4-a716-446655440000`,\n      236 |       {\n      237 |         headers: { 'x-api-key': API_KEY },\n\n      at settle (node_modules/axios/lib/core/settle.js:19:12)\n      at IncomingMessage.handleStreamEnd (node_modules/axios/lib/adapters/http.js:793:11)\n      at Axios.request (node_modules/axios/lib/core/Axios.js:45:41)\n      at Object.<anonymous> (API_Tests/negative_tests/GET_persons_personId_attributes_attributeId_negative.test.js:234:22)\n\n  ● NEGATIVE: GET /persons/:personId/attributes/:attributeId › Should handle invalid Accept header\n\n    expect(received).toContain(expected) // indexOf\n\n    Expected value: 400\n    Received array: [404, 406]\n\n      255 |       // May return 404 or 406\n      256 |       if (error.response) {\n    > 257 |         expect([404, 406]).toContain(error.response.status);\n          |                            ^\n      258 |       }\n      259 |     }\n      260 |   });\n\n      at Object.<anonymous> (API_Tests/negative_tests/GET_persons_personId_attributes_attributeId_negative.test.js:257:28)\n"
+    },
+    {
+      "leaks": false,
+      "numFailingTests": 4,
+      "numPassingTests": 8,
+      "numPendingTests": 0,
+      "numTodoTests": 0,
+      "openHandles": [],
+      "perfStats": {
+        "end": 1769661897023,
+        "runtime": 293,
+        "slow": false,
+        "start": 1769661896730
+      },
+      "skipped": false,
+      "snapshot": {
+        "added": 0,
+        "fileDeleted": false,
+        "matched": 0,
+        "unchecked": 0,
+        "uncheckedKeys": [],
+        "unmatched": 0,
+        "updated": 0
+      },
+      "testFilePath": "C:\\RepoGit\\person-service - v2\\Test\\API_Tests\\negative_tests\\GET_persons_personId_attributes_negative.test.js",
+      "testResults": [
+        {
+          "ancestorTitles": [
+            "NEGATIVE: GET /persons/:personId/attributes - Get All Attributes"
+          ],
+          "duration": 13,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: GET /persons/:personId/attributes - Get All Attributes Should reject request without API key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject request without API key"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: GET /persons/:personId/attributes - Get All Attributes"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: GET /persons/:personId/attributes - Get All Attributes Should reject request with invalid API key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject request with invalid API key"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: GET /persons/:personId/attributes - Get All Attributes"
+          ],
+          "duration": 2,
+          "failureDetails": [
+            {
+              "message": "Request failed with status code 404",
+              "name": "AxiosError",
+              "code": "ERR_BAD_REQUEST",
+              "config": {
+                "transitional": {
+                  "silentJSONParsing": true,
+                  "forcedJSONParsing": true,
+                  "clarifyTimeoutError": false
+                },
+                "adapter": [
+                  "xhr",
+                  "http",
+                  "fetch"
+                ],
+                "transformRequest": [
+                  null
+                ],
+                "transformResponse": [
+                  null
+                ],
+                "timeout": 10000,
+                "xsrfCookieName": "XSRF-TOKEN",
+                "xsrfHeaderName": "X-XSRF-TOKEN",
+                "maxContentLength": -1,
+                "maxBodyLength": -1,
+                "env": {},
+                "headers": {
+                  "Accept": "application/json, text/plain, */*",
+                  "x-api-key": "person-service-key-82aca3c8-8e5d-42d4-9b00-7bc2f3077a58",
+                  "User-Agent": "axios/1.13.2",
+                  "Accept-Encoding": "gzip, compress, deflate, br"
+                },
+                "baseURL": "http://localhost:3000",
+                "method": "get",
+                "url": "/persons/00000000-0000-0000-0000-000000000000/attributes",
+                "allowAbsoluteUrls": true
+              },
+              "status": 404
+            }
+          ],
+          "failureMessages": [
+            "AxiosError: Request failed with status code 404\n    at settle (C:\\RepoGit\\person-service - v2\\Test\\node_modules\\axios\\lib\\core\\settle.js:19:12)\n    at IncomingMessage.handleStreamEnd (C:\\RepoGit\\person-service - v2\\Test\\node_modules\\axios\\lib\\adapters\\http.js:793:11)\n    at IncomingMessage.emit (node:events:530:35)\n    at endReadableNT (node:internal/streams/readable:1698:12)\n    at processTicksAndRejections (node:internal/process/task_queues:90:21)\n    at Axios.request (C:\\RepoGit\\person-service - v2\\Test\\node_modules\\axios\\lib\\core\\Axios.js:45:41)\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at Object.<anonymous> (C:\\RepoGit\\person-service - v2\\Test\\API_Tests\\negative_tests\\GET_persons_personId_attributes_negative.test.js:84:22)"
+          ],
+          "fullName": "NEGATIVE: GET /persons/:personId/attributes - Get All Attributes Should return empty or 404 for non-existent personId",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "failed",
+          "title": "Should return empty or 404 for non-existent personId"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: GET /persons/:personId/attributes - Get All Attributes"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: GET /persons/:personId/attributes - Get All Attributes Should reject invalid UUID format for personId",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject invalid UUID format for personId"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: GET /persons/:personId/attributes - Get All Attributes"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: GET /persons/:personId/attributes - Get All Attributes Should reject empty personId",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject empty personId"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: GET /persons/:personId/attributes - Get All Attributes"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: GET /persons/:personId/attributes - Get All Attributes Should reject personId with special characters",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject personId with special characters"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: GET /persons/:personId/attributes - Get All Attributes"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: GET /persons/:personId/attributes - Get All Attributes Should reject DELETE method on GET endpoint",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject DELETE method on GET endpoint"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: GET /persons/:personId/attributes - Get All Attributes"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: GET /persons/:personId/attributes - Get All Attributes Should reject PATCH method",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject PATCH method"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: GET /persons/:personId/attributes - Get All Attributes"
+          ],
+          "duration": 3,
+          "failureDetails": [
+            {
+              "message": "Request failed with status code 404",
+              "name": "AxiosError",
+              "code": "ERR_BAD_REQUEST",
+              "config": {
+                "transitional": {
+                  "silentJSONParsing": true,
+                  "forcedJSONParsing": true,
+                  "clarifyTimeoutError": false
+                },
+                "adapter": [
+                  "xhr",
+                  "http",
+                  "fetch"
+                ],
+                "transformRequest": [
+                  null
+                ],
+                "transformResponse": [
+                  null
+                ],
+                "timeout": 0,
+                "xsrfCookieName": "XSRF-TOKEN",
+                "xsrfHeaderName": "X-XSRF-TOKEN",
+                "maxContentLength": -1,
+                "maxBodyLength": -1,
+                "env": {},
+                "headers": {
+                  "Accept": "application/json, text/plain, */*",
+                  "Content-Type": "application/json",
+                  "x-api-key": "person-service-key-82aca3c8-8e5d-42d4-9b00-7bc2f3077a58",
+                  "User-Agent": "axios/1.13.2",
+                  "Content-Length": "21",
+                  "Accept-Encoding": "gzip, compress, deflate, br"
+                },
+                "data": "{\"unexpected\":\"body\"}",
+                "method": "get",
+                "url": "http://localhost:3000/persons/550e8400-e29b-41d4-a716-446655440000/attributes",
+                "allowAbsoluteUrls": true
+              },
+              "status": 404
+            }
+          ],
+          "failureMessages": [
+            "AxiosError: Request failed with status code 404\n    at settle (C:\\RepoGit\\person-service - v2\\Test\\node_modules\\axios\\lib\\core\\settle.js:19:12)\n    at IncomingMessage.handleStreamEnd (C:\\RepoGit\\person-service - v2\\Test\\node_modules\\axios\\lib\\adapters\\http.js:793:11)\n    at IncomingMessage.emit (node:events:530:35)\n    at endReadableNT (node:internal/streams/readable:1698:12)\n    at processTicksAndRejections (node:internal/process/task_queues:90:21)\n    at Axios.request (C:\\RepoGit\\person-service - v2\\Test\\node_modules\\axios\\lib\\core\\Axios.js:45:41)\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at Object.<anonymous> (C:\\RepoGit\\person-service - v2\\Test\\API_Tests\\negative_tests\\GET_persons_personId_attributes_negative.test.js:150:22)"
+          ],
+          "fullName": "NEGATIVE: GET /persons/:personId/attributes - Get All Attributes Should reject request with body (GET should not have body)",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "failed",
+          "title": "Should reject request with body (GET should not have body)"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: GET /persons/:personId/attributes - Get All Attributes"
+          ],
+          "duration": 2,
+          "failureDetails": [
+            {
+              "message": "Request failed with status code 404",
+              "name": "AxiosError",
+              "code": "ERR_BAD_REQUEST",
+              "config": {
+                "transitional": {
+                  "silentJSONParsing": true,
+                  "forcedJSONParsing": true,
+                  "clarifyTimeoutError": false
+                },
+                "adapter": [
+                  "xhr",
+                  "http",
+                  "fetch"
+                ],
+                "transformRequest": [
+                  null
+                ],
+                "transformResponse": [
+                  null
+                ],
+                "timeout": 10000,
+                "xsrfCookieName": "XSRF-TOKEN",
+                "xsrfHeaderName": "X-XSRF-TOKEN",
+                "maxContentLength": -1,
+                "maxBodyLength": -1,
+                "env": {},
+                "headers": {
+                  "Accept": "application/xml",
+                  "x-api-key": "person-service-key-82aca3c8-8e5d-42d4-9b00-7bc2f3077a58",
+                  "User-Agent": "axios/1.13.2",
+                  "Accept-Encoding": "gzip, compress, deflate, br"
+                },
+                "baseURL": "http://localhost:3000",
+                "method": "get",
+                "url": "/persons/550e8400-e29b-41d4-a716-446655440000/attributes",
+                "allowAbsoluteUrls": true
+              },
+              "status": 404
+            }
+          ],
+          "failureMessages": [
+            "AxiosError: Request failed with status code 404\n    at settle (C:\\RepoGit\\person-service - v2\\Test\\node_modules\\axios\\lib\\core\\settle.js:19:12)\n    at IncomingMessage.handleStreamEnd (C:\\RepoGit\\person-service - v2\\Test\\node_modules\\axios\\lib\\adapters\\http.js:793:11)\n    at IncomingMessage.emit (node:events:530:35)\n    at endReadableNT (node:internal/streams/readable:1698:12)\n    at processTicksAndRejections (node:internal/process/task_queues:90:21)\n    at Axios.request (C:\\RepoGit\\person-service - v2\\Test\\node_modules\\axios\\lib\\core\\Axios.js:45:41)\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at Object.<anonymous> (C:\\RepoGit\\person-service - v2\\Test\\API_Tests\\negative_tests\\GET_persons_personId_attributes_negative.test.js:163:22)"
+          ],
+          "fullName": "NEGATIVE: GET /persons/:personId/attributes - Get All Attributes Should handle invalid Accept header",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "failed",
+          "title": "Should handle invalid Accept header"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: GET /persons/:personId/attributes - Get All Attributes"
+          ],
+          "duration": 2,
+          "failureDetails": [
+            {
+              "message": "Request failed with status code 404",
+              "name": "AxiosError",
+              "code": "ERR_BAD_REQUEST",
+              "config": {
+                "transitional": {
+                  "silentJSONParsing": true,
+                  "forcedJSONParsing": true,
+                  "clarifyTimeoutError": false
+                },
+                "adapter": [
+                  "xhr",
+                  "http",
+                  "fetch"
+                ],
+                "transformRequest": [
+                  null
+                ],
+                "transformResponse": [
+                  null
+                ],
+                "timeout": 10000,
+                "xsrfCookieName": "XSRF-TOKEN",
+                "xsrfHeaderName": "X-XSRF-TOKEN",
+                "maxContentLength": -1,
+                "maxBodyLength": -1,
+                "env": {},
+                "headers": {
+                  "Accept": "application/json, text/plain, */*",
+                  "x-api-key": "person-service-key-82aca3c8-8e5d-42d4-9b00-7bc2f3077a58",
+                  "User-Agent": "axios/1.13.2",
+                  "Accept-Encoding": "gzip, compress, deflate, br"
+                },
+                "baseURL": "http://localhost:3000",
+                "method": "get",
+                "url": "/persons/550e8400-e29b-41d4-a716-446655440000/attributes?invalid=param&foo=bar",
+                "allowAbsoluteUrls": true
+              },
+              "status": 404
+            }
+          ],
+          "failureMessages": [
+            "AxiosError: Request failed with status code 404\n    at settle (C:\\RepoGit\\person-service - v2\\Test\\node_modules\\axios\\lib\\core\\settle.js:19:12)\n    at IncomingMessage.handleStreamEnd (C:\\RepoGit\\person-service - v2\\Test\\node_modules\\axios\\lib\\adapters\\http.js:793:11)\n    at IncomingMessage.emit (node:events:530:35)\n    at endReadableNT (node:internal/streams/readable:1698:12)\n    at processTicksAndRejections (node:internal/process/task_queues:90:21)\n    at Axios.request (C:\\RepoGit\\person-service - v2\\Test\\node_modules\\axios\\lib\\core\\Axios.js:45:41)\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at Object.<anonymous> (C:\\RepoGit\\person-service - v2\\Test\\API_Tests\\negative_tests\\GET_persons_personId_attributes_negative.test.js:179:22)"
+          ],
+          "fullName": "NEGATIVE: GET /persons/:personId/attributes - Get All Attributes Should ignore invalid query parameters",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "failed",
+          "title": "Should ignore invalid query parameters"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: GET /persons/:personId/attributes - Get All Attributes"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: GET /persons/:personId/attributes - Get All Attributes Should prevent path traversal in personId",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should prevent path traversal in personId"
+        }
+      ],
+      "failureMessage": "  ● NEGATIVE: GET /persons/:personId/attributes - Get All Attributes › Should return empty or 404 for non-existent personId\n\n    AxiosError: Request failed with status code 404\n\n      82 |   \n      83 |   test('Should return empty or 404 for non-existent personId', async () => {\n    > 84 |     const response = await apiClient.get('/persons/00000000-0000-0000-0000-000000000000/attributes');\n         |                      ^\n      85 |     \n      86 |     if (response.status === 200) {\n      87 |       // Returns empty array\n\n      at settle (node_modules/axios/lib/core/settle.js:19:12)\n      at IncomingMessage.handleStreamEnd (node_modules/axios/lib/adapters/http.js:793:11)\n      at Axios.request (node_modules/axios/lib/core/Axios.js:45:41)\n      at Object.<anonymous> (API_Tests/negative_tests/GET_persons_personId_attributes_negative.test.js:84:22)\n\n  ● NEGATIVE: GET /persons/:personId/attributes - Get All Attributes › Should reject request with body (GET should not have body)\n\n    AxiosError: Request failed with status code 404\n\n      148 |   \n      149 |   test('Should reject request with body (GET should not have body)', async () => {\n    > 150 |     const response = await axios.get(\n          |                      ^\n      151 |       `${BASE_URL}/persons/550e8400-e29b-41d4-a716-446655440000/attributes`,\n      152 |       {\n      153 |         headers: { 'x-api-key': API_KEY },\n\n      at settle (node_modules/axios/lib/core/settle.js:19:12)\n      at IncomingMessage.handleStreamEnd (node_modules/axios/lib/adapters/http.js:793:11)\n      at Axios.request (node_modules/axios/lib/core/Axios.js:45:41)\n      at Object.<anonymous> (API_Tests/negative_tests/GET_persons_personId_attributes_negative.test.js:150:22)\n\n  ● NEGATIVE: GET /persons/:personId/attributes - Get All Attributes › Should handle invalid Accept header\n\n    AxiosError: Request failed with status code 404\n\n      161 |   \n      162 |   test('Should handle invalid Accept header', async () => {\n    > 163 |     const response = await apiClient.get(\n          |                      ^\n      164 |       '/persons/550e8400-e29b-41d4-a716-446655440000/attributes',\n      165 |       {\n      166 |         headers: { 'Accept': 'application/xml' }\n\n      at settle (node_modules/axios/lib/core/settle.js:19:12)\n      at IncomingMessage.handleStreamEnd (node_modules/axios/lib/adapters/http.js:793:11)\n      at Axios.request (node_modules/axios/lib/core/Axios.js:45:41)\n      at Object.<anonymous> (API_Tests/negative_tests/GET_persons_personId_attributes_negative.test.js:163:22)\n\n  ● NEGATIVE: GET /persons/:personId/attributes - Get All Attributes › Should ignore invalid query parameters\n\n    AxiosError: Request failed with status code 404\n\n      177 |   \n      178 |   test('Should ignore invalid query parameters', async () => {\n    > 179 |     const response = await apiClient.get(\n          |                      ^\n      180 |       '/persons/550e8400-e29b-41d4-a716-446655440000/attributes?invalid=param&foo=bar'\n      181 |     );\n      182 |     \n\n      at settle (node_modules/axios/lib/core/settle.js:19:12)\n      at IncomingMessage.handleStreamEnd (node_modules/axios/lib/adapters/http.js:793:11)\n      at Axios.request (node_modules/axios/lib/core/Axios.js:45:41)\n      at Object.<anonymous> (API_Tests/negative_tests/GET_persons_personId_attributes_negative.test.js:179:22)\n"
+    },
+    {
+      "leaks": false,
+      "numFailingTests": 1,
+      "numPassingTests": 13,
+      "numPendingTests": 0,
+      "numTodoTests": 0,
+      "openHandles": [],
+      "perfStats": {
+        "end": 1769661897251,
+        "runtime": 224,
+        "slow": false,
+        "start": 1769661897027
+      },
+      "skipped": false,
+      "snapshot": {
+        "added": 0,
+        "fileDeleted": false,
+        "matched": 0,
+        "unchecked": 0,
+        "uncheckedKeys": [],
+        "unmatched": 0,
+        "updated": 0
+      },
+      "testFilePath": "C:\\RepoGit\\person-service - v2\\Test\\API_Tests\\negative_tests\\GET_api_key-value_key_negative.test.js",
+      "testResults": [
+        {
+          "ancestorTitles": [
+            "NEGATIVE: GET /api/key-value/:key - Retrieve Value"
+          ],
+          "duration": 14,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: GET /api/key-value/:key - Retrieve Value Should return 404 for non-existent key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should return 404 for non-existent key"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: GET /api/key-value/:key - Retrieve Value"
+          ],
+          "duration": 3,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: GET /api/key-value/:key - Retrieve Value Should return 404 for random UUID as key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should return 404 for random UUID as key"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: GET /api/key-value/:key - Retrieve Value"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: GET /api/key-value/:key - Retrieve Value Should reject empty key parameter",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject empty key parameter"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: GET /api/key-value/:key - Retrieve Value"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: GET /api/key-value/:key - Retrieve Value Should handle URL-encoded special characters in key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should handle URL-encoded special characters in key"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: GET /api/key-value/:key - Retrieve Value"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: GET /api/key-value/:key - Retrieve Value Should handle key with slashes (path traversal attempt)",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should handle key with slashes (path traversal attempt)"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: GET /api/key-value/:key - Retrieve Value"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: GET /api/key-value/:key - Retrieve Value Should reject PUT method on GET endpoint",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject PUT method on GET endpoint"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: GET /api/key-value/:key - Retrieve Value"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: GET /api/key-value/:key - Retrieve Value Should reject POST method on GET endpoint",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject POST method on GET endpoint"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: GET /api/key-value/:key - Retrieve Value"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: GET /api/key-value/:key - Retrieve Value Should handle invalid Accept header",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should handle invalid Accept header"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: GET /api/key-value/:key - Retrieve Value"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: GET /api/key-value/:key - Retrieve Value Should reject request with body (GET should not have body)",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject request with body (GET should not have body)"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: GET /api/key-value/:key - Retrieve Value"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: GET /api/key-value/:key - Retrieve Value Should ignore query parameters on GET",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should ignore query parameters on GET"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: GET /api/key-value/:key - Retrieve Value"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: GET /api/key-value/:key - Retrieve Value Should handle or reject key with SQL injection pattern",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should handle or reject key with SQL injection pattern"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: GET /api/key-value/:key - Retrieve Value"
+          ],
+          "duration": 5,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: GET /api/key-value/:key - Retrieve Value Should handle key with null byte",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should handle key with null byte"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: GET /api/key-value/:key - Retrieve Value"
+          ],
+          "duration": 5,
+          "failureDetails": [
+            {
+              "matcherResult": {
+                "message": "expect(received).toContain(expected) // indexOf\n\nExpected value: 500\nReceived array: [400, 404, 414]",
+                "pass": false
+              }
+            }
+          ],
+          "failureMessages": [
+            "Error: expect(received).toContain(expected) // indexOf\n\nExpected value: 500\nReceived array: [400, 404, 414]\n    at Object.<anonymous> (C:\\RepoGit\\person-service - v2\\Test\\API_Tests\\negative_tests\\GET_api_key-value_key_negative.test.js:179:31)\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)"
+          ],
+          "fullName": "NEGATIVE: GET /api/key-value/:key - Retrieve Value Should handle very long key in URL",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "failed",
+          "title": "Should handle very long key in URL"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: GET /api/key-value/:key - Retrieve Value"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: GET /api/key-value/:key - Retrieve Value Should handle case sensitivity in key lookup",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should handle case sensitivity in key lookup"
+        }
+      ],
+      "failureMessage": "  ● NEGATIVE: GET /api/key-value/:key - Retrieve Value › Should handle very long key in URL\n\n    expect(received).toContain(expected) // indexOf\n\n    Expected value: 500\n    Received array: [400, 404, 414]\n\n      177 |     } catch (error) {\n      178 |       // Should reject or return 404\n    > 179 |       expect([400, 404, 414]).toContain(error.response.status);\n          |                               ^\n      180 |     }\n      181 |   });\n      182 |   \n\n      at Object.<anonymous> (API_Tests/negative_tests/GET_api_key-value_key_negative.test.js:179:31)\n"
+    },
+    {
+      "leaks": false,
+      "numFailingTests": 0,
+      "numPassingTests": 6,
+      "numPendingTests": 0,
+      "numTodoTests": 0,
+      "openHandles": [],
+      "perfStats": {
+        "end": 1769661898675,
+        "runtime": 1420,
+        "slow": false,
+        "start": 1769661897255
+      },
+      "skipped": false,
+      "snapshot": {
+        "added": 0,
+        "fileDeleted": false,
+        "matched": 0,
+        "unchecked": 0,
+        "uncheckedKeys": [],
+        "unmatched": 0,
+        "updated": 0
+      },
+      "testFilePath": "C:\\RepoGit\\person-service - v2\\Test\\API_Tests\\specification_tests\\person_attributes_business_spec.test.js",
+      "testResults": [
+        {
+          "ancestorTitles": [
+            "SPECIFICATION: Person Attributes - Business Logic"
+          ],
+          "duration": 33,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "SPECIFICATION: Person Attributes - Business Logic SPEC: Should create audit trail for all operations",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "SPEC: Should create audit trail for all operations"
+        },
+        {
+          "ancestorTitles": [
+            "SPECIFICATION: Person Attributes - Business Logic"
+          ],
+          "duration": 46,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "SPECIFICATION: Person Attributes - Business Logic SPEC: Should handle concurrent updates gracefully",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "SPEC: Should handle concurrent updates gracefully"
+        },
+        {
+          "ancestorTitles": [
+            "SPECIFICATION: Person Attributes - Business Logic"
+          ],
+          "duration": 26,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "SPECIFICATION: Person Attributes - Business Logic SPEC: Should cascade delete attributes when person is deleted",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "SPEC: Should cascade delete attributes when person is deleted"
+        },
+        {
+          "ancestorTitles": [
+            "SPECIFICATION: Person Attributes - Business Logic"
+          ],
+          "duration": 1032,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "SPECIFICATION: Person Attributes - Business Logic SPEC: Should maintain consistent timestamps",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 4,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "SPEC: Should maintain consistent timestamps"
+        },
+        {
+          "ancestorTitles": [
+            "SPECIFICATION: Person Attributes - Business Logic"
+          ],
+          "duration": 11,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "SPECIFICATION: Person Attributes - Business Logic SPEC: Should maintain data integrity on failures",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "SPEC: Should maintain data integrity on failures"
+        },
+        {
+          "ancestorTitles": [
+            "SPECIFICATION: Person Attributes - Business Logic"
+          ],
+          "duration": 19,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "SPECIFICATION: Person Attributes - Business Logic SPEC: Should enforce attribute key uniqueness per person",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "SPEC: Should enforce attribute key uniqueness per person"
+        }
+      ],
+      "failureMessage": null
+    },
     {
       "leaks": false,
       "numFailingTests": 0,
@@ -37,10 +2381,1917 @@
       "numTodoTests": 0,
       "openHandles": [],
       "perfStats": {
-        "end": 1768930226844,
-        "runtime": 641,
+        "end": 1769661899179,
+        "runtime": 500,
         "slow": false,
-        "start": 1768930226203
+        "start": 1769661898679
+      },
+      "skipped": false,
+      "snapshot": {
+        "added": 0,
+        "fileDeleted": false,
+        "matched": 0,
+        "unchecked": 0,
+        "uncheckedKeys": [],
+        "unmatched": 0,
+        "updated": 0
+      },
+      "testFilePath": "C:\\RepoGit\\person-service - v2\\Test\\API_Tests\\comprehensive_tests\\person_attributes_full_verification.test.js",
+      "testResults": [
+        {
+          "ancestorTitles": [
+            "Person Attributes API - Full Verification with Encryption"
+          ],
+          "duration": 35,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Person Attributes API - Full Verification with Encryption 1. CREATE attribute via API and verify ENCRYPTION in database",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 9,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "1. CREATE attribute via API and verify ENCRYPTION in database"
+        },
+        {
+          "ancestorTitles": [
+            "Person Attributes API - Full Verification with Encryption"
+          ],
+          "duration": 20,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Person Attributes API - Full Verification with Encryption 2. GET attribute via API and verify DECRYPTION",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 6,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "2. GET attribute via API and verify DECRYPTION"
+        },
+        {
+          "ancestorTitles": [
+            "Person Attributes API - Full Verification with Encryption"
+          ],
+          "duration": 20,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Person Attributes API - Full Verification with Encryption 3. UPDATE attribute and verify RE-ENCRYPTION in database",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 4,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "3. UPDATE attribute and verify RE-ENCRYPTION in database"
+        },
+        {
+          "ancestorTitles": [
+            "Person Attributes API - Full Verification with Encryption"
+          ],
+          "duration": 25,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Person Attributes API - Full Verification with Encryption 4. DELETE attribute and verify complete removal from database",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 4,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "4. DELETE attribute and verify complete removal from database"
+        },
+        {
+          "ancestorTitles": [
+            "Person Attributes API - Full Verification with Encryption"
+          ],
+          "duration": 30,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Person Attributes API - Full Verification with Encryption 5. FULL CRUD LIFECYCLE with encryption at each step",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 3,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "5. FULL CRUD LIFECYCLE with encryption at each step"
+        }
+      ],
+      "failureMessage": null
+    },
+    {
+      "leaks": false,
+      "numFailingTests": 0,
+      "numPassingTests": 22,
+      "numPendingTests": 0,
+      "numTodoTests": 0,
+      "openHandles": [],
+      "perfStats": {
+        "end": 1769661899616,
+        "runtime": 433,
+        "slow": false,
+        "start": 1769661899183
+      },
+      "skipped": false,
+      "snapshot": {
+        "added": 0,
+        "fileDeleted": false,
+        "matched": 0,
+        "unchecked": 0,
+        "uncheckedKeys": [],
+        "unmatched": 0,
+        "updated": 0
+      },
+      "testFilePath": "C:\\RepoGit\\person-service - v2\\Test\\API_Tests\\negative_tests\\POST_persons_personId_attributes_negative.test.js",
+      "testResults": [
+        {
+          "ancestorTitles": [
+            "NEGATIVE: POST /persons/:personId/attributes - Create Attribute"
+          ],
+          "duration": 16,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: POST /persons/:personId/attributes - Create Attribute Should reject request without API key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject request without API key"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: POST /persons/:personId/attributes - Create Attribute"
+          ],
+          "duration": 3,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: POST /persons/:personId/attributes - Create Attribute Should reject request with invalid API key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject request with invalid API key"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: POST /persons/:personId/attributes - Create Attribute"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: POST /persons/:personId/attributes - Create Attribute Should reject request with expired/wrong format API key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject request with expired/wrong format API key"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: POST /persons/:personId/attributes - Create Attribute"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: POST /persons/:personId/attributes - Create Attribute Should reject request with non-existent personId",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject request with non-existent personId"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: POST /persons/:personId/attributes - Create Attribute"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: POST /persons/:personId/attributes - Create Attribute Should reject request with invalid UUID format for personId",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject request with invalid UUID format for personId"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: POST /persons/:personId/attributes - Create Attribute"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: POST /persons/:personId/attributes - Create Attribute Should reject request with empty personId",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject request with empty personId"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: POST /persons/:personId/attributes - Create Attribute"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: POST /persons/:personId/attributes - Create Attribute Should reject request without key field",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject request without key field"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: POST /persons/:personId/attributes - Create Attribute"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: POST /persons/:personId/attributes - Create Attribute Should reject request without meta field",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject request without meta field"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: POST /persons/:personId/attributes - Create Attribute"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: POST /persons/:personId/attributes - Create Attribute Should reject request with empty meta object",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject request with empty meta object"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: POST /persons/:personId/attributes - Create Attribute"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: POST /persons/:personId/attributes - Create Attribute Should reject request without entire body",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject request without entire body"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: POST /persons/:personId/attributes - Create Attribute"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: POST /persons/:personId/attributes - Create Attribute Should reject empty string as key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject empty string as key"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: POST /persons/:personId/attributes - Create Attribute"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: POST /persons/:personId/attributes - Create Attribute Should reject null as key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject null as key"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: POST /persons/:personId/attributes - Create Attribute"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: POST /persons/:personId/attributes - Create Attribute Should reject whitespace-only key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject whitespace-only key"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: POST /persons/:personId/attributes - Create Attribute"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: POST /persons/:personId/attributes - Create Attribute Should reject number as key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject number as key"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: POST /persons/:personId/attributes - Create Attribute"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: POST /persons/:personId/attributes - Create Attribute Should reject object as key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject object as key"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: POST /persons/:personId/attributes - Create Attribute"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: POST /persons/:personId/attributes - Create Attribute Should reject array as value",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject array as value"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: POST /persons/:personId/attributes - Create Attribute"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: POST /persons/:personId/attributes - Create Attribute Should reject invalid JSON",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject invalid JSON"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: POST /persons/:personId/attributes - Create Attribute"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: POST /persons/:personId/attributes - Create Attribute Should reject wrong Content-Type",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject wrong Content-Type"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: POST /persons/:personId/attributes - Create Attribute"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: POST /persons/:personId/attributes - Create Attribute Should handle or reject extremely long key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should handle or reject extremely long key"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: POST /persons/:personId/attributes - Create Attribute"
+          ],
+          "duration": 89,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: POST /persons/:personId/attributes - Create Attribute Should handle or reject extremely long value",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should handle or reject extremely long value"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: POST /persons/:personId/attributes - Create Attribute"
+          ],
+          "duration": 19,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: POST /persons/:personId/attributes - Create Attribute Should reject GET method on POST endpoint",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject GET method on POST endpoint"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: POST /persons/:personId/attributes - Create Attribute"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: POST /persons/:personId/attributes - Create Attribute Should reject PATCH method",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject PATCH method"
+        }
+      ],
+      "failureMessage": null
+    },
+    {
+      "leaks": false,
+      "numFailingTests": 0,
+      "numPassingTests": 5,
+      "numPendingTests": 0,
+      "numTodoTests": 0,
+      "openHandles": [],
+      "perfStats": {
+        "end": 1769661899991,
+        "runtime": 371,
+        "slow": false,
+        "start": 1769661899620
+      },
+      "skipped": false,
+      "snapshot": {
+        "added": 0,
+        "fileDeleted": false,
+        "matched": 0,
+        "unchecked": 0,
+        "uncheckedKeys": [],
+        "unmatched": 0,
+        "updated": 0
+      },
+      "testFilePath": "C:\\RepoGit\\person-service - v2\\Test\\API_Tests\\comprehensive_tests\\key_value_full_verification.test.js",
+      "testResults": [
+        {
+          "ancestorTitles": [
+            "Key-Value API - Full CRUD with Database Verification"
+          ],
+          "duration": 31,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Key-Value API - Full CRUD with Database Verification 1. CREATE key-value via API and verify in database",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 10,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "1. CREATE key-value via API and verify in database"
+        },
+        {
+          "ancestorTitles": [
+            "Key-Value API - Full CRUD with Database Verification"
+          ],
+          "duration": 15,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Key-Value API - Full CRUD with Database Verification 2. GET key-value via API and verify response matches database",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 5,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "2. GET key-value via API and verify response matches database"
+        },
+        {
+          "ancestorTitles": [
+            "Key-Value API - Full CRUD with Database Verification"
+          ],
+          "duration": 12,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Key-Value API - Full CRUD with Database Verification 3. UPDATE key-value via API and verify in database",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 5,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "3. UPDATE key-value via API and verify in database"
+        },
+        {
+          "ancestorTitles": [
+            "Key-Value API - Full CRUD with Database Verification"
+          ],
+          "duration": 20,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Key-Value API - Full CRUD with Database Verification 4. DELETE key-value via API and verify removal from database",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 4,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "4. DELETE key-value via API and verify removal from database"
+        },
+        {
+          "ancestorTitles": [
+            "Key-Value API - Full CRUD with Database Verification"
+          ],
+          "duration": 25,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Key-Value API - Full CRUD with Database Verification 5. FULL CRUD LIFECYCLE with step-by-step database verification",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 6,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "5. FULL CRUD LIFECYCLE with step-by-step database verification"
+        }
+      ],
+      "failureMessage": null
+    },
+    {
+      "leaks": false,
+      "numFailingTests": 0,
+      "numPassingTests": 5,
+      "numPendingTests": 0,
+      "numTodoTests": 0,
+      "openHandles": [],
+      "perfStats": {
+        "end": 1769661900345,
+        "runtime": 351,
+        "slow": false,
+        "start": 1769661899994
+      },
+      "skipped": false,
+      "snapshot": {
+        "added": 0,
+        "fileDeleted": false,
+        "matched": 0,
+        "unchecked": 0,
+        "uncheckedKeys": [],
+        "unmatched": 0,
+        "updated": 0
+      },
+      "testFilePath": "C:\\RepoGit\\person-service - v2\\Test\\API_Tests\\tests\\DELETE_persons_personId_attributes_attributeId.test.js",
+      "testResults": [
+        {
+          "ancestorTitles": [
+            "DELETE /persons/:personId/attributes/:attributeId - Delete Attribute"
+          ],
+          "duration": 18,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "DELETE /persons/:personId/attributes/:attributeId - Delete Attribute Delete an existing attribute",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Delete an existing attribute"
+        },
+        {
+          "ancestorTitles": [
+            "DELETE /persons/:personId/attributes/:attributeId - Delete Attribute"
+          ],
+          "duration": 12,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "DELETE /persons/:personId/attributes/:attributeId - Delete Attribute Verify attribute is deleted from database",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Verify attribute is deleted from database"
+        },
+        {
+          "ancestorTitles": [
+            "DELETE /persons/:personId/attributes/:attributeId - Delete Attribute"
+          ],
+          "duration": 3,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "DELETE /persons/:personId/attributes/:attributeId - Delete Attribute Delete non-existent attribute",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Delete non-existent attribute"
+        },
+        {
+          "ancestorTitles": [
+            "DELETE /persons/:personId/attributes/:attributeId - Delete Attribute"
+          ],
+          "duration": 6,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "DELETE /persons/:personId/attributes/:attributeId - Delete Attribute Delete without API key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Delete without API key"
+        },
+        {
+          "ancestorTitles": [
+            "DELETE /persons/:personId/attributes/:attributeId - Delete Attribute"
+          ],
+          "duration": 20,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "DELETE /persons/:personId/attributes/:attributeId - Delete Attribute Full CRUD lifecycle",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 7,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Full CRUD lifecycle"
+        }
+      ],
+      "failureMessage": null
+    },
+    {
+      "leaks": false,
+      "numFailingTests": 0,
+      "numPassingTests": 6,
+      "numPendingTests": 0,
+      "numTodoTests": 0,
+      "openHandles": [],
+      "perfStats": {
+        "end": 1769661900771,
+        "runtime": 422,
+        "slow": false,
+        "start": 1769661900349
+      },
+      "skipped": false,
+      "snapshot": {
+        "added": 0,
+        "fileDeleted": false,
+        "matched": 0,
+        "unchecked": 0,
+        "uncheckedKeys": [],
+        "unmatched": 0,
+        "updated": 0
+      },
+      "testFilePath": "C:\\RepoGit\\person-service - v2\\Test\\API_Tests\\tests\\DELETE_api_key-value_key.test.js",
+      "testResults": [
+        {
+          "ancestorTitles": [
+            "DELETE /api/key-value/:key - Delete Key-Value"
+          ],
+          "duration": 15,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "DELETE /api/key-value/:key - Delete Key-Value Delete an existing key-value pair",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Delete an existing key-value pair"
+        },
+        {
+          "ancestorTitles": [
+            "DELETE /api/key-value/:key - Delete Key-Value"
+          ],
+          "duration": 9,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "DELETE /api/key-value/:key - Delete Key-Value Verify key is deleted from database",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Verify key is deleted from database"
+        },
+        {
+          "ancestorTitles": [
+            "DELETE /api/key-value/:key - Delete Key-Value"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "DELETE /api/key-value/:key - Delete Key-Value Delete non-existent key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Delete non-existent key"
+        },
+        {
+          "ancestorTitles": [
+            "DELETE /api/key-value/:key - Delete Key-Value"
+          ],
+          "duration": 5,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "DELETE /api/key-value/:key - Delete Key-Value Delete same key twice",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Delete same key twice"
+        },
+        {
+          "ancestorTitles": [
+            "DELETE /api/key-value/:key - Delete Key-Value"
+          ],
+          "duration": 10,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "DELETE /api/key-value/:key - Delete Key-Value Delete multiple keys sequentially",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 4,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Delete multiple keys sequentially"
+        },
+        {
+          "ancestorTitles": [
+            "DELETE /api/key-value/:key - Delete Key-Value"
+          ],
+          "duration": 9,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "DELETE /api/key-value/:key - Delete Key-Value CRUD lifecycle",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 7,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "CRUD lifecycle"
+        }
+      ],
+      "failureMessage": null
+    },
+    {
+      "leaks": false,
+      "numFailingTests": 0,
+      "numPassingTests": 6,
+      "numPendingTests": 0,
+      "numTodoTests": 0,
+      "openHandles": [],
+      "perfStats": {
+        "end": 1769661901094,
+        "runtime": 320,
+        "slow": false,
+        "start": 1769661900774
+      },
+      "skipped": false,
+      "snapshot": {
+        "added": 0,
+        "fileDeleted": false,
+        "matched": 0,
+        "unchecked": 0,
+        "uncheckedKeys": [],
+        "unmatched": 0,
+        "updated": 0
+      },
+      "testFilePath": "C:\\RepoGit\\person-service - v2\\Test\\API_Tests\\tests\\PUT_persons_personId_attributes.test.js",
+      "testResults": [
+        {
+          "ancestorTitles": [
+            "PUT /persons/:personId/attributes - Create/Update Single Attribute"
+          ],
+          "duration": 18,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PUT /persons/:personId/attributes - Create/Update Single Attribute Create/update attribute using PUT",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 3,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Create/update attribute using PUT"
+        },
+        {
+          "ancestorTitles": [
+            "PUT /persons/:personId/attributes - Create/Update Single Attribute"
+          ],
+          "duration": 11,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PUT /persons/:personId/attributes - Create/Update Single Attribute Update existing attribute using PUT",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Update existing attribute using PUT"
+        },
+        {
+          "ancestorTitles": [
+            "PUT /persons/:personId/attributes - Create/Update Single Attribute"
+          ],
+          "duration": 6,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PUT /persons/:personId/attributes - Create/Update Single Attribute PUT creates new attribute if not exists",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 3,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "PUT creates new attribute if not exists"
+        },
+        {
+          "ancestorTitles": [
+            "PUT /persons/:personId/attributes - Create/Update Single Attribute"
+          ],
+          "duration": 6,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PUT /persons/:personId/attributes - Create/Update Single Attribute PUT without API key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "PUT without API key"
+        },
+        {
+          "ancestorTitles": [
+            "PUT /persons/:personId/attributes - Create/Update Single Attribute"
+          ],
+          "duration": 3,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PUT /persons/:personId/attributes - Create/Update Single Attribute PUT without meta",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "PUT without meta"
+        },
+        {
+          "ancestorTitles": [
+            "PUT /persons/:personId/attributes - Create/Update Single Attribute"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PUT /persons/:personId/attributes - Create/Update Single Attribute PUT with empty key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "PUT with empty key"
+        }
+      ],
+      "failureMessage": null
+    },
+    {
+      "leaks": false,
+      "numFailingTests": 0,
+      "numPassingTests": 4,
+      "numPendingTests": 0,
+      "numTodoTests": 0,
+      "openHandles": [],
+      "perfStats": {
+        "end": 1769661901390,
+        "runtime": 292,
+        "slow": false,
+        "start": 1769661901098
+      },
+      "skipped": false,
+      "snapshot": {
+        "added": 0,
+        "fileDeleted": false,
+        "matched": 0,
+        "unchecked": 0,
+        "uncheckedKeys": [],
+        "unmatched": 0,
+        "updated": 0
+      },
+      "testFilePath": "C:\\RepoGit\\person-service - v2\\Test\\API_Tests\\tests\\PUT_persons_personId_attributes_attributeId.test.js",
+      "testResults": [
+        {
+          "ancestorTitles": [
+            "PUT /persons/:personId/attributes/:attributeId - Update Attribute"
+          ],
+          "duration": 20,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PUT /persons/:personId/attributes/:attributeId - Update Attribute Update attribute value only",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Update attribute value only"
+        },
+        {
+          "ancestorTitles": [
+            "PUT /persons/:personId/attributes/:attributeId - Update Attribute"
+          ],
+          "duration": 5,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PUT /persons/:personId/attributes/:attributeId - Update Attribute Update non-existent attribute",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Update non-existent attribute"
+        },
+        {
+          "ancestorTitles": [
+            "PUT /persons/:personId/attributes/:attributeId - Update Attribute"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PUT /persons/:personId/attributes/:attributeId - Update Attribute Update without API key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Update without API key"
+        },
+        {
+          "ancestorTitles": [
+            "PUT /persons/:personId/attributes/:attributeId - Update Attribute"
+          ],
+          "duration": 6,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PUT /persons/:personId/attributes/:attributeId - Update Attribute Update without meta information (meta is optional for UPDATE)",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Update without meta information (meta is optional for UPDATE)"
+        }
+      ],
+      "failureMessage": null
+    },
+    {
+      "leaks": false,
+      "numFailingTests": 0,
+      "numPassingTests": 8,
+      "numPendingTests": 0,
+      "numTodoTests": 0,
+      "openHandles": [],
+      "perfStats": {
+        "end": 1769661901706,
+        "runtime": 312,
+        "slow": false,
+        "start": 1769661901394
+      },
+      "skipped": false,
+      "snapshot": {
+        "added": 0,
+        "fileDeleted": false,
+        "matched": 0,
+        "unchecked": 0,
+        "uncheckedKeys": [],
+        "unmatched": 0,
+        "updated": 0
+      },
+      "testFilePath": "C:\\RepoGit\\person-service - v2\\Test\\API_Tests\\tests\\POST_api_key-value.test.js",
+      "testResults": [
+        {
+          "ancestorTitles": [
+            "POST /api/key-value - Create/Update Key-Value"
+          ],
+          "duration": 13,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "POST /api/key-value - Create/Update Key-Value Create a new key-value pair",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 5,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Create a new key-value pair"
+        },
+        {
+          "ancestorTitles": [
+            "POST /api/key-value - Create/Update Key-Value"
+          ],
+          "duration": 4,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "POST /api/key-value - Create/Update Key-Value Update an existing key-value pair",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Update an existing key-value pair"
+        },
+        {
+          "ancestorTitles": [
+            "POST /api/key-value - Create/Update Key-Value"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "POST /api/key-value - Create/Update Key-Value Create key-value with special characters",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Create key-value with special characters"
+        },
+        {
+          "ancestorTitles": [
+            "POST /api/key-value - Create/Update Key-Value"
+          ],
+          "duration": 6,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "POST /api/key-value - Create/Update Key-Value Missing required field - key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Missing required field - key"
+        },
+        {
+          "ancestorTitles": [
+            "POST /api/key-value - Create/Update Key-Value"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "POST /api/key-value - Create/Update Key-Value Missing required field - value",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Missing required field - value"
+        },
+        {
+          "ancestorTitles": [
+            "POST /api/key-value - Create/Update Key-Value"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "POST /api/key-value - Create/Update Key-Value Empty key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Empty key"
+        },
+        {
+          "ancestorTitles": [
+            "POST /api/key-value - Create/Update Key-Value"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "POST /api/key-value - Create/Update Key-Value Empty value",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Empty value"
+        },
+        {
+          "ancestorTitles": [
+            "POST /api/key-value - Create/Update Key-Value"
+          ],
+          "duration": 5,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "POST /api/key-value - Create/Update Key-Value Create multiple key-value pairs",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 3,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Create multiple key-value pairs"
+        }
+      ],
+      "failureMessage": null
+    },
+    {
+      "leaks": false,
+      "numFailingTests": 0,
+      "numPassingTests": 3,
+      "numPendingTests": 0,
+      "numTodoTests": 0,
+      "openHandles": [],
+      "perfStats": {
+        "end": 1769661902016,
+        "runtime": 306,
+        "slow": false,
+        "start": 1769661901710
+      },
+      "skipped": false,
+      "snapshot": {
+        "added": 0,
+        "fileDeleted": false,
+        "matched": 0,
+        "unchecked": 0,
+        "uncheckedKeys": [],
+        "unmatched": 0,
+        "updated": 0
+      },
+      "testFilePath": "C:\\RepoGit\\person-service - v2\\Test\\API_Tests\\tests\\GET_persons_personId_attributes.test.js",
+      "testResults": [
+        {
+          "ancestorTitles": [
+            "GET /persons/:personId/attributes - Get All Attributes"
+          ],
+          "duration": 24,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "GET /persons/:personId/attributes - Get All Attributes Get all attributes for person with multiple attributes",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 3,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Get all attributes for person with multiple attributes"
+        },
+        {
+          "ancestorTitles": [
+            "GET /persons/:personId/attributes - Get All Attributes"
+          ],
+          "duration": 5,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "GET /persons/:personId/attributes - Get All Attributes Get attributes without API key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Get attributes without API key"
+        },
+        {
+          "ancestorTitles": [
+            "GET /persons/:personId/attributes - Get All Attributes"
+          ],
+          "duration": 5,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "GET /persons/:personId/attributes - Get All Attributes Verify all attributes are decrypted",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 7,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Verify all attributes are decrypted"
+        }
+      ],
+      "failureMessage": null
+    },
+    {
+      "leaks": false,
+      "numFailingTests": 0,
+      "numPassingTests": 6,
+      "numPendingTests": 0,
+      "numTodoTests": 0,
+      "openHandles": [],
+      "perfStats": {
+        "end": 1769661902331,
+        "runtime": 311,
+        "slow": false,
+        "start": 1769661902020
+      },
+      "skipped": false,
+      "snapshot": {
+        "added": 0,
+        "fileDeleted": false,
+        "matched": 0,
+        "unchecked": 0,
+        "uncheckedKeys": [],
+        "unmatched": 0,
+        "updated": 0
+      },
+      "testFilePath": "C:\\RepoGit\\person-service - v2\\Test\\API_Tests\\tests\\GET_api_key-value_key.test.js",
+      "testResults": [
+        {
+          "ancestorTitles": [
+            "GET /api/key-value/:key - Retrieve Value"
+          ],
+          "duration": 15,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "GET /api/key-value/:key - Retrieve Value Get an existing key-value pair",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 5,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Get an existing key-value pair"
+        },
+        {
+          "ancestorTitles": [
+            "GET /api/key-value/:key - Retrieve Value"
+          ],
+          "duration": 5,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "GET /api/key-value/:key - Retrieve Value Get non-existent key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Get non-existent key"
+        },
+        {
+          "ancestorTitles": [
+            "GET /api/key-value/:key - Retrieve Value"
+          ],
+          "duration": 5,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "GET /api/key-value/:key - Retrieve Value Get key with special characters",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Get key with special characters"
+        },
+        {
+          "ancestorTitles": [
+            "GET /api/key-value/:key - Retrieve Value"
+          ],
+          "duration": 4,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "GET /api/key-value/:key - Retrieve Value Get key returns latest value after update",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Get key returns latest value after update"
+        },
+        {
+          "ancestorTitles": [
+            "GET /api/key-value/:key - Retrieve Value"
+          ],
+          "duration": 6,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "GET /api/key-value/:key - Retrieve Value Get multiple different keys",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 3,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Get multiple different keys"
+        },
+        {
+          "ancestorTitles": [
+            "GET /api/key-value/:key - Retrieve Value"
+          ],
+          "duration": 3,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "GET /api/key-value/:key - Retrieve Value Verify timestamps are valid",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 4,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Verify timestamps are valid"
+        }
+      ],
+      "failureMessage": null
+    },
+    {
+      "leaks": false,
+      "numFailingTests": 0,
+      "numPassingTests": 5,
+      "numPendingTests": 0,
+      "numTodoTests": 0,
+      "openHandles": [],
+      "perfStats": {
+        "end": 1769661902750,
+        "runtime": 416,
+        "slow": false,
+        "start": 1769661902334
+      },
+      "skipped": false,
+      "snapshot": {
+        "added": 0,
+        "fileDeleted": false,
+        "matched": 0,
+        "unchecked": 0,
+        "uncheckedKeys": [],
+        "unmatched": 0,
+        "updated": 0
+      },
+      "testFilePath": "C:\\RepoGit\\person-service - v2\\Test\\API_Tests\\tests\\GET_persons_personId_attributes_attributeId.test.js",
+      "testResults": [
+        {
+          "ancestorTitles": [
+            "GET /persons/:personId/attributes/:attributeId - Get Single Attribute"
+          ],
+          "duration": 4,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "GET /persons/:personId/attributes/:attributeId - Get Single Attribute Get existing attribute by ID",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 4,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Get existing attribute by ID"
+        },
+        {
+          "ancestorTitles": [
+            "GET /persons/:personId/attributes/:attributeId - Get Single Attribute"
+          ],
+          "duration": 7,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "GET /persons/:personId/attributes/:attributeId - Get Single Attribute Get non-existent attribute",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Get non-existent attribute"
+        },
+        {
+          "ancestorTitles": [
+            "GET /persons/:personId/attributes/:attributeId - Get Single Attribute"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "GET /persons/:personId/attributes/:attributeId - Get Single Attribute Get attribute without API key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Get attribute without API key"
+        },
+        {
+          "ancestorTitles": [
+            "GET /persons/:personId/attributes/:attributeId - Get Single Attribute"
+          ],
+          "duration": 3,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "GET /persons/:personId/attributes/:attributeId - Get Single Attribute Verify attribute value is decrypted",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 3,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Verify attribute value is decrypted"
+        },
+        {
+          "ancestorTitles": [
+            "GET /persons/:personId/attributes/:attributeId - Get Single Attribute"
+          ],
+          "duration": 3,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "GET /persons/:personId/attributes/:attributeId - Get Single Attribute Verify response includes all fields",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 6,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Verify response includes all fields"
+        }
+      ],
+      "failureMessage": null
+    },
+    {
+      "leaks": false,
+      "numFailingTests": 0,
+      "numPassingTests": 5,
+      "numPendingTests": 0,
+      "numTodoTests": 0,
+      "openHandles": [],
+      "perfStats": {
+        "end": 1769661903041,
+        "runtime": 287,
+        "slow": false,
+        "start": 1769661902754
+      },
+      "skipped": false,
+      "snapshot": {
+        "added": 0,
+        "fileDeleted": false,
+        "matched": 0,
+        "unchecked": 0,
+        "uncheckedKeys": [],
+        "unmatched": 0,
+        "updated": 0
+      },
+      "testFilePath": "C:\\RepoGit\\person-service - v2\\Test\\API_Tests\\tests\\POST_persons_personId_attributes.test.js",
+      "testResults": [
+        {
+          "ancestorTitles": [
+            "POST /persons/:personId/attributes - Create Attribute"
+          ],
+          "duration": 14,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "POST /persons/:personId/attributes - Create Attribute Create a single attribute",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 4,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Create a single attribute"
+        },
+        {
+          "ancestorTitles": [
+            "POST /persons/:personId/attributes - Create Attribute"
+          ],
+          "duration": 5,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "POST /persons/:personId/attributes - Create Attribute Create attribute without API key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Create attribute without API key"
+        },
+        {
+          "ancestorTitles": [
+            "POST /persons/:personId/attributes - Create Attribute"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "POST /persons/:personId/attributes - Create Attribute Create attribute with invalid API key format",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Create attribute with invalid API key format"
+        },
+        {
+          "ancestorTitles": [
+            "POST /persons/:personId/attributes - Create Attribute"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "POST /persons/:personId/attributes - Create Attribute Create attribute without meta information",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Create attribute without meta information"
+        },
+        {
+          "ancestorTitles": [
+            "POST /persons/:personId/attributes - Create Attribute"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "POST /persons/:personId/attributes - Create Attribute Create attribute without key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Create attribute without key"
+        }
+      ],
+      "failureMessage": null
+    },
+    {
+      "leaks": false,
+      "numFailingTests": 0,
+      "numPassingTests": 15,
+      "numPendingTests": 0,
+      "numTodoTests": 0,
+      "openHandles": [],
+      "perfStats": {
+        "end": 1769661903268,
+        "runtime": 224,
+        "slow": false,
+        "start": 1769661903044
+      },
+      "skipped": false,
+      "snapshot": {
+        "added": 0,
+        "fileDeleted": false,
+        "matched": 0,
+        "unchecked": 0,
+        "uncheckedKeys": [],
+        "unmatched": 0,
+        "updated": 0
+      },
+      "testFilePath": "C:\\RepoGit\\person-service - v2\\Test\\API_Tests\\negative_tests\\DELETE_api_key-value_key_negative.test.js",
+      "testResults": [
+        {
+          "ancestorTitles": [
+            "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value"
+          ],
+          "duration": 11,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value Should handle DELETE of non-existent key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should handle DELETE of non-existent key"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value"
+          ],
+          "duration": 5,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value Should handle DELETE of already deleted key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should handle DELETE of already deleted key"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value"
+          ],
+          "duration": 5,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value Should reject DELETE with empty key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject DELETE with empty key"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value Should reject DELETE with whitespace-only key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject DELETE with whitespace-only key"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value Should reject GET on DELETE endpoint",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject GET on DELETE endpoint"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value Should reject PATCH method",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject PATCH method"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value Should ignore request body on DELETE",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should ignore request body on DELETE"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value"
+          ],
+          "duration": 3,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value Should handle DELETE with SQL injection pattern in key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should handle DELETE with SQL injection pattern in key"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value Should handle DELETE with path traversal attempt",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should handle DELETE with path traversal attempt"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value Should handle DELETE with XSS payload in key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should handle DELETE with XSS payload in key"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value"
+          ],
+          "duration": 5,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value Should handle multiple concurrent DELETEs of same key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 5,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should handle multiple concurrent DELETEs of same key"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value Should ignore invalid Content-Type header on DELETE",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should ignore invalid Content-Type header on DELETE"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value Should handle DELETE without Accept header",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should handle DELETE without Accept header"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value Should handle URL-encoded key in DELETE",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should handle URL-encoded key in DELETE"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value Should handle special URL characters",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should handle special URL characters"
+        }
+      ],
+      "failureMessage": null
+    },
+    {
+      "leaks": false,
+      "numFailingTests": 0,
+      "numPassingTests": 6,
+      "numPendingTests": 0,
+      "numTodoTests": 0,
+      "openHandles": [],
+      "perfStats": {
+        "end": 1769661903487,
+        "runtime": 216,
+        "slow": false,
+        "start": 1769661903271
+      },
+      "skipped": false,
+      "snapshot": {
+        "added": 0,
+        "fileDeleted": false,
+        "matched": 0,
+        "unchecked": 0,
+        "uncheckedKeys": [],
+        "unmatched": 0,
+        "updated": 0
+      },
+      "testFilePath": "C:\\RepoGit\\person-service - v2\\Test\\API_Tests\\tests\\GET_health.test.js",
+      "testResults": [
+        {
+          "ancestorTitles": [
+            "GET /health - Health Check API"
+          ],
+          "duration": 12,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "GET /health - Health Check API Health endpoint returns 200 OK",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Health endpoint returns 200 OK"
+        },
+        {
+          "ancestorTitles": [
+            "GET /health - Health Check API"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "GET /health - Health Check API Health response contains status field",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Health response contains status field"
+        },
+        {
+          "ancestorTitles": [
+            "GET /health - Health Check API"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "GET /health - Health Check API Health response is valid JSON",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Health response is valid JSON"
+        },
+        {
+          "ancestorTitles": [
+            "GET /health - Health Check API"
+          ],
+          "duration": 3,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "GET /health - Health Check API Health check responds within acceptable time",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Health check responds within acceptable time"
+        },
+        {
+          "ancestorTitles": [
+            "GET /health - Health Check API"
+          ],
+          "duration": 8,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "GET /health - Health Check API Multiple health checks are consistent",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 10,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Multiple health checks are consistent"
+        },
+        {
+          "ancestorTitles": [
+            "GET /health - Health Check API"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "GET /health - Health Check API Health check does not timeout",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Health check does not timeout"
+        }
+      ],
+      "failureMessage": null
+    },
+    {
+      "leaks": false,
+      "numFailingTests": 0,
+      "numPassingTests": 5,
+      "numPendingTests": 0,
+      "numTodoTests": 0,
+      "openHandles": [],
+      "perfStats": {
+        "end": 1769661903696,
+        "runtime": 205,
+        "slow": false,
+        "start": 1769661903491
       },
       "skipped": false,
       "snapshot": {
@@ -58,7 +4309,7 @@
           "ancestorTitles": [
             "NEGATIVE: GET /health - Health Check Endpoint"
           ],
-          "duration": 56,
+          "duration": 13,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: GET /health - Health Check Endpoint Should handle invalid HTTP method (POST instead of GET)",
@@ -73,7 +4324,7 @@
           "ancestorTitles": [
             "NEGATIVE: GET /health - Health Check Endpoint"
           ],
-          "duration": 3,
+          "duration": 2,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: GET /health - Health Check Endpoint Should handle invalid path (/healths instead of /health)",
@@ -88,7 +4339,7 @@
           "ancestorTitles": [
             "NEGATIVE: GET /health - Health Check Endpoint"
           ],
-          "duration": 5,
+          "duration": 2,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: GET /health - Health Check Endpoint Should handle path with query parameters",
@@ -103,7 +4354,7 @@
           "ancestorTitles": [
             "NEGATIVE: GET /health - Health Check Endpoint"
           ],
-          "duration": 2,
+          "duration": 1,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: GET /health - Health Check Endpoint Should handle excessive request timeout",
@@ -118,7 +4369,7 @@
           "ancestorTitles": [
             "NEGATIVE: GET /health - Health Check Endpoint"
           ],
-          "duration": 2,
+          "duration": 1,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: GET /health - Health Check Endpoint Should handle malformed Accept header",
