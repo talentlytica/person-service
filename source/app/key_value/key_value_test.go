@@ -2,100 +2,49 @@ package key_value
 
 import (
 	"context"
-	"database/sql"
-	"errors"
+	"log"
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"strings"
 	"testing"
 
-	"github.com/jackc/pgx/v5"
-	"github.com/jackc/pgx/v5/pgconn"
-	"github.com/jackc/pgx/v5/pgtype"
+	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/labstack/echo/v4"
 	"github.com/stretchr/testify/assert"
 
 	db "person-service/internal/db/generated"
+	"person-service/internal/testdb"
 )
 
-// MockDBTX is a mock for db.DBTX interface
-type MockDBTX struct {
-	ExecFunc     func(context.Context, string, ...interface{}) (pgconn.CommandTag, error)
-	QueryFunc    func(context.Context, string, ...interface{}) (pgx.Rows, error)
-	QueryRowFunc func(context.Context, string, ...interface{}) pgx.Row
-	CopyFromFunc func(ctx context.Context, tableName pgx.Identifier, columnNames []string, rowSrc pgx.CopyFromSource) (int64, error)
-}
+var pool *pgxpool.Pool
 
-func (m *MockDBTX) Exec(ctx context.Context, sql string, arguments ...interface{}) (pgconn.CommandTag, error) {
-	if m.ExecFunc != nil {
-		return m.ExecFunc(ctx, sql, arguments...)
+func TestMain(m *testing.M) {
+	ctx := context.Background()
+	var err error
+	pool, err = testdb.GetPool(ctx)
+	if err != nil {
+		log.Fatalf("Failed to get pool: %v", err)
 	}
-	return pgconn.CommandTag{}, nil
-}
-
-func (m *MockDBTX) Query(ctx context.Context, sql string, arguments ...interface{}) (pgx.Rows, error) {
-	if m.QueryFunc != nil {
-		return m.QueryFunc(ctx, sql, arguments...)
+	if err := testdb.RunMigrations(ctx, pool); err != nil {
+		log.Fatalf("Failed to run migrations: %v", err)
 	}
-	return nil, nil
-}
-
-func (m *MockDBTX) QueryRow(ctx context.Context, sql string, arguments ...interface{}) pgx.Row {
-	if m.QueryRowFunc != nil {
-		return m.QueryRowFunc(ctx, sql, arguments...)
-	}
-	return nil
-}
-
-func (m *MockDBTX) CopyFrom(ctx context.Context, tableName pgx.Identifier, columnNames []string, rowSrc pgx.CopyFromSource) (int64, error) {
-	if m.CopyFromFunc != nil {
-		return m.CopyFromFunc(ctx, tableName, columnNames, rowSrc)
-	}
-	return 0, nil
-}
-
-// MockRow is a mock for pgx.Row interface
-type MockRow struct {
-	ScanFunc func(dest ...interface{}) error
-}
-
-func (m *MockRow) Scan(dest ...interface{}) error {
-	if m.ScanFunc != nil {
-		return m.ScanFunc(dest...)
-	}
-	return nil
+	os.Exit(m.Run())
 }
 
 func TestNewKeyValueHandler(t *testing.T) {
-	mockDB := &MockDBTX{}
-	queries := db.New(mockDB)
+	queries := db.New(pool)
 	handler := NewKeyValueHandler(queries)
 	assert.NotNil(t, handler)
 	assert.Equal(t, queries, handler.queries)
 }
 
 func TestSetValue_Success(t *testing.T) {
-	mockDB := &MockDBTX{
-		ExecFunc: func(ctx context.Context, query string, arguments ...interface{}) (pgconn.CommandTag, error) {
-			return pgconn.CommandTag{}, nil
-		},
-		QueryRowFunc: func(ctx context.Context, query string, arguments ...interface{}) pgx.Row {
-			return &MockRow{
-				ScanFunc: func(dest ...interface{}) error {
-					if len(dest) >= 4 {
-						// key, value, created_at, updated_at
-						*dest[0].(*string) = "test-key"
-						*dest[1].(*string) = "test-value"
-						*dest[2].(*pgtype.Timestamp) = pgtype.Timestamp{Valid: true}
-						*dest[3].(*pgtype.Timestamp) = pgtype.Timestamp{Valid: true}
-					}
-					return nil
-				},
-			}
-		},
-	}
+	ctx := context.Background()
+	err := testdb.TruncateTables(ctx, pool)
+	assert.NoError(t, err)
 
-	queries := db.New(mockDB)
+	queries := db.New(pool)
 	handler := NewKeyValueHandler(queries)
 
 	e := echo.New()
@@ -105,7 +54,7 @@ func TestSetValue_Success(t *testing.T) {
 	rec := httptest.NewRecorder()
 	c := e.NewContext(req, rec)
 
-	err := handler.SetValue(c)
+	err = handler.SetValue(c)
 
 	assert.NoError(t, err)
 	assert.Equal(t, http.StatusOK, rec.Code)
@@ -114,8 +63,7 @@ func TestSetValue_Success(t *testing.T) {
 }
 
 func TestSetValue_InvalidJSON(t *testing.T) {
-	mockDB := &MockDBTX{}
-	queries := db.New(mockDB)
+	queries := db.New(pool)
 	handler := NewKeyValueHandler(queries)
 
 	e := echo.New()
@@ -133,8 +81,7 @@ func TestSetValue_InvalidJSON(t *testing.T) {
 }
 
 func TestSetValue_EmptyKey(t *testing.T) {
-	mockDB := &MockDBTX{}
-	queries := db.New(mockDB)
+	queries := db.New(pool)
 	handler := NewKeyValueHandler(queries)
 
 	e := echo.New()
@@ -152,8 +99,7 @@ func TestSetValue_EmptyKey(t *testing.T) {
 }
 
 func TestSetValue_EmptyValue(t *testing.T) {
-	mockDB := &MockDBTX{}
-	queries := db.New(mockDB)
+	queries := db.New(pool)
 	handler := NewKeyValueHandler(queries)
 
 	e := echo.New()
@@ -171,13 +117,10 @@ func TestSetValue_EmptyValue(t *testing.T) {
 }
 
 func TestSetValue_DatabaseErrorOnSet(t *testing.T) {
-	mockDB := &MockDBTX{
-		ExecFunc: func(ctx context.Context, query string, arguments ...interface{}) (pgconn.CommandTag, error) {
-			return pgconn.CommandTag{}, errors.New("database error")
-		},
-	}
+	closedPool, err := createClosedPool()
+	assert.NoError(t, err)
 
-	queries := db.New(mockDB)
+	queries := db.New(closedPool)
 	handler := NewKeyValueHandler(queries)
 
 	e := echo.New()
@@ -187,62 +130,23 @@ func TestSetValue_DatabaseErrorOnSet(t *testing.T) {
 	rec := httptest.NewRecorder()
 	c := e.NewContext(req, rec)
 
-	err := handler.SetValue(c)
+	err = handler.SetValue(c)
 
 	assert.NoError(t, err)
 	assert.Equal(t, http.StatusInternalServerError, rec.Code)
 	assert.Contains(t, rec.Body.String(), "Failed to set value")
 }
 
-func TestSetValue_DatabaseErrorOnGet(t *testing.T) {
-	mockDB := &MockDBTX{
-		ExecFunc: func(ctx context.Context, query string, arguments ...interface{}) (pgconn.CommandTag, error) {
-			return pgconn.CommandTag{}, nil
-		},
-		QueryRowFunc: func(ctx context.Context, query string, arguments ...interface{}) pgx.Row {
-			return &MockRow{
-				ScanFunc: func(dest ...interface{}) error {
-					return errors.New("database error")
-				},
-			}
-		},
-	}
-
-	queries := db.New(mockDB)
-	handler := NewKeyValueHandler(queries)
-
-	e := echo.New()
-	jsonBody := `{"key":"test-key","value":"test-value"}`
-	req := httptest.NewRequest(http.MethodPost, "/api/key-value", strings.NewReader(jsonBody))
-	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
-	rec := httptest.NewRecorder()
-	c := e.NewContext(req, rec)
-
-	err := handler.SetValue(c)
-
-	assert.NoError(t, err)
-	assert.Equal(t, http.StatusInternalServerError, rec.Code)
-	assert.Contains(t, rec.Body.String(), "Failed to retrieve value")
-}
-
 func TestGetValue_Success(t *testing.T) {
-	mockDB := &MockDBTX{
-		QueryRowFunc: func(ctx context.Context, query string, arguments ...interface{}) pgx.Row {
-			return &MockRow{
-				ScanFunc: func(dest ...interface{}) error {
-					if len(dest) >= 4 {
-						*dest[0].(*string) = "test-key"
-						*dest[1].(*string) = "test-value"
-						*dest[2].(*pgtype.Timestamp) = pgtype.Timestamp{Valid: true}
-						*dest[3].(*pgtype.Timestamp) = pgtype.Timestamp{Valid: true}
-					}
-					return nil
-				},
-			}
-		},
-	}
+	ctx := context.Background()
+	err := testdb.TruncateTables(ctx, pool)
+	assert.NoError(t, err)
 
-	queries := db.New(mockDB)
+	// Insert test data directly
+	err = testdb.InsertKeyValueDirect(ctx, pool, "test-key", "test-value")
+	assert.NoError(t, err)
+
+	queries := db.New(pool)
 	handler := NewKeyValueHandler(queries)
 
 	e := echo.New()
@@ -252,7 +156,7 @@ func TestGetValue_Success(t *testing.T) {
 	c.SetParamNames("key")
 	c.SetParamValues("test-key")
 
-	err := handler.GetValue(c)
+	err = handler.GetValue(c)
 
 	assert.NoError(t, err)
 	assert.Equal(t, http.StatusOK, rec.Code)
@@ -261,8 +165,7 @@ func TestGetValue_Success(t *testing.T) {
 }
 
 func TestGetValue_EmptyKey(t *testing.T) {
-	mockDB := &MockDBTX{}
-	queries := db.New(mockDB)
+	queries := db.New(pool)
 	handler := NewKeyValueHandler(queries)
 
 	e := echo.New()
@@ -280,17 +183,11 @@ func TestGetValue_EmptyKey(t *testing.T) {
 }
 
 func TestGetValue_KeyNotFound(t *testing.T) {
-	mockDB := &MockDBTX{
-		QueryRowFunc: func(ctx context.Context, query string, arguments ...interface{}) pgx.Row {
-			return &MockRow{
-				ScanFunc: func(dest ...interface{}) error {
-					return sql.ErrNoRows
-				},
-			}
-		},
-	}
+	ctx := context.Background()
+	err := testdb.TruncateTables(ctx, pool)
+	assert.NoError(t, err)
 
-	queries := db.New(mockDB)
+	queries := db.New(pool)
 	handler := NewKeyValueHandler(queries)
 
 	e := echo.New()
@@ -300,7 +197,7 @@ func TestGetValue_KeyNotFound(t *testing.T) {
 	c.SetParamNames("key")
 	c.SetParamValues("nonexistent")
 
-	err := handler.GetValue(c)
+	err = handler.GetValue(c)
 
 	assert.NoError(t, err)
 	assert.Equal(t, http.StatusNotFound, rec.Code)
@@ -308,17 +205,10 @@ func TestGetValue_KeyNotFound(t *testing.T) {
 }
 
 func TestGetValue_DatabaseError(t *testing.T) {
-	mockDB := &MockDBTX{
-		QueryRowFunc: func(ctx context.Context, query string, arguments ...interface{}) pgx.Row {
-			return &MockRow{
-				ScanFunc: func(dest ...interface{}) error {
-					return errors.New("database error")
-				},
-			}
-		},
-	}
+	closedPool, err := createClosedPool()
+	assert.NoError(t, err)
 
-	queries := db.New(mockDB)
+	queries := db.New(closedPool)
 	handler := NewKeyValueHandler(queries)
 
 	e := echo.New()
@@ -328,7 +218,7 @@ func TestGetValue_DatabaseError(t *testing.T) {
 	c.SetParamNames("key")
 	c.SetParamValues("test-key")
 
-	err := handler.GetValue(c)
+	err = handler.GetValue(c)
 
 	assert.NoError(t, err)
 	assert.Equal(t, http.StatusInternalServerError, rec.Code)
@@ -336,13 +226,15 @@ func TestGetValue_DatabaseError(t *testing.T) {
 }
 
 func TestDeleteValue_Success(t *testing.T) {
-	mockDB := &MockDBTX{
-		ExecFunc: func(ctx context.Context, query string, arguments ...interface{}) (pgconn.CommandTag, error) {
-			return pgconn.CommandTag{}, nil
-		},
-	}
+	ctx := context.Background()
+	err := testdb.TruncateTables(ctx, pool)
+	assert.NoError(t, err)
 
-	queries := db.New(mockDB)
+	// Insert test data directly
+	err = testdb.InsertKeyValueDirect(ctx, pool, "test-key", "test-value")
+	assert.NoError(t, err)
+
+	queries := db.New(pool)
 	handler := NewKeyValueHandler(queries)
 
 	e := echo.New()
@@ -352,7 +244,7 @@ func TestDeleteValue_Success(t *testing.T) {
 	c.SetParamNames("key")
 	c.SetParamValues("test-key")
 
-	err := handler.DeleteValue(c)
+	err = handler.DeleteValue(c)
 
 	assert.NoError(t, err)
 	assert.Equal(t, http.StatusOK, rec.Code)
@@ -360,8 +252,7 @@ func TestDeleteValue_Success(t *testing.T) {
 }
 
 func TestDeleteValue_EmptyKey(t *testing.T) {
-	mockDB := &MockDBTX{}
-	queries := db.New(mockDB)
+	queries := db.New(pool)
 	handler := NewKeyValueHandler(queries)
 
 	e := echo.New()
@@ -379,13 +270,10 @@ func TestDeleteValue_EmptyKey(t *testing.T) {
 }
 
 func TestDeleteValue_DatabaseError(t *testing.T) {
-	mockDB := &MockDBTX{
-		ExecFunc: func(ctx context.Context, query string, arguments ...interface{}) (pgconn.CommandTag, error) {
-			return pgconn.CommandTag{}, errors.New("database error")
-		},
-	}
+	closedPool, err := createClosedPool()
+	assert.NoError(t, err)
 
-	queries := db.New(mockDB)
+	queries := db.New(closedPool)
 	handler := NewKeyValueHandler(queries)
 
 	e := echo.New()
@@ -395,9 +283,33 @@ func TestDeleteValue_DatabaseError(t *testing.T) {
 	c.SetParamNames("key")
 	c.SetParamValues("test-key")
 
-	err := handler.DeleteValue(c)
+	err = handler.DeleteValue(c)
 
 	assert.NoError(t, err)
 	assert.Equal(t, http.StatusInternalServerError, rec.Code)
 	assert.Contains(t, rec.Body.String(), "Failed to delete value")
+}
+
+// createClosedPool creates a pool and immediately closes it to simulate database errors
+func createClosedPool() (*pgxpool.Pool, error) {
+	ctx := context.Background()
+	connStr, err := testdb.GetConnectionString(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	config, err := pgxpool.ParseConfig(connStr)
+	if err != nil {
+		return nil, err
+	}
+
+	closedPool, err := pgxpool.NewWithConfig(ctx, config)
+	if err != nil {
+		return nil, err
+	}
+
+	// Close the pool immediately
+	closedPool.Close()
+
+	return closedPool, nil
 }

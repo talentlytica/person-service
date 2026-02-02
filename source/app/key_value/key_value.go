@@ -2,10 +2,11 @@ package key_value
 
 import (
 	"context"
-	"database/sql"
+	"errors"
 	"net/http"
 	db "person-service/internal/db/generated"
 
+	"github.com/jackc/pgx/v5"
 	"github.com/labstack/echo/v4"
 )
 
@@ -96,7 +97,7 @@ func (h *KeyValueHandler) GetValue(c echo.Context) error {
 	record, err := h.queries.GetKeyValue(ctx, key)
 
 	if err != nil {
-		if err == sql.ErrNoRows {
+		if errors.Is(err, pgx.ErrNoRows) {
 			return c.JSON(http.StatusNotFound, map[string]interface{}{
 				"error": "Key not found",
 			})

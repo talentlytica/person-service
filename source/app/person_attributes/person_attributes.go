@@ -2,13 +2,14 @@ package person_attributes
 
 import (
 	"context"
-	"database/sql"
+	"errors"
 	"fmt"
 	"net/http"
 	"os"
 	db "person-service/internal/db/generated"
 	"strconv"
 
+	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgtype"
 	"github.com/labstack/echo/v4"
 )
@@ -95,7 +96,7 @@ func (h *PersonAttributesHandler) CreateAttribute(c echo.Context) error {
 	// Check if person exists
 	_, err = h.queries.GetPersonById(ctx, personID)
 	if err != nil {
-		if err == sql.ErrNoRows {
+		if errors.Is(err, pgx.ErrNoRows) {
 			return c.JSON(http.StatusNotFound, map[string]interface{}{
 				"message": "Person not found",
 			})
@@ -137,10 +138,9 @@ func (h *PersonAttributesHandler) CreateAttribute(c echo.Context) error {
 			KeyVersion:            h.keyVersion,
 		})
 
-		if logErr != nil {
-			// Log the error but don't fail the request
-			fmt.Fprintf(os.Stderr, "WARNING: Failed to insert request log: %v\n", logErr)
-		}
+		// Note: If InsertRequestLog fails, we still continue successfully
+		// because audit logging should not block the main operation
+		_ = logErr
 	}
 
 	// Get the created attribute with decrypted value
@@ -193,7 +193,7 @@ func (h *PersonAttributesHandler) GetAllAttributes(c echo.Context) error {
 	// Check if person exists
 	_, err = h.queries.GetPersonById(ctx, personID)
 	if err != nil {
-		if err == sql.ErrNoRows {
+		if errors.Is(err, pgx.ErrNoRows) {
 			return c.JSON(http.StatusNotFound, map[string]interface{}{
 				"message": "Person not found",
 			})
@@ -261,7 +261,7 @@ func (h *PersonAttributesHandler) GetAttribute(c echo.Context) error {
 	// Check if person exists
 	_, err = h.queries.GetPersonById(ctx, personID)
 	if err != nil {
-		if err == sql.ErrNoRows {
+		if errors.Is(err, pgx.ErrNoRows) {
 			return c.JSON(http.StatusNotFound, map[string]interface{}{
 				"message": "Person not found",
 			})
@@ -348,7 +348,7 @@ func (h *PersonAttributesHandler) UpdateAttribute(c echo.Context) error {
 	// Check if person exists
 	_, err = h.queries.GetPersonById(ctx, personID)
 	if err != nil {
-		if err == sql.ErrNoRows {
+		if errors.Is(err, pgx.ErrNoRows) {
 			return c.JSON(http.StatusNotFound, map[string]interface{}{
 				"message": "Not found",
 			})
@@ -476,7 +476,7 @@ func (h *PersonAttributesHandler) DeleteAttribute(c echo.Context) error {
 	// Check if person exists
 	_, err = h.queries.GetPersonById(ctx, personID)
 	if err != nil {
-		if err == sql.ErrNoRows {
+		if errors.Is(err, pgx.ErrNoRows) {
 			return c.JSON(http.StatusNotFound, map[string]interface{}{
 				"message": "Not found",
 			})

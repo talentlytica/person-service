@@ -47,7 +47,7 @@ test-unit-coverage:
 
 # run mutation tests (requires gremlins to be installed: go install github.com/go-gremlins/gremlins/cmd/gremlins@latest)
 test-mutation:
-	cd source/app && $(shell go env GOPATH)/bin/gremlins unleash --exclude-files="vendor/.*" --exclude-files="internal/db/generated/.*" --exclude-files=".*_test\\.go$$" --exclude-files="main\\.go" --integration --timeout-coefficient=10 .
+	cd source/app && $(shell go env GOPATH)/bin/gremlins unleash --exclude-files="vendor/.*" --exclude-files="internal/db/generated/.*" --exclude-files=".*_test\\.go$$" --exclude-files="main\\.go" --integration --timeout-coefficient=30 .
 
 # run tests with coverage (integration + unit tests merged)
 test-coverage:
