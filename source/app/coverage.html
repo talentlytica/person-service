@@ -1,0 +1,961 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>healthcheck: Go Coverage Report</title>
+		<style>
+			body {
+				background: black;
+				color: rgb(80, 80, 80);
+			}
+			body, pre, #legend span {
+				font-family: Menlo, monospace;
+				font-weight: bold;
+			}
+			#topbar {
+				background: black;
+				position: fixed;
+				top: 0; left: 0; right: 0;
+				height: 42px;
+				border-bottom: 1px solid rgb(80, 80, 80);
+			}
+			#content {
+				margin-top: 50px;
+			}
+			#nav, #legend {
+				float: left;
+				margin-left: 10px;
+			}
+			#legend {
+				margin-top: 12px;
+			}
+			#nav {
+				margin-top: 10px;
+			}
+			#legend span {
+				margin: 0 5px;
+			}
+			.cov0 { color: rgb(192, 0, 0) }
+.cov1 { color: rgb(128, 128, 128) }
+.cov2 { color: rgb(116, 140, 131) }
+.cov3 { color: rgb(104, 152, 134) }
+.cov4 { color: rgb(92, 164, 137) }
+.cov5 { color: rgb(80, 176, 140) }
+.cov6 { color: rgb(68, 188, 143) }
+.cov7 { color: rgb(56, 200, 146) }
+.cov8 { color: rgb(44, 212, 149) }
+.cov9 { color: rgb(32, 224, 152) }
+.cov10 { color: rgb(20, 236, 155) }
+
+		</style>
+	</head>
+	<body>
+		<div id="topbar">
+			<div id="nav">
+				<select id="files">
+				
+				<option value="file0">person-service/healthcheck/health_handler.go (100.0%)</option>
+				
+				<option value="file1">person-service/key_value/key_value.go (97.6%)</option>
+				
+				<option value="file2">person-service/middleware/api_key.go (100.0%)</option>
+				
+				<option value="file3">person-service/person_attributes/person_attributes.go (93.7%)</option>
+				
+				</select>
+			</div>
+			<div id="legend">
+				<span>not tracked</span>
+			
+				<span class="cov0">not covered</span>
+				<span class="cov8">covered</span>
+			
+			</div>
+		</div>
+		<div id="content">
+		
+		<pre class="file" id="file0" style="display: none">package health
+
+import (
+        "context"
+        "net/http"
+
+        errs "person-service/errors"
+        db "person-service/internal/db/generated"
+
+        "github.com/labstack/echo/v4"
+)
+
+// HealthCheckService handles health check operations
+type HealthCheckHandler struct {
+        queries *db.Queries
+}
+
+// NewHealthCheckHandler creates a new instance of HealthCheckService with injected queries
+func NewHealthCheckHandler(queries *db.Queries) *HealthCheckHandler <span class="cov8" title="1">{
+        return &amp;HealthCheckHandler{
+                queries: queries,
+        }
+}</span>
+
+// Check performs a health check on the database and returns the result as an echo handler
+func (h *HealthCheckHandler) Check(c echo.Context) error <span class="cov8" title="1">{
+        // Call HealthCheck directly
+        err := h.queries.HealthCheck(context.Background())
+        if err != nil </span><span class="cov8" title="1">{
+                return c.JSON(http.StatusInternalServerError, errs.ErrorResponse{
+                        Message:   err.Error(),
+                        ErrorCode: errs.ErrHealthCheckFailed,
+                })
+        }</span>
+
+        // Return healthy status
+        <span class="cov8" title="1">return c.JSON(http.StatusOK, map[string]interface{}{
+                "status": "healthy",
+        })</span>
+}
+</pre>
+		
+		<pre class="file" id="file1" style="display: none">package key_value
+
+import (
+        "context"
+        "errors"
+        "net/http"
+        errs "person-service/errors"
+        db "person-service/internal/db/generated"
+
+        "github.com/jackc/pgx/v5"
+        "github.com/labstack/echo/v4"
+)
+
+// SetValueRequest represents the request body for setting a key-value pair
+type SetValueRequest struct {
+        Key   string `json:"key" validate:"required"`
+        Value string `json:"value" validate:"required"`
+}
+
+// KeyValueHandler handles KeyValue
+type KeyValueHandler struct {
+        queries *db.Queries
+}
+
+// KeyValueHandler creates a new instance of KeyValueHandler with injected queries
+func NewKeyValueHandler(queries *db.Queries) *KeyValueHandler <span class="cov8" title="1">{
+        return &amp;KeyValueHandler{
+                queries: queries,
+        }
+}</span>
+
+// SetValue handles POST /api/key_value - sets or updates a key-value pair
+func (h *KeyValueHandler) SetValue(c echo.Context) error <span class="cov8" title="1">{
+        // Parse request body
+        var req SetValueRequest
+        if err := c.Bind(&amp;req); err != nil </span><span class="cov8" title="1">{
+                return c.JSON(http.StatusBadRequest, errs.ErrorResponse{
+                        Message:   "Invalid request body",
+                        ErrorCode: errs.ErrKVInvalidRequestBody,
+                })
+        }</span>
+
+        // Validate required fields
+        <span class="cov8" title="1">if req.Key == "" || req.Value == "" </span><span class="cov8" title="1">{
+                return c.JSON(http.StatusBadRequest, errs.ErrorResponse{
+                        Message:   "Key and value are required",
+                        ErrorCode: errs.ErrKVMissingKeyOrValue,
+                })
+        }</span>
+
+        // Set value in database
+        <span class="cov8" title="1">ctx := context.Background()
+        err := h.queries.SetValue(ctx, db.SetValueParams{
+                Key:   req.Key,
+                Value: req.Value,
+        })
+
+        if err != nil </span><span class="cov8" title="1">{
+                return c.JSON(http.StatusInternalServerError, errs.ErrorResponse{
+                        Message:   "Failed to set value",
+                        ErrorCode: errs.ErrKVFailedSetValue,
+                })
+        }</span>
+
+        // Retrieve the full record with timestamps
+        <span class="cov8" title="1">record, err := h.queries.GetKeyValue(ctx, req.Key)
+        if err != nil </span><span class="cov0" title="0">{
+                return c.JSON(http.StatusInternalServerError, errs.ErrorResponse{
+                        Message:   "Failed to retrieve value",
+                        ErrorCode: errs.ErrKVFailedRetrieveValue,
+                })
+        }</span>
+
+        // Return success with the full key-value record
+        <span class="cov8" title="1">response := map[string]interface{}{
+                "key":   record.Key,
+                "value": record.Value,
+        }
+
+        // Add timestamps if they are valid
+        if record.CreatedAt.Valid </span><span class="cov8" title="1">{
+                response["created_at"] = record.CreatedAt.Time
+        }</span>
+        <span class="cov8" title="1">if record.UpdatedAt.Valid </span><span class="cov8" title="1">{
+                response["updated_at"] = record.UpdatedAt.Time
+        }</span>
+
+        <span class="cov8" title="1">return c.JSON(http.StatusOK, response)</span>
+}
+
+// GetValue handles GET /api/key_value/:key - retrieves a value by key
+func (h *KeyValueHandler) GetValue(c echo.Context) error <span class="cov8" title="1">{
+        key := c.Param("key")
+        if key == "" </span><span class="cov8" title="1">{
+                return c.JSON(http.StatusBadRequest, errs.ErrorResponse{
+                        Message:   "Key parameter is required",
+                        ErrorCode: errs.ErrKVMissingKeyParam,
+                })
+        }</span>
+
+        // Get full record from database
+        <span class="cov8" title="1">ctx := context.Background()
+        record, err := h.queries.GetKeyValue(ctx, key)
+
+        if err != nil </span><span class="cov8" title="1">{
+                if errors.Is(err, pgx.ErrNoRows) </span><span class="cov8" title="1">{
+                        return c.JSON(http.StatusNotFound, errs.ErrorResponse{
+                                Message:   "Key not found",
+                                ErrorCode: errs.ErrKVKeyNotFound,
+                        })
+                }</span>
+                <span class="cov8" title="1">return c.JSON(http.StatusInternalServerError, errs.ErrorResponse{
+                        Message:   "Failed to retrieve value",
+                        ErrorCode: errs.ErrKVFailedRetrieveValue,
+                })</span>
+        }
+
+        // Return the full key-value record
+        <span class="cov8" title="1">response := map[string]interface{}{
+                "key":   record.Key,
+                "value": record.Value,
+        }
+
+        // Add timestamps if they are valid
+        if record.CreatedAt.Valid </span><span class="cov8" title="1">{
+                response["created_at"] = record.CreatedAt.Time
+        }</span>
+        <span class="cov8" title="1">if record.UpdatedAt.Valid </span><span class="cov8" title="1">{
+                response["updated_at"] = record.UpdatedAt.Time
+        }</span>
+
+        <span class="cov8" title="1">return c.JSON(http.StatusOK, response)</span>
+}
+
+// DeleteValue handles DELETE /api/key_value/:key - deletes a key-value pair
+func (h *KeyValueHandler) DeleteValue(c echo.Context) error <span class="cov8" title="1">{
+        key := c.Param("key")
+        if key == "" </span><span class="cov8" title="1">{
+                return c.JSON(http.StatusBadRequest, errs.ErrorResponse{
+                        Message:   "Key parameter is required",
+                        ErrorCode: errs.ErrKVMissingKeyParam,
+                })
+        }</span>
+
+        // Delete value from database
+        <span class="cov8" title="1">ctx := context.Background()
+        err := h.queries.DeleteValue(ctx, key)
+
+        if err != nil </span><span class="cov8" title="1">{
+                return c.JSON(http.StatusInternalServerError, errs.ErrorResponse{
+                        Message:   "Failed to delete value",
+                        ErrorCode: errs.ErrKVFailedDeleteValue,
+                })
+        }</span>
+
+        // Return success message
+        <span class="cov8" title="1">return c.JSON(http.StatusOK, map[string]interface{}{
+                "message": "Key deleted successfully",
+        })</span>
+}
+</pre>
+		
+		<pre class="file" id="file2" style="display: none">package middleware
+
+import (
+        "net/http"
+        "os"
+        "regexp"
+
+        errs "person-service/errors"
+
+        "github.com/labstack/echo/v4"
+)
+
+// API key format: person-service-key-&lt;UUID&gt;
+// UUID format: 8-4-4-4-12 hexadecimal characters
+var apiKeyPattern = regexp.MustCompile(`^person-service-key-[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$`)
+
+// APIKeyMiddleware creates a middleware that validates the x-api-key header
+// against PERSON_API_KEY_BLUE and PERSON_API_KEY_GREEN environment variables.
+// The API key must follow the format: person-service-key-&lt;UUID&gt;
+func APIKeyMiddleware() echo.MiddlewareFunc <span class="cov8" title="1">{
+        return func(next echo.HandlerFunc) echo.HandlerFunc </span><span class="cov8" title="1">{
+                return func(c echo.Context) error </span><span class="cov8" title="1">{
+                        apiKey := c.Request().Header.Get("x-api-key")
+
+                        // Check if API key is provided
+                        if apiKey == "" </span><span class="cov8" title="1">{
+                                return c.JSON(http.StatusUnauthorized, errs.ErrorResponse{
+                                        Message:   "Missing required header \"x-api-key\"",
+                                        ErrorCode: errs.ErrMissingAPIKey,
+                                })
+                        }</span>
+
+                        // Validate the format of the provided API key
+                        <span class="cov8" title="1">if !apiKeyPattern.MatchString(apiKey) </span><span class="cov8" title="1">{
+                                return c.JSON(http.StatusUnauthorized, errs.ErrorResponse{
+                                        Message:   "Invalid API key format",
+                                        ErrorCode: errs.ErrInvalidAPIKeyFormat,
+                                })
+                        }</span>
+
+                        // Get the configured API keys from environment
+                        <span class="cov8" title="1">apiKeyBlue := os.Getenv("PERSON_API_KEY_BLUE")
+                        apiKeyGreen := os.Getenv("PERSON_API_KEY_GREEN")
+
+                        // Check if blue key is active (valid format)
+                        blueActive := apiKeyPattern.MatchString(apiKeyBlue)
+                        // Check if green key is active (valid format)
+                        greenActive := apiKeyPattern.MatchString(apiKeyGreen)
+
+                        // If neither key is active (properly configured), reject the request
+                        if !blueActive &amp;&amp; !greenActive </span><span class="cov8" title="1">{
+                                return c.JSON(http.StatusServiceUnavailable, errs.ErrorResponse{
+                                        Message:   "API keys are not properly configured",
+                                        ErrorCode: errs.ErrAPIKeysNotConfigured,
+                                })
+                        }</span>
+
+                        // Validate the provided key against active keys
+                        <span class="cov8" title="1">keyValid := false
+                        if blueActive &amp;&amp; apiKey == apiKeyBlue </span><span class="cov8" title="1">{
+                                keyValid = true
+                        }</span>
+                        <span class="cov8" title="1">if greenActive &amp;&amp; apiKey == apiKeyGreen </span><span class="cov8" title="1">{
+                                keyValid = true
+                        }</span>
+
+                        <span class="cov8" title="1">if !keyValid </span><span class="cov8" title="1">{
+                                return c.JSON(http.StatusUnauthorized, errs.ErrorResponse{
+                                        Message:   "Invalid API key",
+                                        ErrorCode: errs.ErrInvalidAPIKey,
+                                })
+                        }</span>
+
+                        <span class="cov8" title="1">return next(c)</span>
+                }
+        }
+}
+</pre>
+		
+		<pre class="file" id="file3" style="display: none">package person_attributes
+
+import (
+        "context"
+        "errors"
+        "fmt"
+        "net/http"
+        "os"
+        errs "person-service/errors"
+        db "person-service/internal/db/generated"
+        "strconv"
+
+        "github.com/jackc/pgx/v5"
+        "github.com/jackc/pgx/v5/pgtype"
+        "github.com/labstack/echo/v4"
+)
+
+// Meta contains request metadata for tracing and auditing
+type Meta struct {
+        Caller  string `json:"caller"`
+        Reason  string `json:"reason"`
+        TraceID string `json:"traceId"`
+}
+
+// CreateAttributeRequest represents the request body for creating an attribute
+type CreateAttributeRequest struct {
+        Key   string `json:"key" validate:"required"`
+        Value string `json:"value"`
+        Meta  *Meta  `json:"meta"`
+}
+
+// UpdateAttributeRequest represents the request body for updating an attribute
+type UpdateAttributeRequest struct {
+        Key   string `json:"key"`
+        Value string `json:"value"`
+        Meta  *Meta  `json:"meta"`
+}
+
+// PersonAttributesHandler handles person attributes operations
+type PersonAttributesHandler struct {
+        queries       *db.Queries
+        encryptionKey string
+        keyVersion    int32
+}
+
+// NewPersonAttributesHandler creates a new instance of PersonAttributesHandler
+func NewPersonAttributesHandler(queries *db.Queries) *PersonAttributesHandler <span class="cov8" title="1">{
+        encryptionKey := os.Getenv("ENCRYPTION_KEY_1")
+        if encryptionKey == "" </span><span class="cov8" title="1">{
+                encryptionKey = "default-key-for-dev"
+        }</span>
+
+        <span class="cov8" title="1">return &amp;PersonAttributesHandler{
+                queries:       queries,
+                encryptionKey: encryptionKey,
+                keyVersion:    1,
+        }</span>
+}
+
+// CreateAttribute handles POST/PUT /persons/:personId/attributes - creates or updates an attribute
+func (h *PersonAttributesHandler) CreateAttribute(c echo.Context) error <span class="cov8" title="1">{
+        // Parse person ID from path
+        personIDStr := c.Param("personId")
+        var personID pgtype.UUID
+        err := personID.Scan(personIDStr)
+        if err != nil </span><span class="cov8" title="1">{
+                // Return 404 for invalid UUID (treat as person not found)
+                return c.JSON(http.StatusNotFound, errs.ErrorResponse{
+                        Message:   "Person not found",
+                        ErrorCode: errs.ErrInvalidPersonID,
+                })
+        }</span>
+
+        // Parse request body
+        <span class="cov8" title="1">var req CreateAttributeRequest
+        if err := c.Bind(&amp;req); err != nil </span><span class="cov8" title="1">{
+                return c.JSON(http.StatusBadRequest, errs.ErrorResponse{
+                        Message:   "Invalid request body",
+                        ErrorCode: errs.ErrInvalidRequestBody,
+                })
+        }</span>
+
+        // Validate required fields
+        <span class="cov8" title="1">if req.Key == "" </span><span class="cov8" title="1">{
+                return c.JSON(http.StatusBadRequest, errs.ErrorResponse{
+                        Message:   "Key is required",
+                        ErrorCode: errs.ErrMissingRequiredFieldKey,
+                })
+        }</span>
+
+        // Validate meta is present
+        <span class="cov8" title="1">if req.Meta == nil </span><span class="cov8" title="1">{
+                return c.JSON(http.StatusBadRequest, errs.ErrorResponse{
+                        Message:   "Missing required field \"meta\"",
+                        ErrorCode: errs.ErrMissingRequiredFieldMeta,
+                })
+        }</span>
+
+        <span class="cov8" title="1">ctx := context.Background()
+
+        // Check if person exists
+        _, err = h.queries.GetPersonById(ctx, personID)
+        if err != nil </span><span class="cov8" title="1">{
+                if errors.Is(err, pgx.ErrNoRows) </span><span class="cov8" title="1">{
+                        return c.JSON(http.StatusNotFound, errs.ErrorResponse{
+                                Message:   "Person not found",
+                                ErrorCode: errs.ErrPersonNotFound,
+                        })
+                }</span>
+                <span class="cov8" title="1">return c.JSON(http.StatusInternalServerError, errs.ErrorResponse{
+                        Message:   "Failed to verify person",
+                        ErrorCode: errs.ErrFailedVerifyPerson,
+                })</span>
+        }
+
+        // Create or update the attribute
+        <span class="cov8" title="1">_, err = h.queries.CreateOrUpdatePersonAttribute(ctx, db.CreateOrUpdatePersonAttributeParams{
+                PersonID:       personID,
+                AttributeKey:   req.Key,
+                AttributeValue: req.Value,
+                EncKey:         h.encryptionKey,
+                KeyVersion:     h.keyVersion,
+        })
+
+        if err != nil </span><span class="cov0" title="0">{
+                fmt.Fprintf(os.Stderr, "ERROR: Failed to create attribute: %v\n", err)
+                return c.JSON(http.StatusInternalServerError, errs.ErrorResponse{
+                        Message:   "Failed to create attribute",
+                        ErrorCode: errs.ErrFailedCreateAttribute,
+                })
+        }</span>
+
+        // Log the request to audit log (request_log table)
+        <span class="cov8" title="1">if req.Meta != nil &amp;&amp; req.Meta.TraceID != "" </span><span class="cov8" title="1">{
+                // Serialize request body and response for audit
+                requestBody := fmt.Sprintf(`{"key":"%s","value":"%s"}`, req.Key, req.Value)
+                responseBody := "" // Will be populated after getting the attribute
+
+                _, logErr := h.queries.InsertRequestLog(ctx, db.InsertRequestLogParams{
+                        TraceID:               req.Meta.TraceID,
+                        Caller:                req.Meta.Caller,
+                        Reason:                req.Meta.Reason,
+                        EncryptedRequestBody:  requestBody,
+                        EncryptedResponseBody: responseBody,
+                        EncKey:                h.encryptionKey,
+                        KeyVersion:            h.keyVersion,
+                })
+
+                // Note: If InsertRequestLog fails, we still continue successfully
+                // because audit logging should not block the main operation
+                _ = logErr
+        }</span>
+
+        // Get the created attribute with decrypted value
+        <span class="cov8" title="1">attribute, err := h.queries.GetPersonAttribute(ctx, db.GetPersonAttributeParams{
+                PersonID:     personID,
+                AttributeKey: req.Key,
+                EncKey:       h.encryptionKey,
+        })
+
+        if err != nil </span><span class="cov0" title="0">{
+                return c.JSON(http.StatusInternalServerError, errs.ErrorResponse{
+                        Message:   "Failed to retrieve attribute",
+                        ErrorCode: errs.ErrFailedRetrieveAttribute,
+                })
+        }</span>
+
+        // Build response
+        <span class="cov8" title="1">response := map[string]interface{}{
+                "id":    attribute.ID,
+                "key":   attribute.AttributeKey,
+                "value": string(attribute.AttributeValue),
+        }
+
+        if attribute.CreatedAt.Valid </span><span class="cov8" title="1">{
+                response["createdAt"] = attribute.CreatedAt.Time
+        }</span>
+        <span class="cov8" title="1">if attribute.UpdatedAt.Valid </span><span class="cov8" title="1">{
+                response["updatedAt"] = attribute.UpdatedAt.Time
+        }</span>
+
+        // Always return 201 Created for this endpoint, even if it's an upsert
+        // This is because from the client's perspective, they're creating/setting an attribute
+        <span class="cov8" title="1">return c.JSON(http.StatusCreated, response)</span>
+}
+
+// GetAllAttributes handles GET /persons/:personId/attributes - retrieves all attributes for a person
+func (h *PersonAttributesHandler) GetAllAttributes(c echo.Context) error <span class="cov8" title="1">{
+        // Parse person ID from path
+        personIDStr := c.Param("personId")
+        var personID pgtype.UUID
+        err := personID.Scan(personIDStr)
+        if err != nil </span><span class="cov8" title="1">{
+                // Return 404 for invalid UUID (treat as person not found)
+                return c.JSON(http.StatusNotFound, errs.ErrorResponse{
+                        Message:   "Person not found",
+                        ErrorCode: errs.ErrInvalidPersonID,
+                })
+        }</span>
+
+        <span class="cov8" title="1">ctx := context.Background()
+
+        // Check if person exists
+        _, err = h.queries.GetPersonById(ctx, personID)
+        if err != nil </span><span class="cov8" title="1">{
+                if errors.Is(err, pgx.ErrNoRows) </span><span class="cov8" title="1">{
+                        return c.JSON(http.StatusNotFound, errs.ErrorResponse{
+                                Message:   "Person not found",
+                                ErrorCode: errs.ErrPersonNotFound,
+                        })
+                }</span>
+                <span class="cov8" title="1">return c.JSON(http.StatusInternalServerError, errs.ErrorResponse{
+                        Message:   "Failed to verify person",
+                        ErrorCode: errs.ErrFailedVerifyPerson,
+                })</span>
+        }
+
+        // Get all attributes for the person
+        <span class="cov8" title="1">attributes, err := h.queries.GetAllPersonAttributes(ctx, db.GetAllPersonAttributesParams{
+                PersonID: personID,
+                EncKey:   h.encryptionKey,
+        })
+
+        if err != nil </span><span class="cov0" title="0">{
+                return c.JSON(http.StatusInternalServerError, errs.ErrorResponse{
+                        Message:   "Failed to retrieve attributes",
+                        ErrorCode: errs.ErrFailedRetrieveAttributes,
+                })
+        }</span>
+
+        // Build response array
+        <span class="cov8" title="1">response := make([]map[string]interface{}, 0, len(attributes))
+        for _, attr := range attributes </span><span class="cov8" title="1">{
+                item := map[string]interface{}{
+                        "id":    attr.ID,
+                        "key":   attr.AttributeKey,
+                        "value": string(attr.AttributeValue),
+                }
+                if attr.CreatedAt.Valid </span><span class="cov8" title="1">{
+                        item["createdAt"] = attr.CreatedAt.Time
+                }</span>
+                <span class="cov8" title="1">if attr.UpdatedAt.Valid </span><span class="cov8" title="1">{
+                        item["updatedAt"] = attr.UpdatedAt.Time
+                }</span>
+                <span class="cov8" title="1">response = append(response, item)</span>
+        }
+
+        <span class="cov8" title="1">return c.JSON(http.StatusOK, response)</span>
+}
+
+// GetAttribute handles GET /persons/:personId/attributes/:attributeId - retrieves a specific attribute
+func (h *PersonAttributesHandler) GetAttribute(c echo.Context) error <span class="cov8" title="1">{
+        // Parse person ID from path
+        personIDStr := c.Param("personId")
+        var personID pgtype.UUID
+        err := personID.Scan(personIDStr)
+        if err != nil </span><span class="cov8" title="1">{
+                return c.JSON(http.StatusBadRequest, errs.ErrorResponse{
+                        Message:   "Invalid person ID format",
+                        ErrorCode: errs.ErrInvalidPersonID,
+                })
+        }</span>
+
+        // Parse attribute ID from path
+        <span class="cov8" title="1">attributeIDStr := c.Param("attributeId")
+        attributeID, err := strconv.ParseInt(attributeIDStr, 10, 32)
+        if err != nil </span><span class="cov8" title="1">{
+                return c.JSON(http.StatusBadRequest, errs.ErrorResponse{
+                        Message:   "Invalid attribute ID format",
+                        ErrorCode: errs.ErrInvalidAttributeIDFormat,
+                })
+        }</span>
+
+        <span class="cov8" title="1">ctx := context.Background()
+
+        // Check if person exists
+        _, err = h.queries.GetPersonById(ctx, personID)
+        if err != nil </span><span class="cov8" title="1">{
+                if errors.Is(err, pgx.ErrNoRows) </span><span class="cov8" title="1">{
+                        return c.JSON(http.StatusNotFound, errs.ErrorResponse{
+                                Message:   "Person not found",
+                                ErrorCode: errs.ErrPersonNotFound,
+                        })
+                }</span>
+                <span class="cov8" title="1">return c.JSON(http.StatusInternalServerError, errs.ErrorResponse{
+                        Message:   "Failed to verify person",
+                        ErrorCode: errs.ErrFailedVerifyPerson,
+                })</span>
+        }
+
+        // Get all attributes and find the one with matching ID
+        <span class="cov8" title="1">attributes, err := h.queries.GetAllPersonAttributes(ctx, db.GetAllPersonAttributesParams{
+                PersonID: personID,
+                EncKey:   h.encryptionKey,
+        })
+
+        if err != nil </span><span class="cov0" title="0">{
+                return c.JSON(http.StatusInternalServerError, errs.ErrorResponse{
+                        Message:   "Failed to retrieve attributes",
+                        ErrorCode: errs.ErrFailedRetrieveAttributes,
+                })
+        }</span>
+
+        // Find the attribute with matching ID
+        <span class="cov8" title="1">var foundAttr *db.GetAllPersonAttributesRow
+        for _, attr := range attributes </span><span class="cov8" title="1">{
+                if attr.ID == int32(attributeID) </span><span class="cov8" title="1">{
+                        foundAttr = &amp;attr
+                        break</span>
+                }
+        }
+
+        <span class="cov8" title="1">if foundAttr == nil </span><span class="cov8" title="1">{
+                return c.JSON(http.StatusNotFound, errs.ErrorResponse{
+                        Message:   "Attribute not found",
+                        ErrorCode: errs.ErrAttributeNotFound,
+                })
+        }</span>
+
+        // Build response
+        <span class="cov8" title="1">response := map[string]interface{}{
+                "id":    foundAttr.ID,
+                "key":   foundAttr.AttributeKey,
+                "value": string(foundAttr.AttributeValue),
+        }
+        if foundAttr.CreatedAt.Valid </span><span class="cov8" title="1">{
+                response["createdAt"] = foundAttr.CreatedAt.Time
+        }</span>
+        <span class="cov8" title="1">if foundAttr.UpdatedAt.Valid </span><span class="cov8" title="1">{
+                response["updatedAt"] = foundAttr.UpdatedAt.Time
+        }</span>
+
+        <span class="cov8" title="1">return c.JSON(http.StatusOK, response)</span>
+}
+
+// UpdateAttribute handles PUT /persons/:personId/attributes/:attributeId - updates a specific attribute
+func (h *PersonAttributesHandler) UpdateAttribute(c echo.Context) error <span class="cov8" title="1">{
+        // Parse person ID from path
+        personIDStr := c.Param("personId")
+        var personID pgtype.UUID
+        err := personID.Scan(personIDStr)
+        if err != nil </span><span class="cov8" title="1">{
+                return c.JSON(http.StatusBadRequest, errs.ErrorResponse{
+                        Message:   "Invalid person ID format",
+                        ErrorCode: errs.ErrInvalidPersonID,
+                })
+        }</span>
+
+        // Parse attribute ID from path
+        <span class="cov8" title="1">attributeIDStr := c.Param("attributeId")
+        attributeID, err := strconv.ParseInt(attributeIDStr, 10, 32)
+        if err != nil </span><span class="cov8" title="1">{
+                return c.JSON(http.StatusBadRequest, errs.ErrorResponse{
+                        Message:   "Invalid attribute ID format",
+                        ErrorCode: errs.ErrInvalidAttributeIDFormat,
+                })
+        }</span>
+
+        // Parse request body
+        <span class="cov8" title="1">var req UpdateAttributeRequest
+        if err := c.Bind(&amp;req); err != nil </span><span class="cov8" title="1">{
+                return c.JSON(http.StatusBadRequest, errs.ErrorResponse{
+                        Message:   "Invalid request body",
+                        ErrorCode: errs.ErrInvalidRequestBody,
+                })
+        }</span>
+
+        <span class="cov8" title="1">ctx := context.Background()
+
+        // Check if person exists
+        _, err = h.queries.GetPersonById(ctx, personID)
+        if err != nil </span><span class="cov8" title="1">{
+                if errors.Is(err, pgx.ErrNoRows) </span><span class="cov8" title="1">{
+                        return c.JSON(http.StatusNotFound, errs.ErrorResponse{
+                                Message:   "Not found",
+                                ErrorCode: errs.ErrPersonNotFound,
+                        })
+                }</span>
+                <span class="cov8" title="1">return c.JSON(http.StatusInternalServerError, errs.ErrorResponse{
+                        Message:   "Failed to verify person",
+                        ErrorCode: errs.ErrFailedVerifyPerson,
+                })</span>
+        }
+
+        // Get all attributes and find the one with matching ID to get the key
+        <span class="cov8" title="1">attributes, err := h.queries.GetAllPersonAttributes(ctx, db.GetAllPersonAttributesParams{
+                PersonID: personID,
+                EncKey:   h.encryptionKey,
+        })
+
+        if err != nil </span><span class="cov0" title="0">{
+                return c.JSON(http.StatusInternalServerError, errs.ErrorResponse{
+                        Message:   "Failed to retrieve attributes",
+                        ErrorCode: errs.ErrFailedRetrieveAttributes,
+                })
+        }</span>
+
+        // Find the attribute with matching ID
+        <span class="cov8" title="1">var existingKey string
+        found := false
+        for _, attr := range attributes </span><span class="cov8" title="1">{
+                if attr.ID == int32(attributeID) </span><span class="cov8" title="1">{
+                        existingKey = attr.AttributeKey
+                        found = true
+                        break</span>
+                }
+        }
+
+        <span class="cov8" title="1">if !found </span><span class="cov8" title="1">{
+                return c.JSON(http.StatusNotFound, errs.ErrorResponse{
+                        Message:   "Attribute not found",
+                        ErrorCode: errs.ErrAttributeNotFound,
+                })
+        }</span>
+
+        // Determine which key to use: if new key is provided, use it; otherwise use existing key
+        <span class="cov8" title="1">keyToUse := existingKey
+        if req.Key != "" </span><span class="cov8" title="1">{
+                keyToUse = req.Key
+        }</span>
+
+        // If the key changed, we need to delete the old one first
+        <span class="cov8" title="1">if req.Key != "" &amp;&amp; req.Key != existingKey </span><span class="cov8" title="1">{
+                err = h.queries.DeletePersonAttribute(ctx, db.DeletePersonAttributeParams{
+                        PersonID:     personID,
+                        AttributeKey: existingKey,
+                })
+                if err != nil </span><span class="cov0" title="0">{
+                        return c.JSON(http.StatusInternalServerError, errs.ErrorResponse{
+                                Message:   "Failed to update attribute key",
+                                ErrorCode: errs.ErrFailedUpdateAttributeKey,
+                        })
+                }</span>
+        }
+
+        // Update the attribute (or create with new key)
+        <span class="cov8" title="1">_, err = h.queries.CreateOrUpdatePersonAttribute(ctx, db.CreateOrUpdatePersonAttributeParams{
+                PersonID:       personID,
+                AttributeKey:   keyToUse,
+                AttributeValue: req.Value,
+                EncKey:         h.encryptionKey,
+                KeyVersion:     h.keyVersion,
+        })
+
+        if err != nil </span><span class="cov0" title="0">{
+                return c.JSON(http.StatusInternalServerError, errs.ErrorResponse{
+                        Message:   "Failed to update attribute",
+                        ErrorCode: errs.ErrFailedUpdateAttribute,
+                })
+        }</span>
+
+        // Get the updated attribute
+        <span class="cov8" title="1">attribute, err := h.queries.GetPersonAttribute(ctx, db.GetPersonAttributeParams{
+                PersonID:     personID,
+                AttributeKey: keyToUse,
+                EncKey:       h.encryptionKey,
+        })
+
+        if err != nil </span><span class="cov0" title="0">{
+                return c.JSON(http.StatusInternalServerError, errs.ErrorResponse{
+                        Message:   "Failed to retrieve updated attribute",
+                        ErrorCode: errs.ErrFailedRetrieveUpdatedAttr,
+                })
+        }</span>
+
+        // Build response
+        <span class="cov8" title="1">response := map[string]interface{}{
+                "id":    attribute.ID,
+                "key":   attribute.AttributeKey,
+                "value": string(attribute.AttributeValue),
+        }
+        if attribute.CreatedAt.Valid </span><span class="cov8" title="1">{
+                response["createdAt"] = attribute.CreatedAt.Time
+        }</span>
+        <span class="cov8" title="1">if attribute.UpdatedAt.Valid </span><span class="cov8" title="1">{
+                response["updatedAt"] = attribute.UpdatedAt.Time
+        }</span>
+
+        <span class="cov8" title="1">return c.JSON(http.StatusOK, response)</span>
+}
+
+// DeleteAttribute handles DELETE /persons/:personId/attributes/:attributeId - deletes a specific attribute
+func (h *PersonAttributesHandler) DeleteAttribute(c echo.Context) error <span class="cov8" title="1">{
+        // Parse person ID from path
+        personIDStr := c.Param("personId")
+        var personID pgtype.UUID
+        err := personID.Scan(personIDStr)
+        if err != nil </span><span class="cov8" title="1">{
+                return c.JSON(http.StatusBadRequest, errs.ErrorResponse{
+                        Message:   "Invalid person ID format",
+                        ErrorCode: errs.ErrInvalidPersonID,
+                })
+        }</span>
+
+        // Parse attribute ID from path
+        <span class="cov8" title="1">attributeIDStr := c.Param("attributeId")
+        attributeID, err := strconv.ParseInt(attributeIDStr, 10, 32)
+        if err != nil </span><span class="cov8" title="1">{
+                return c.JSON(http.StatusBadRequest, errs.ErrorResponse{
+                        Message:   "Invalid attribute ID format",
+                        ErrorCode: errs.ErrInvalidAttributeIDFormat,
+                })
+        }</span>
+
+        <span class="cov8" title="1">ctx := context.Background()
+
+        // Check if person exists
+        _, err = h.queries.GetPersonById(ctx, personID)
+        if err != nil </span><span class="cov8" title="1">{
+                if errors.Is(err, pgx.ErrNoRows) </span><span class="cov8" title="1">{
+                        return c.JSON(http.StatusNotFound, errs.ErrorResponse{
+                                Message:   "Not found",
+                                ErrorCode: errs.ErrPersonNotFound,
+                        })
+                }</span>
+                <span class="cov8" title="1">return c.JSON(http.StatusInternalServerError, errs.ErrorResponse{
+                        Message:   "Failed to verify person",
+                        ErrorCode: errs.ErrFailedVerifyPerson,
+                })</span>
+        }
+
+        // Get all attributes and find the one with matching ID to get the key
+        <span class="cov8" title="1">attributes, err := h.queries.GetAllPersonAttributes(ctx, db.GetAllPersonAttributesParams{
+                PersonID: personID,
+                EncKey:   h.encryptionKey,
+        })
+
+        if err != nil </span><span class="cov0" title="0">{
+                return c.JSON(http.StatusInternalServerError, errs.ErrorResponse{
+                        Message:   "Failed to retrieve attributes",
+                        ErrorCode: errs.ErrFailedRetrieveAttributes,
+                })
+        }</span>
+
+        // Find the attribute with matching ID
+        <span class="cov8" title="1">var keyToDelete string
+        found := false
+        for _, attr := range attributes </span><span class="cov8" title="1">{
+                if attr.ID == int32(attributeID) </span><span class="cov8" title="1">{
+                        keyToDelete = attr.AttributeKey
+                        found = true
+                        break</span>
+                }
+        }
+
+        <span class="cov8" title="1">if !found </span><span class="cov8" title="1">{
+                return c.JSON(http.StatusNotFound, errs.ErrorResponse{
+                        Message:   "Attribute not found",
+                        ErrorCode: errs.ErrAttributeNotFound,
+                })
+        }</span>
+
+        // Delete the attribute
+        <span class="cov8" title="1">err = h.queries.DeletePersonAttribute(ctx, db.DeletePersonAttributeParams{
+                PersonID:     personID,
+                AttributeKey: keyToDelete,
+        })
+
+        if err != nil </span><span class="cov0" title="0">{
+                return c.JSON(http.StatusInternalServerError, errs.ErrorResponse{
+                        Message:   "Failed to delete attribute",
+                        ErrorCode: errs.ErrFailedDeleteAttribute,
+                })
+        }</span>
+
+        <span class="cov8" title="1">return c.JSON(http.StatusOK, map[string]interface{}{
+                "message": "Attribute deleted successfully",
+        })</span>
+}
+</pre>
+		
+		</div>
+	</body>
+	<script>
+	(function() {
+		var files = document.getElementById('files');
+		var visible;
+		files.addEventListener('change', onChange, false);
+		function select(part) {
+			if (visible)
+				visible.style.display = 'none';
+			visible = document.getElementById(part);
+			if (!visible)
+				return;
+			files.value = part;
+			visible.style.display = 'block';
+			location.hash = part;
+		}
+		function onChange() {
+			select(files.value);
+			window.scrollTo(0, 0);
+		}
+		if (location.hash != "") {
+			select(location.hash.substr(1));
+		}
+		if (!visible) {
+			select("file0");
+		}
+	})();
+	</script>
+</html>

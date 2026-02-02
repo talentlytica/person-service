@@ -867,6 +867,371 @@ func TestUpdateAttribute_WithoutKeyProvided(t *testing.T) {
 	assert.Contains(t, rec.Body.String(), "existing-key")
 }
 
+// TestCreateAttribute_WithEmptyValue tests creating an attribute with empty value
+func TestCreateAttribute_WithEmptyValue(t *testing.T) {
+	ctx := context.Background()
+	err := testdb.TruncateTables(ctx, pool)
+	assert.NoError(t, err)
+
+	// Create a test person
+	personID, err := createTestPerson(ctx, "test-client-empty-value")
+	assert.NoError(t, err)
+
+	queries := db.New(pool)
+	handler := NewPersonAttributesHandler(queries)
+
+	e := echo.New()
+	jsonBody := `{"key":"empty-value-key","value":"","meta":{"caller":"test","reason":"testing","traceId":"trace-empty"}}`
+	req := httptest.NewRequest(http.MethodPut, "/persons/"+personID+"/attributes", strings.NewReader(jsonBody))
+	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
+	rec := httptest.NewRecorder()
+	c := e.NewContext(req, rec)
+	c.SetParamNames("personId")
+	c.SetParamValues(personID)
+
+	err = handler.CreateAttribute(c)
+
+	assert.NoError(t, err)
+	assert.Equal(t, http.StatusCreated, rec.Code)
+	assert.Contains(t, rec.Body.String(), "empty-value-key")
+}
+
+// TestUpdateAttribute_SameKeyAsExisting tests updating with the same key (no key change)
+func TestUpdateAttribute_SameKeyAsExisting(t *testing.T) {
+	ctx := context.Background()
+	err := testdb.TruncateTables(ctx, pool)
+	assert.NoError(t, err)
+
+	// Create a test person with an attribute
+	personID, err := createTestPerson(ctx, "test-client-same-key")
+	assert.NoError(t, err)
+
+	attrID, err := createTestAttribute(ctx, personID, "same-key", "old-value")
+	assert.NoError(t, err)
+
+	queries := db.New(pool)
+	handler := NewPersonAttributesHandler(queries)
+
+	e := echo.New()
+	// Update with same key explicitly provided
+	jsonBody := `{"key":"same-key","value":"new-value"}`
+	req := httptest.NewRequest(http.MethodPut, fmt.Sprintf("/persons/%s/attributes/%d", personID, attrID), strings.NewReader(jsonBody))
+	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
+	rec := httptest.NewRecorder()
+	c := e.NewContext(req, rec)
+	c.SetParamNames("personId", "attributeId")
+	c.SetParamValues(personID, fmt.Sprintf("%d", attrID))
+
+	err = handler.UpdateAttribute(c)
+
+	assert.NoError(t, err)
+	assert.Equal(t, http.StatusOK, rec.Code)
+	assert.Contains(t, rec.Body.String(), "same-key")
+	assert.Contains(t, rec.Body.String(), "new-value")
+}
+
+// TestUpdateAttribute_EmptyKeyPreservesOriginal tests that providing empty key preserves the original key
+// This verifies that when req.Key is empty, the attribute is NOT deleted (tests line 423 condition)
+func TestUpdateAttribute_EmptyKeyPreservesOriginal(t *testing.T) {
+	ctx := context.Background()
+	err := testdb.TruncateTables(ctx, pool)
+	assert.NoError(t, err)
+
+	// Create a test person with an attribute
+	personID, err := createTestPerson(ctx, "test-client-empty-key")
+	assert.NoError(t, err)
+
+	attrID, err := createTestAttribute(ctx, personID, "preserve-key", "old-value")
+	assert.NoError(t, err)
+
+	queries := db.New(pool)
+	handler := NewPersonAttributesHandler(queries)
+
+	e := echo.New()
+	// Update with empty key - should preserve the original key
+	jsonBody := `{"key":"","value":"new-value"}`
+	req := httptest.NewRequest(http.MethodPut, fmt.Sprintf("/persons/%s/attributes/%d", personID, attrID), strings.NewReader(jsonBody))
+	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
+	rec := httptest.NewRecorder()
+	c := e.NewContext(req, rec)
+	c.SetParamNames("personId", "attributeId")
+	c.SetParamValues(personID, fmt.Sprintf("%d", attrID))
+
+	err = handler.UpdateAttribute(c)
+
+	assert.NoError(t, err)
+	assert.Equal(t, http.StatusOK, rec.Code)
+	// Verify the original key is preserved
+	assert.Contains(t, rec.Body.String(), "preserve-key")
+	assert.Contains(t, rec.Body.String(), "new-value")
+
+	// Verify the attribute still exists with the same ID by fetching it again
+	req2 := httptest.NewRequest(http.MethodGet, fmt.Sprintf("/persons/%s/attributes/%d", personID, attrID), nil)
+	rec2 := httptest.NewRecorder()
+	c2 := e.NewContext(req2, rec2)
+	c2.SetParamNames("personId", "attributeId")
+	c2.SetParamValues(personID, fmt.Sprintf("%d", attrID))
+
+	err = handler.GetAttribute(c2)
+	assert.NoError(t, err)
+	assert.Equal(t, http.StatusOK, rec2.Code)
+	assert.Contains(t, rec2.Body.String(), "preserve-key")
+}
+
+// TestGetAttribute_WithTimestamps tests that timestamps are included in response
+func TestGetAttribute_WithTimestamps(t *testing.T) {
+	ctx := context.Background()
+	err := testdb.TruncateTables(ctx, pool)
+	assert.NoError(t, err)
+
+	// Create a test person with an attribute
+	personID, err := createTestPerson(ctx, "test-client-timestamps")
+	assert.NoError(t, err)
+
+	attrID, err := createTestAttribute(ctx, personID, "timestamp-key", "timestamp-value")
+	assert.NoError(t, err)
+
+	queries := db.New(pool)
+	handler := NewPersonAttributesHandler(queries)
+
+	e := echo.New()
+	req := httptest.NewRequest(http.MethodGet, fmt.Sprintf("/persons/%s/attributes/%d", personID, attrID), nil)
+	rec := httptest.NewRecorder()
+	c := e.NewContext(req, rec)
+	c.SetParamNames("personId", "attributeId")
+	c.SetParamValues(personID, fmt.Sprintf("%d", attrID))
+
+	err = handler.GetAttribute(c)
+
+	assert.NoError(t, err)
+	assert.Equal(t, http.StatusOK, rec.Code)
+	assert.Contains(t, rec.Body.String(), "createdAt")
+}
+
+// TestGetAllAttributes_WithTimestamps tests that timestamps are included in response for all attributes
+func TestGetAllAttributes_WithTimestamps(t *testing.T) {
+	ctx := context.Background()
+	err := testdb.TruncateTables(ctx, pool)
+	assert.NoError(t, err)
+
+	// Create a test person with an attribute
+	personID, err := createTestPerson(ctx, "test-client-all-timestamps")
+	assert.NoError(t, err)
+
+	_, err = createTestAttribute(ctx, personID, "ts-key-1", "ts-value-1")
+	assert.NoError(t, err)
+
+	queries := db.New(pool)
+	handler := NewPersonAttributesHandler(queries)
+
+	e := echo.New()
+	req := httptest.NewRequest(http.MethodGet, "/persons/"+personID+"/attributes", nil)
+	rec := httptest.NewRecorder()
+	c := e.NewContext(req, rec)
+	c.SetParamNames("personId")
+	c.SetParamValues(personID)
+
+	err = handler.GetAllAttributes(c)
+
+	assert.NoError(t, err)
+	assert.Equal(t, http.StatusOK, rec.Code)
+	assert.Contains(t, rec.Body.String(), "createdAt")
+}
+
+// TestCreateAttribute_WithUpdatedAt tests that updatedAt timestamp is set on create
+func TestCreateAttribute_WithUpdatedAt(t *testing.T) {
+	ctx := context.Background()
+	err := testdb.TruncateTables(ctx, pool)
+	assert.NoError(t, err)
+
+	// Create a test person
+	personID, err := createTestPerson(ctx, "test-client-updated-at")
+	assert.NoError(t, err)
+
+	queries := db.New(pool)
+	handler := NewPersonAttributesHandler(queries)
+
+	e := echo.New()
+	jsonBody := `{"key":"updated-key","value":"updated-value","meta":{"caller":"test","reason":"testing","traceId":"trace-updated"}}`
+	req := httptest.NewRequest(http.MethodPut, "/persons/"+personID+"/attributes", strings.NewReader(jsonBody))
+	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
+	rec := httptest.NewRecorder()
+	c := e.NewContext(req, rec)
+	c.SetParamNames("personId")
+	c.SetParamValues(personID)
+
+	err = handler.CreateAttribute(c)
+
+	assert.NoError(t, err)
+	assert.Equal(t, http.StatusCreated, rec.Code)
+	assert.Contains(t, rec.Body.String(), "updatedAt")
+}
+
+// TestUpdateAttribute_ResponseContainsTimestamps tests that response contains timestamps
+func TestUpdateAttribute_ResponseContainsTimestamps(t *testing.T) {
+	ctx := context.Background()
+	err := testdb.TruncateTables(ctx, pool)
+	assert.NoError(t, err)
+
+	// Create a test person with an attribute
+	personID, err := createTestPerson(ctx, "test-client-update-ts")
+	assert.NoError(t, err)
+
+	attrID, err := createTestAttribute(ctx, personID, "update-ts-key", "old-value")
+	assert.NoError(t, err)
+
+	queries := db.New(pool)
+	handler := NewPersonAttributesHandler(queries)
+
+	e := echo.New()
+	jsonBody := `{"value":"new-value"}`
+	req := httptest.NewRequest(http.MethodPut, fmt.Sprintf("/persons/%s/attributes/%d", personID, attrID), strings.NewReader(jsonBody))
+	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
+	rec := httptest.NewRecorder()
+	c := e.NewContext(req, rec)
+	c.SetParamNames("personId", "attributeId")
+	c.SetParamValues(personID, fmt.Sprintf("%d", attrID))
+
+	err = handler.UpdateAttribute(c)
+
+	assert.NoError(t, err)
+	assert.Equal(t, http.StatusOK, rec.Code)
+	assert.Contains(t, rec.Body.String(), "createdAt")
+	assert.Contains(t, rec.Body.String(), "updatedAt")
+}
+
+// createHandlerWithWrongKey creates a handler with an incorrect encryption key
+// This causes decryption to fail, triggering error paths in retrieve operations
+func createHandlerWithWrongKey(queries *db.Queries) *PersonAttributesHandler {
+	return &PersonAttributesHandler{
+		queries:       queries,
+		encryptionKey: "wrong-encryption-key-32bytes!!!",
+		keyVersion:    1,
+	}
+}
+
+// TestGetAllAttributes_DecryptionError tests error when decryption fails
+func TestGetAllAttributes_DecryptionError(t *testing.T) {
+	ctx := context.Background()
+	err := testdb.TruncateTables(ctx, pool)
+	assert.NoError(t, err)
+
+	// Create a test person with an attribute using the correct key
+	personID, err := createTestPerson(ctx, "test-client-decrypt-err-1")
+	assert.NoError(t, err)
+	_, err = createTestAttribute(ctx, personID, "encrypted-key", "encrypted-value")
+	assert.NoError(t, err)
+
+	// Create handler with wrong key - decryption will fail
+	queries := db.New(pool)
+	handler := createHandlerWithWrongKey(queries)
+
+	e := echo.New()
+	req := httptest.NewRequest(http.MethodGet, "/persons/"+personID+"/attributes", nil)
+	rec := httptest.NewRecorder()
+	c := e.NewContext(req, rec)
+	c.SetParamNames("personId")
+	c.SetParamValues(personID)
+
+	err = handler.GetAllAttributes(c)
+
+	assert.NoError(t, err)
+	assert.Equal(t, http.StatusInternalServerError, rec.Code)
+	assert.Contains(t, rec.Body.String(), "Failed to retrieve attributes")
+}
+
+// TestGetAttribute_DecryptionError tests error when decryption fails for single attribute
+func TestGetAttribute_DecryptionError(t *testing.T) {
+	ctx := context.Background()
+	err := testdb.TruncateTables(ctx, pool)
+	assert.NoError(t, err)
+
+	// Create a test person with an attribute using the correct key
+	personID, err := createTestPerson(ctx, "test-client-decrypt-err-2")
+	assert.NoError(t, err)
+	attrID, err := createTestAttribute(ctx, personID, "encrypted-key", "encrypted-value")
+	assert.NoError(t, err)
+
+	// Create handler with wrong key - decryption will fail
+	queries := db.New(pool)
+	handler := createHandlerWithWrongKey(queries)
+
+	e := echo.New()
+	req := httptest.NewRequest(http.MethodGet, fmt.Sprintf("/persons/%s/attributes/%d", personID, attrID), nil)
+	rec := httptest.NewRecorder()
+	c := e.NewContext(req, rec)
+	c.SetParamNames("personId", "attributeId")
+	c.SetParamValues(personID, fmt.Sprintf("%d", attrID))
+
+	err = handler.GetAttribute(c)
+
+	assert.NoError(t, err)
+	assert.Equal(t, http.StatusInternalServerError, rec.Code)
+	assert.Contains(t, rec.Body.String(), "Failed to retrieve attributes")
+}
+
+// TestUpdateAttribute_GetAttributesDecryptionError tests error when getting attributes for update fails
+func TestUpdateAttribute_GetAttributesDecryptionError(t *testing.T) {
+	ctx := context.Background()
+	err := testdb.TruncateTables(ctx, pool)
+	assert.NoError(t, err)
+
+	// Create a test person with an attribute using the correct key
+	personID, err := createTestPerson(ctx, "test-client-decrypt-err-3")
+	assert.NoError(t, err)
+	attrID, err := createTestAttribute(ctx, personID, "encrypted-key", "encrypted-value")
+	assert.NoError(t, err)
+
+	// Create handler with wrong key - decryption will fail when trying to find existing attribute
+	queries := db.New(pool)
+	handler := createHandlerWithWrongKey(queries)
+
+	e := echo.New()
+	jsonBody := `{"value":"new-value"}`
+	req := httptest.NewRequest(http.MethodPut, fmt.Sprintf("/persons/%s/attributes/%d", personID, attrID), strings.NewReader(jsonBody))
+	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
+	rec := httptest.NewRecorder()
+	c := e.NewContext(req, rec)
+	c.SetParamNames("personId", "attributeId")
+	c.SetParamValues(personID, fmt.Sprintf("%d", attrID))
+
+	err = handler.UpdateAttribute(c)
+
+	assert.NoError(t, err)
+	assert.Equal(t, http.StatusInternalServerError, rec.Code)
+	assert.Contains(t, rec.Body.String(), "Failed to retrieve attributes")
+}
+
+// TestDeleteAttribute_GetAttributesDecryptionError tests error when getting attributes for delete fails
+func TestDeleteAttribute_GetAttributesDecryptionError(t *testing.T) {
+	ctx := context.Background()
+	err := testdb.TruncateTables(ctx, pool)
+	assert.NoError(t, err)
+
+	// Create a test person with an attribute using the correct key
+	personID, err := createTestPerson(ctx, "test-client-decrypt-err-4")
+	assert.NoError(t, err)
+	attrID, err := createTestAttribute(ctx, personID, "encrypted-key", "encrypted-value")
+	assert.NoError(t, err)
+
+	// Create handler with wrong key - decryption will fail when trying to find existing attribute
+	queries := db.New(pool)
+	handler := createHandlerWithWrongKey(queries)
+
+	e := echo.New()
+	req := httptest.NewRequest(http.MethodDelete, fmt.Sprintf("/persons/%s/attributes/%d", personID, attrID), nil)
+	rec := httptest.NewRecorder()
+	c := e.NewContext(req, rec)
+	c.SetParamNames("personId", "attributeId")
+	c.SetParamValues(personID, fmt.Sprintf("%d", attrID))
+
+	err = handler.DeleteAttribute(c)
+
+	assert.NoError(t, err)
+	assert.Equal(t, http.StatusInternalServerError, rec.Code)
+	assert.Contains(t, rec.Body.String(), "Failed to retrieve attributes")
+}
+
 // createClosedPool creates a pool and immediately closes it to simulate database errors
 func createClosedPool() (*pgxpool.Pool, error) {
 	ctx := context.Background()
