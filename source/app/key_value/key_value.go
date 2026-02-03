@@ -48,9 +48,14 @@ func (h *KeyValueHandler) SetValue(c echo.Context) error {
 		})
 	}
 
-	// Set value in database
 	ctx := context.Background()
-	err := h.queries.SetValue(ctx, db.SetValueParams{
+
+	// Check if key already exists to determine response status code
+	_, err := h.queries.GetKeyValue(ctx, req.Key)
+	isNewKey := errors.Is(err, pgx.ErrNoRows)
+
+	// Set value in database
+	err = h.queries.SetValue(ctx, db.SetValueParams{
 		Key:   req.Key,
 		Value: req.Value,
 	})
@@ -85,6 +90,10 @@ func (h *KeyValueHandler) SetValue(c echo.Context) error {
 		response["updated_at"] = record.UpdatedAt.Time
 	}
 
+	// Return 201 Created for new keys, 200 OK for updates
+	if isNewKey {
+		return c.JSON(http.StatusCreated, response)
+	}
 	return c.JSON(http.StatusOK, response)
 }
 
@@ -142,9 +151,25 @@ func (h *KeyValueHandler) DeleteValue(c echo.Context) error {
 		})
 	}
 
-	// Delete value from database
 	ctx := context.Background()
-	err := h.queries.DeleteValue(ctx, key)
+
+	// Check if key exists before deleting
+	_, err := h.queries.GetKeyValue(ctx, key)
+	if err != nil {
+		if errors.Is(err, pgx.ErrNoRows) {
+			return c.JSON(http.StatusNotFound, errs.ErrorResponse{
+				Message:   "Key not found",
+				ErrorCode: errs.ErrKVKeyNotFound,
+			})
+		}
+		return c.JSON(http.StatusInternalServerError, errs.ErrorResponse{
+			Message:   "Failed to retrieve value",
+			ErrorCode: errs.ErrKVFailedRetrieveValue,
+		})
+	}
+
+	// Delete value from database
+	err = h.queries.DeleteValue(ctx, key)
 
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, errs.ErrorResponse{

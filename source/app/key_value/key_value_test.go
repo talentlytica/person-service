@@ -60,7 +60,7 @@ func TestSetValue_Success(t *testing.T) {
 	err = handler.SetValue(c)
 
 	assert.NoError(t, err)
-	assert.Equal(t, http.StatusOK, rec.Code)
+	assert.Equal(t, http.StatusCreated, rec.Code) // 201 for new keys
 	assert.Contains(t, rec.Body.String(), "test-key")
 	assert.Contains(t, rec.Body.String(), "test-value")
 }
@@ -290,7 +290,8 @@ func TestDeleteValue_DatabaseError(t *testing.T) {
 
 	assert.NoError(t, err)
 	assert.Equal(t, http.StatusInternalServerError, rec.Code)
-	assert.Contains(t, rec.Body.String(), "Failed to delete value")
+	// Now calls GetKeyValue first to check existence, so error message is "Failed to retrieve value"
+	assert.Contains(t, rec.Body.String(), "Failed to retrieve value")
 }
 
 // TestSetValue_RetrieveErrorAfterSet tests the error path when GetKeyValue fails after SetValue succeeds
@@ -313,7 +314,7 @@ func TestSetValue_RetrieveErrorAfterSet(t *testing.T) {
 
 	err = handler.SetValue(c)
 	assert.NoError(t, err)
-	assert.Equal(t, http.StatusOK, rec.Code)
+	assert.Equal(t, http.StatusCreated, rec.Code) // 201 for new keys
 
 	// Now close the pool to test retrieval error scenario
 	// We need a separate test with a custom handler that uses a pool that closes between operations
@@ -340,7 +341,7 @@ func TestSetValue_UpdateExisting(t *testing.T) {
 
 	err = handler.SetValue(c)
 	assert.NoError(t, err)
-	assert.Equal(t, http.StatusOK, rec.Code)
+	assert.Equal(t, http.StatusCreated, rec.Code) // 201 for new keys
 	assert.Contains(t, rec.Body.String(), "initial-value")
 
 	// Update with same key
@@ -447,7 +448,7 @@ func TestConcurrentSetValue_DifferentKeys(t *testing.T) {
 
 	successCount := 0
 	for code := range results {
-		if code == http.StatusOK {
+		if code == http.StatusCreated { // 201 for new keys
 			successCount++
 		}
 	}
@@ -488,7 +489,8 @@ func TestConcurrentSetValue_SameKey(t *testing.T) {
 	close(results)
 
 	for code := range results {
-		assert.Equal(t, http.StatusOK, code, "All concurrent updates should succeed")
+		// Could be 201 (create) or 200 (update) depending on race condition
+		assert.True(t, code == http.StatusOK || code == http.StatusCreated, "All concurrent writes should succeed")
 	}
 
 	// Verify only one key exists
@@ -586,7 +588,7 @@ func TestSetValue_MaxKeyLength(t *testing.T) {
 
 	err = handler.SetValue(c)
 	assert.NoError(t, err)
-	assert.Equal(t, http.StatusOK, rec.Code)
+	assert.Equal(t, http.StatusCreated, rec.Code) // 201 for new keys
 
 	// Verify retrieval works
 	req = httptest.NewRequest(http.MethodGet, "/api/key-value/"+maxKey, nil)
@@ -646,7 +648,7 @@ func TestSetValue_MaxValueLength(t *testing.T) {
 
 	err = handler.SetValue(c)
 	assert.NoError(t, err)
-	assert.Equal(t, http.StatusOK, rec.Code)
+	assert.Equal(t, http.StatusCreated, rec.Code) // 201 for new keys
 }
 
 // TestSetValue_ValueTooLong tests value exceeding VARCHAR(255) limit
@@ -706,7 +708,7 @@ func TestSetValue_SpecialCharacters(t *testing.T) {
 
 			err := handler.SetValue(c)
 			assert.NoError(t, err)
-			assert.Equal(t, http.StatusOK, rec.Code)
+			assert.Equal(t, http.StatusCreated, rec.Code) // 201 for new keys
 
 			// Verify retrieval
 			req = httptest.NewRequest(http.MethodGet, "/api/key-value/"+tc.key, nil)
@@ -754,7 +756,7 @@ func TestSetValue_UnicodeCharacters(t *testing.T) {
 
 			err := handler.SetValue(c)
 			assert.NoError(t, err)
-			assert.Equal(t, http.StatusOK, rec.Code)
+			assert.Equal(t, http.StatusCreated, rec.Code) // 201 for new keys
 		})
 	}
 }
@@ -781,7 +783,7 @@ func TestSetValue_ResponseSchema(t *testing.T) {
 
 	err = handler.SetValue(c)
 	assert.NoError(t, err)
-	assert.Equal(t, http.StatusOK, rec.Code)
+	assert.Equal(t, http.StatusCreated, rec.Code) // 201 for new keys
 
 	var response map[string]interface{}
 	err = json.Unmarshal(rec.Body.Bytes(), &response)

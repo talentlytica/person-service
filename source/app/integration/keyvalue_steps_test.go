@@ -57,8 +57,9 @@ func registerKeyValueSteps(sc *godog.ScenarioContext, tc *TestContext) {
 	})
 
 	sc.Step(`^it should respond with key "([^"]*)" and value "([^"]*)" and created_at and updated_at should be current timestamp$`, func(key, value string) error {
-		if tc.Response.Code != 200 {
-			return fmt.Errorf("expected status 200 but got %d: %s", tc.Response.Code, tc.Response.Body.String())
+		// Accept 200 (update) or 201 (create) as success
+		if tc.Response.Code != 200 && tc.Response.Code != 201 {
+			return fmt.Errorf("expected status 200 or 201 but got %d: %s", tc.Response.Code, tc.Response.Body.String())
 		}
 
 		var result map[string]interface{}
