@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	errs "person-service/errors"
 	health "person-service/healthcheck"
 	key_value "person-service/key_value"
 	"person-service/middleware"
@@ -28,12 +29,12 @@ import (
 func setupDb(port string) *db.Queries {
 	databaseURL := os.Getenv("DATABASE_URL")
 	if databaseURL == "" {
-		log.Fatalln("ERROR: DATABASE_URL environment variable is not set")
+		log.Fatalf("ERROR: DATABASE_URL environment variable is not set (error_code: %s)\n", errs.ErrDatabaseURLNotSet)
 	}
 
 	// Validate port
 	if _, err := strconv.Atoi(port); err != nil {
-		log.Fatalf("ERROR: Invalid PORT value: %s\n", err)
+		log.Fatalf("ERROR: Invalid PORT value: %s (error_code: %s)\n", err, errs.ErrInvalidPort)
 	}
 
 	fmt.Fprintf(os.Stdout, "INFO: Connecting to database...\n")
@@ -44,7 +45,7 @@ func setupDb(port string) *db.Queries {
 	// Configure connection pool
 	config, err := pgxpool.ParseConfig(databaseURL)
 	if err != nil {
-		log.Fatalf("ERROR: Failed to parse database URL: %v\n", err)
+		log.Fatalf("ERROR: Failed to parse database URL: %v (error_code: %s)\n", err, errs.ErrFailedParseDBURL)
 	}
 
 	// Set connection pool parameters
@@ -60,14 +61,14 @@ func setupDb(port string) *db.Queries {
 
 	pool, err := pgxpool.NewWithConfig(ctx, config)
 	if err != nil {
-		log.Fatalf("ERROR: Failed to create connection pool: %v\n", err)
+		log.Fatalf("ERROR: Failed to create connection pool: %v (error_code: %s)\n", err, errs.ErrFailedCreateConnPool)
 	}
 
 	fmt.Fprintf(os.Stdout, "DEBUG: Pinging database...\n")
 	// Ping database
 	if err := pool.Ping(ctx); err != nil {
-		fmt.Fprintf(os.Stderr, "ERROR: Database ping failed: %v\n", err)
-		log.Fatalf("ERROR: Failed to ping database: %v\n", err)
+		fmt.Fprintf(os.Stderr, "ERROR: Database ping failed: %v (error_code: %s)\n", err, errs.ErrDatabasePingFailed)
+		log.Fatalf("ERROR: Failed to ping database: %v (error_code: %s)\n", err, errs.ErrDatabasePingFailed)
 	}
 
 	fmt.Fprintf(os.Stdout, "DEBUG: Database ping successful!\n")
@@ -137,7 +138,7 @@ func main() {
 	// Start server in goroutine
 	go func() {
 		if err := e.Start(e.Server.Addr); err != nil && err != http.ErrServerClosed {
-			log.Printf("ERROR: Server error: %v\n", err)
+			log.Printf("ERROR: Server error: %v (error_code: %s)\n", err, errs.ErrFailedStartServer)
 		}
 	}()
 
@@ -157,7 +158,7 @@ func main() {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 	if err := e.Shutdown(ctx); err != nil {
-		log.Fatalf("ERROR: Server shutdown failed: %v\n", err)
+		log.Fatalf("ERROR: Server shutdown failed: %v (error_code: %s)\n", err, errs.ErrFailedShutdownServer)
 	}
 	fmt.Fprintf(os.Stdout, "INFO: Server gracefully stopped\n")
 }

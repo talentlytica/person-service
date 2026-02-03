@@ -2,72 +2,48 @@ package health
 
 import (
 	"context"
-	"errors"
+	"log"
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"testing"
 
-	"github.com/jackc/pgx/v5"
-	"github.com/jackc/pgx/v5/pgconn"
+	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/labstack/echo/v4"
 	"github.com/stretchr/testify/assert"
 
 	db "person-service/internal/db/generated"
+	"person-service/internal/testdb"
 )
 
-// MockDBTX is a mock for db.DBTX interface
-type MockDBTX struct {
-	ExecFunc     func(context.Context, string, ...interface{}) (pgconn.CommandTag, error)
-	QueryFunc    func(context.Context, string, ...interface{}) (pgx.Rows, error)
-	QueryRowFunc func(context.Context, string, ...interface{}) pgx.Row
-	CopyFromFunc func(ctx context.Context, tableName pgx.Identifier, columnNames []string, rowSrc pgx.CopyFromSource) (int64, error)
-}
+var pool *pgxpool.Pool
 
-func (m *MockDBTX) Exec(ctx context.Context, sql string, arguments ...interface{}) (pgconn.CommandTag, error) {
-	if m.ExecFunc != nil {
-		return m.ExecFunc(ctx, sql, arguments...)
+func TestMain(m *testing.M) {
+	ctx := context.Background()
+	var err error
+	pool, err = testdb.GetPool(ctx)
+	if err != nil {
+		log.Fatalf("Failed to get pool: %v", err)
 	}
-	return pgconn.CommandTag{}, nil
-}
-
-func (m *MockDBTX) Query(ctx context.Context, sql string, arguments ...interface{}) (pgx.Rows, error) {
-	if m.QueryFunc != nil {
-		return m.QueryFunc(ctx, sql, arguments...)
+	if err := testdb.RunMigrations(ctx, pool); err != nil {
+		log.Fatalf("Failed to run migrations: %v", err)
 	}
-	return nil, nil
-}
-
-func (m *MockDBTX) QueryRow(ctx context.Context, sql string, arguments ...interface{}) pgx.Row {
-	if m.QueryRowFunc != nil {
-		return m.QueryRowFunc(ctx, sql, arguments...)
-	}
-	return nil
-}
-
-func (m *MockDBTX) CopyFrom(ctx context.Context, tableName pgx.Identifier, columnNames []string, rowSrc pgx.CopyFromSource) (int64, error) {
-	if m.CopyFromFunc != nil {
-		return m.CopyFromFunc(ctx, tableName, columnNames, rowSrc)
-	}
-	return 0, nil
+	os.Exit(m.Run())
 }
 
 func TestNewHealthCheckHandler(t *testing.T) {
-	mockDB := &MockDBTX{}
-	queries := db.New(mockDB)
+	queries := db.New(pool)
 	handler := NewHealthCheckHandler(queries)
 	assert.NotNil(t, handler)
 	assert.Equal(t, queries, handler.queries)
 }
 
 func TestCheck_Success(t *testing.T) {
-	// Setup mock that returns success
-	mockDB := &MockDBTX{
-		ExecFunc: func(ctx context.Context, sql string, arguments ...interface{}) (pgconn.CommandTag, error) {
-			return pgconn.CommandTag{}, nil
-		},
-	}
+	ctx := context.Background()
+	err := testdb.TruncateTables(ctx, pool)
+	assert.NoError(t, err)
 
-	queries := db.New(mockDB)
+	queries := db.New(pool)
 	handler := NewHealthCheckHandler(queries)
 
 	// Setup Echo
@@ -77,7 +53,7 @@ func TestCheck_Success(t *testing.T) {
 	c := e.NewContext(req, rec)
 
 	// Execute
-	err := handler.Check(c)
+	err = handler.Check(c)
 
 	// Assert
 	assert.NoError(t, err)
@@ -86,14 +62,11 @@ func TestCheck_Success(t *testing.T) {
 }
 
 func TestCheck_DatabaseError(t *testing.T) {
-	// Setup mock that returns error
-	mockDB := &MockDBTX{
-		ExecFunc: func(ctx context.Context, sql string, arguments ...interface{}) (pgconn.CommandTag, error) {
-			return pgconn.CommandTag{}, errors.New("database connection failed")
-		},
-	}
+	// Create a handler with a closed pool to simulate database error
+	closedPool, err := createClosedPool()
+	assert.NoError(t, err)
 
-	queries := db.New(mockDB)
+	queries := db.New(closedPool)
 	handler := NewHealthCheckHandler(queries)
 
 	// Setup Echo
@@ -103,23 +76,34 @@ func TestCheck_DatabaseError(t *testing.T) {
 	c := e.NewContext(req, rec)
 
 	// Execute
-	err := handler.Check(c)
+	err = handler.Check(c)
 
 	// Assert
 	assert.NoError(t, err)
 	assert.Equal(t, http.StatusInternalServerError, rec.Code)
-	assert.Contains(t, rec.Body.String(), "unhealthy")
-	assert.Contains(t, rec.Body.String(), "database connection failed")
+	assert.Contains(t, rec.Body.String(), "HC_001_HEALTH_CHECK_FAILED")
 }
 
-// MockRow is a mock for pgx.Row interface
-type MockRow struct {
-	ScanFunc func(dest ...interface{}) error
-}
-
-func (m *MockRow) Scan(dest ...interface{}) error {
-	if m.ScanFunc != nil {
-		return m.ScanFunc(dest...)
+// createClosedPool creates a pool and immediately closes it to simulate database errors
+func createClosedPool() (*pgxpool.Pool, error) {
+	ctx := context.Background()
+	connStr, err := testdb.GetConnectionString(ctx)
+	if err != nil {
+		return nil, err
 	}
-	return nil
+
+	config, err := pgxpool.ParseConfig(connStr)
+	if err != nil {
+		return nil, err
+	}
+
+	closedPool, err := pgxpool.NewWithConfig(ctx, config)
+	if err != nil {
+		return nil, err
+	}
+
+	// Close the pool immediately
+	closedPool.Close()
+
+	return closedPool, nil
 }

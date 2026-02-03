@@ -2,14 +2,15 @@ package person_attributes
 
 import (
 	"context"
-	"database/sql"
-	"encoding/json"
+	"errors"
 	"fmt"
 	"net/http"
 	"os"
+	errs "person-service/errors"
 	db "person-service/internal/db/generated"
 	"strconv"
 
+	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgtype"
 	"github.com/labstack/echo/v4"
 )
@@ -64,30 +65,34 @@ func (h *PersonAttributesHandler) CreateAttribute(c echo.Context) error {
 	err := personID.Scan(personIDStr)
 	if err != nil {
 		// Return 404 for invalid UUID (treat as person not found)
-		return c.JSON(http.StatusNotFound, map[string]interface{}{
-			"message": "Person not found",
+		return c.JSON(http.StatusNotFound, errs.ErrorResponse{
+			Message:   "Person not found",
+			ErrorCode: errs.ErrInvalidPersonID,
 		})
 	}
 
 	// Parse request body
 	var req CreateAttributeRequest
 	if err := c.Bind(&req); err != nil {
-		return c.JSON(http.StatusBadRequest, map[string]interface{}{
-			"message": "Invalid request body",
+		return c.JSON(http.StatusBadRequest, errs.ErrorResponse{
+			Message:   "Invalid request body",
+			ErrorCode: errs.ErrInvalidRequestBody,
 		})
 	}
 
 	// Validate required fields
 	if req.Key == "" {
-		return c.JSON(http.StatusBadRequest, map[string]interface{}{
-			"message": "Key is required",
+		return c.JSON(http.StatusBadRequest, errs.ErrorResponse{
+			Message:   "Key is required",
+			ErrorCode: errs.ErrMissingRequiredFieldKey,
 		})
 	}
 
 	// Validate meta is present
 	if req.Meta == nil {
-		return c.JSON(http.StatusBadRequest, map[string]interface{}{
-			"message": "Missing required field \"meta\"",
+		return c.JSON(http.StatusBadRequest, errs.ErrorResponse{
+			Message:   "Missing required field \"meta\"",
+			ErrorCode: errs.ErrMissingRequiredFieldMeta,
 		})
 	}
 
@@ -96,13 +101,15 @@ func (h *PersonAttributesHandler) CreateAttribute(c echo.Context) error {
 	// Check if person exists
 	_, err = h.queries.GetPersonById(ctx, personID)
 	if err != nil {
-		if err == sql.ErrNoRows {
-			return c.JSON(http.StatusNotFound, map[string]interface{}{
-				"message": "Person not found",
+		if errors.Is(err, pgx.ErrNoRows) {
+			return c.JSON(http.StatusNotFound, errs.ErrorResponse{
+				Message:   "Person not found",
+				ErrorCode: errs.ErrPersonNotFound,
 			})
 		}
-		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
-			"message": "Failed to verify person",
+		return c.JSON(http.StatusInternalServerError, errs.ErrorResponse{
+			Message:   "Failed to verify person",
+			ErrorCode: errs.ErrFailedVerifyPerson,
 		})
 	}
 
@@ -117,40 +124,31 @@ func (h *PersonAttributesHandler) CreateAttribute(c echo.Context) error {
 
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "ERROR: Failed to create attribute: %v\n", err)
-		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
-			"message": "Failed to create attribute",
+		return c.JSON(http.StatusInternalServerError, errs.ErrorResponse{
+			Message:   "Failed to create attribute",
+			ErrorCode: errs.ErrFailedCreateAttribute,
 		})
 	}
 
 	// Log the request to audit log (request_log table)
 	if req.Meta != nil && req.Meta.TraceID != "" {
-		// Serialize request body for audit using proper JSON encoding
-		requestBodyMap := map[string]string{
-			"key":   req.Key,
-			"value": req.Value,
-		}
-		requestBodyBytes, err := json.Marshal(requestBodyMap)
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "WARNING: Failed to marshal request body for audit: %v\n", err)
-		} else {
-			requestBody := string(requestBodyBytes)
-			responseBody := "" // Will be populated after getting the attribute
+		// Serialize request body and response for audit
+		requestBody := fmt.Sprintf(`{"key":"%s","value":"%s"}`, req.Key, req.Value)
+		responseBody := "" // Will be populated after getting the attribute
 
-			_, logErr := h.queries.InsertRequestLog(ctx, db.InsertRequestLogParams{
-				TraceID:               req.Meta.TraceID,
-				Caller:                req.Meta.Caller,
-				Reason:                req.Meta.Reason,
-				EncryptedRequestBody:  requestBody,
-				EncryptedResponseBody: responseBody,
-				EncKey:                h.encryptionKey,
-				KeyVersion:            h.keyVersion,
-			})
+		_, logErr := h.queries.InsertRequestLog(ctx, db.InsertRequestLogParams{
+			TraceID:               req.Meta.TraceID,
+			Caller:                req.Meta.Caller,
+			Reason:                req.Meta.Reason,
+			EncryptedRequestBody:  requestBody,
+			EncryptedResponseBody: responseBody,
+			EncKey:                h.encryptionKey,
+			KeyVersion:            h.keyVersion,
+		})
 
-			if logErr != nil {
-				// Log the error but don't fail the request
-				fmt.Fprintf(os.Stderr, "WARNING: Failed to insert request log: %v\n", logErr)
-			}
-		}
+		// Note: If InsertRequestLog fails, we still continue successfully
+		// because audit logging should not block the main operation
+		_ = logErr
 	}
 
 	// Get the created attribute with decrypted value
@@ -161,8 +159,9 @@ func (h *PersonAttributesHandler) CreateAttribute(c echo.Context) error {
 	})
 
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
-			"message": "Failed to retrieve attribute",
+		return c.JSON(http.StatusInternalServerError, errs.ErrorResponse{
+			Message:   "Failed to retrieve attribute",
+			ErrorCode: errs.ErrFailedRetrieveAttribute,
 		})
 	}
 
@@ -193,8 +192,9 @@ func (h *PersonAttributesHandler) GetAllAttributes(c echo.Context) error {
 	err := personID.Scan(personIDStr)
 	if err != nil {
 		// Return 404 for invalid UUID (treat as person not found)
-		return c.JSON(http.StatusNotFound, map[string]interface{}{
-			"message": "Person not found",
+		return c.JSON(http.StatusNotFound, errs.ErrorResponse{
+			Message:   "Person not found",
+			ErrorCode: errs.ErrInvalidPersonID,
 		})
 	}
 
@@ -203,13 +203,15 @@ func (h *PersonAttributesHandler) GetAllAttributes(c echo.Context) error {
 	// Check if person exists
 	_, err = h.queries.GetPersonById(ctx, personID)
 	if err != nil {
-		if err == sql.ErrNoRows {
-			return c.JSON(http.StatusNotFound, map[string]interface{}{
-				"message": "Person not found",
+		if errors.Is(err, pgx.ErrNoRows) {
+			return c.JSON(http.StatusNotFound, errs.ErrorResponse{
+				Message:   "Person not found",
+				ErrorCode: errs.ErrPersonNotFound,
 			})
 		}
-		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
-			"message": "Failed to verify person",
+		return c.JSON(http.StatusInternalServerError, errs.ErrorResponse{
+			Message:   "Failed to verify person",
+			ErrorCode: errs.ErrFailedVerifyPerson,
 		})
 	}
 
@@ -220,8 +222,9 @@ func (h *PersonAttributesHandler) GetAllAttributes(c echo.Context) error {
 	})
 
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
-			"message": "Failed to retrieve attributes",
+		return c.JSON(http.StatusInternalServerError, errs.ErrorResponse{
+			Message:   "Failed to retrieve attributes",
+			ErrorCode: errs.ErrFailedRetrieveAttributes,
 		})
 	}
 
@@ -252,9 +255,9 @@ func (h *PersonAttributesHandler) GetAttribute(c echo.Context) error {
 	var personID pgtype.UUID
 	err := personID.Scan(personIDStr)
 	if err != nil {
-		// Return 404 for invalid UUID (treat as person not found)
-		return c.JSON(http.StatusNotFound, map[string]interface{}{
-			"message": "Person not found",
+		return c.JSON(http.StatusBadRequest, errs.ErrorResponse{
+			Message:   "Invalid person ID format",
+			ErrorCode: errs.ErrInvalidPersonID,
 		})
 	}
 
@@ -262,9 +265,9 @@ func (h *PersonAttributesHandler) GetAttribute(c echo.Context) error {
 	attributeIDStr := c.Param("attributeId")
 	attributeID, err := strconv.ParseInt(attributeIDStr, 10, 32)
 	if err != nil {
-		// Return 404 for invalid attribute ID (treat as attribute not found)
-		return c.JSON(http.StatusNotFound, map[string]interface{}{
-			"message": "Attribute not found",
+		return c.JSON(http.StatusBadRequest, errs.ErrorResponse{
+			Message:   "Invalid attribute ID format",
+			ErrorCode: errs.ErrInvalidAttributeIDFormat,
 		})
 	}
 
@@ -273,13 +276,15 @@ func (h *PersonAttributesHandler) GetAttribute(c echo.Context) error {
 	// Check if person exists
 	_, err = h.queries.GetPersonById(ctx, personID)
 	if err != nil {
-		if err == sql.ErrNoRows {
-			return c.JSON(http.StatusNotFound, map[string]interface{}{
-				"message": "Person not found",
+		if errors.Is(err, pgx.ErrNoRows) {
+			return c.JSON(http.StatusNotFound, errs.ErrorResponse{
+				Message:   "Person not found",
+				ErrorCode: errs.ErrPersonNotFound,
 			})
 		}
-		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
-			"message": "Failed to verify person",
+		return c.JSON(http.StatusInternalServerError, errs.ErrorResponse{
+			Message:   "Failed to verify person",
+			ErrorCode: errs.ErrFailedVerifyPerson,
 		})
 	}
 
@@ -290,8 +295,9 @@ func (h *PersonAttributesHandler) GetAttribute(c echo.Context) error {
 	})
 
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
-			"message": "Failed to retrieve attributes",
+		return c.JSON(http.StatusInternalServerError, errs.ErrorResponse{
+			Message:   "Failed to retrieve attributes",
+			ErrorCode: errs.ErrFailedRetrieveAttributes,
 		})
 	}
 
@@ -305,8 +311,9 @@ func (h *PersonAttributesHandler) GetAttribute(c echo.Context) error {
 	}
 
 	if foundAttr == nil {
-		return c.JSON(http.StatusNotFound, map[string]interface{}{
-			"message": "Attribute not found",
+		return c.JSON(http.StatusNotFound, errs.ErrorResponse{
+			Message:   "Attribute not found",
+			ErrorCode: errs.ErrAttributeNotFound,
 		})
 	}
 
@@ -333,9 +340,9 @@ func (h *PersonAttributesHandler) UpdateAttribute(c echo.Context) error {
 	var personID pgtype.UUID
 	err := personID.Scan(personIDStr)
 	if err != nil {
-		// Return 404 for invalid UUID (treat as person not found)
-		return c.JSON(http.StatusNotFound, map[string]interface{}{
-			"message": "Person not found",
+		return c.JSON(http.StatusBadRequest, errs.ErrorResponse{
+			Message:   "Invalid person ID format",
+			ErrorCode: errs.ErrInvalidPersonID,
 		})
 	}
 
@@ -343,17 +350,18 @@ func (h *PersonAttributesHandler) UpdateAttribute(c echo.Context) error {
 	attributeIDStr := c.Param("attributeId")
 	attributeID, err := strconv.ParseInt(attributeIDStr, 10, 32)
 	if err != nil {
-		// Return 404 for invalid attribute ID (treat as attribute not found)
-		return c.JSON(http.StatusNotFound, map[string]interface{}{
-			"message": "Attribute not found",
+		return c.JSON(http.StatusBadRequest, errs.ErrorResponse{
+			Message:   "Invalid attribute ID format",
+			ErrorCode: errs.ErrInvalidAttributeIDFormat,
 		})
 	}
 
 	// Parse request body
 	var req UpdateAttributeRequest
 	if err := c.Bind(&req); err != nil {
-		return c.JSON(http.StatusBadRequest, map[string]interface{}{
-			"message": "Invalid request body",
+		return c.JSON(http.StatusBadRequest, errs.ErrorResponse{
+			Message:   "Invalid request body",
+			ErrorCode: errs.ErrInvalidRequestBody,
 		})
 	}
 
@@ -362,13 +370,15 @@ func (h *PersonAttributesHandler) UpdateAttribute(c echo.Context) error {
 	// Check if person exists
 	_, err = h.queries.GetPersonById(ctx, personID)
 	if err != nil {
-		if err == sql.ErrNoRows {
-			return c.JSON(http.StatusNotFound, map[string]interface{}{
-				"message": "Person not found",
+		if errors.Is(err, pgx.ErrNoRows) {
+			return c.JSON(http.StatusNotFound, errs.ErrorResponse{
+				Message:   "Not found",
+				ErrorCode: errs.ErrPersonNotFound,
 			})
 		}
-		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
-			"message": "Failed to verify person",
+		return c.JSON(http.StatusInternalServerError, errs.ErrorResponse{
+			Message:   "Failed to verify person",
+			ErrorCode: errs.ErrFailedVerifyPerson,
 		})
 	}
 
@@ -379,8 +389,9 @@ func (h *PersonAttributesHandler) UpdateAttribute(c echo.Context) error {
 	})
 
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
-			"message": "Failed to retrieve attributes",
+		return c.JSON(http.StatusInternalServerError, errs.ErrorResponse{
+			Message:   "Failed to retrieve attributes",
+			ErrorCode: errs.ErrFailedRetrieveAttributes,
 		})
 	}
 
@@ -396,8 +407,9 @@ func (h *PersonAttributesHandler) UpdateAttribute(c echo.Context) error {
 	}
 
 	if !found {
-		return c.JSON(http.StatusNotFound, map[string]interface{}{
-			"message": "Attribute not found",
+		return c.JSON(http.StatusNotFound, errs.ErrorResponse{
+			Message:   "Attribute not found",
+			ErrorCode: errs.ErrAttributeNotFound,
 		})
 	}
 
@@ -414,8 +426,9 @@ func (h *PersonAttributesHandler) UpdateAttribute(c echo.Context) error {
 			AttributeKey: existingKey,
 		})
 		if err != nil {
-			return c.JSON(http.StatusInternalServerError, map[string]interface{}{
-				"message": "Failed to update attribute key",
+			return c.JSON(http.StatusInternalServerError, errs.ErrorResponse{
+				Message:   "Failed to update attribute key",
+				ErrorCode: errs.ErrFailedUpdateAttributeKey,
 			})
 		}
 	}
@@ -430,8 +443,9 @@ func (h *PersonAttributesHandler) UpdateAttribute(c echo.Context) error {
 	})
 
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
-			"message": "Failed to update attribute",
+		return c.JSON(http.StatusInternalServerError, errs.ErrorResponse{
+			Message:   "Failed to update attribute",
+			ErrorCode: errs.ErrFailedUpdateAttribute,
 		})
 	}
 
@@ -443,8 +457,9 @@ func (h *PersonAttributesHandler) UpdateAttribute(c echo.Context) error {
 	})
 
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
-			"message": "Failed to retrieve updated attribute",
+		return c.JSON(http.StatusInternalServerError, errs.ErrorResponse{
+			Message:   "Failed to retrieve updated attribute",
+			ErrorCode: errs.ErrFailedRetrieveUpdatedAttr,
 		})
 	}
 
@@ -471,9 +486,9 @@ func (h *PersonAttributesHandler) DeleteAttribute(c echo.Context) error {
 	var personID pgtype.UUID
 	err := personID.Scan(personIDStr)
 	if err != nil {
-		// Return 404 for invalid UUID (treat as person not found)
-		return c.JSON(http.StatusNotFound, map[string]interface{}{
-			"message": "Person not found",
+		return c.JSON(http.StatusBadRequest, errs.ErrorResponse{
+			Message:   "Invalid person ID format",
+			ErrorCode: errs.ErrInvalidPersonID,
 		})
 	}
 
@@ -481,9 +496,9 @@ func (h *PersonAttributesHandler) DeleteAttribute(c echo.Context) error {
 	attributeIDStr := c.Param("attributeId")
 	attributeID, err := strconv.ParseInt(attributeIDStr, 10, 32)
 	if err != nil {
-		// Return 404 for invalid attribute ID (treat as attribute not found)
-		return c.JSON(http.StatusNotFound, map[string]interface{}{
-			"message": "Attribute not found",
+		return c.JSON(http.StatusBadRequest, errs.ErrorResponse{
+			Message:   "Invalid attribute ID format",
+			ErrorCode: errs.ErrInvalidAttributeIDFormat,
 		})
 	}
 
@@ -492,13 +507,15 @@ func (h *PersonAttributesHandler) DeleteAttribute(c echo.Context) error {
 	// Check if person exists
 	_, err = h.queries.GetPersonById(ctx, personID)
 	if err != nil {
-		if err == sql.ErrNoRows {
-			return c.JSON(http.StatusNotFound, map[string]interface{}{
-				"message": "Person not found",
+		if errors.Is(err, pgx.ErrNoRows) {
+			return c.JSON(http.StatusNotFound, errs.ErrorResponse{
+				Message:   "Not found",
+				ErrorCode: errs.ErrPersonNotFound,
 			})
 		}
-		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
-			"message": "Failed to verify person",
+		return c.JSON(http.StatusInternalServerError, errs.ErrorResponse{
+			Message:   "Failed to verify person",
+			ErrorCode: errs.ErrFailedVerifyPerson,
 		})
 	}
 
@@ -509,8 +526,9 @@ func (h *PersonAttributesHandler) DeleteAttribute(c echo.Context) error {
 	})
 
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
-			"message": "Failed to retrieve attributes",
+		return c.JSON(http.StatusInternalServerError, errs.ErrorResponse{
+			Message:   "Failed to retrieve attributes",
+			ErrorCode: errs.ErrFailedRetrieveAttributes,
 		})
 	}
 
@@ -526,8 +544,9 @@ func (h *PersonAttributesHandler) DeleteAttribute(c echo.Context) error {
 	}
 
 	if !found {
-		return c.JSON(http.StatusNotFound, map[string]interface{}{
-			"message": "Attribute not found",
+		return c.JSON(http.StatusNotFound, errs.ErrorResponse{
+			Message:   "Attribute not found",
+			ErrorCode: errs.ErrAttributeNotFound,
 		})
 	}
 
@@ -538,8 +557,9 @@ func (h *PersonAttributesHandler) DeleteAttribute(c echo.Context) error {
 	})
 
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
-			"message": "Failed to delete attribute",
+		return c.JSON(http.StatusInternalServerError, errs.ErrorResponse{
+			Message:   "Failed to delete attribute",
+			ErrorCode: errs.ErrFailedDeleteAttribute,
 		})
 	}
 

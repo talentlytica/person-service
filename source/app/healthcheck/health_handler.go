@@ -4,6 +4,7 @@ import (
 	"context"
 	"net/http"
 
+	errs "person-service/errors"
 	db "person-service/internal/db/generated"
 
 	"github.com/labstack/echo/v4"
@@ -26,9 +27,9 @@ func (h *HealthCheckHandler) Check(c echo.Context) error {
 	// Call HealthCheck directly
 	err := h.queries.HealthCheck(context.Background())
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
-			"status": "unhealthy",
-			"error":  err.Error(),
+		return c.JSON(http.StatusInternalServerError, errs.ErrorResponse{
+			Message:   err.Error(),
+			ErrorCode: errs.ErrHealthCheckFailed,
 		})
 	}
 

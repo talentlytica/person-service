@@ -30,7 +30,27 @@ test-only:
 
 # run unit tests
 test-unit:
-	cd source/app && go test -v ./...
+	cd source/app && $(shell go env GOPATH)/bin/gotestsum --format testdox -- -v ./...
+
+# run Go integration tests (godog + testcontainers)
+test-integration:
+	cd source/app && $(shell go env GOPATH)/bin/gotestsum --format testdox -- -v -coverprofile=coverage-int.out -coverpkg=./... ./integration/...
+
+# run all Go tests (unit + integration) with coverage percentage
+# Coverage only includes business logic packages (excludes test utilities and generated code)
+test-all:
+	cd source/app && $(shell go env GOPATH)/bin/gotestsum --format testdox -- -v -coverprofile=coverage.out -coverpkg=./healthcheck/...,./key_value/...,./person_attributes/...,./middleware/...,./errors/... ./...
+	@echo ""
+	@echo "============================================"
+	@echo "           CODE COVERAGE SUMMARY            "
+	@echo "============================================"
+	@cd source/app && go tool cover -func=coverage.out | grep total | awk '{print "Total Coverage: " $$3}'
+	@echo "============================================"
+	@echo ""
+	@echo "Coverage by package:"
+	@cd source/app && go tool cover -func=coverage.out | grep -v "total:"
+	@echo ""
+	@echo "For detailed HTML report run: cd source/app && go tool cover -html=coverage.out"
 
 # run unit tests with coverage
 test-unit-coverage:
@@ -39,7 +59,7 @@ test-unit-coverage:
 
 # run mutation tests (requires gremlins to be installed: go install github.com/go-gremlins/gremlins/cmd/gremlins@latest)
 test-mutation:
-	cd source/app && $(shell go env GOPATH)/bin/gremlins unleash --exclude-files="vendor/.*" --exclude-files="internal/db/generated/.*" --exclude-files=".*_test\\.go$$" --exclude-files="main\\.go" --integration --timeout-coefficient=10 .
+	cd source/app && $(shell go env GOPATH)/bin/gremlins unleash --exclude-files="vendor/.*" --exclude-files="internal/db/generated/.*" --exclude-files=".*_test\\.go$$" --exclude-files="main\\.go" --integration --timeout-coefficient=30 .
 
 # run tests with coverage (integration + unit tests merged)
 test-coverage:

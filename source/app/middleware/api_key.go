@@ -5,6 +5,8 @@ import (
 	"os"
 	"regexp"
 
+	errs "person-service/errors"
+
 	"github.com/labstack/echo/v4"
 )
 
@@ -22,15 +24,17 @@ func APIKeyMiddleware() echo.MiddlewareFunc {
 
 			// Check if API key is provided
 			if apiKey == "" {
-				return c.JSON(http.StatusUnauthorized, map[string]interface{}{
-					"message": "Missing required header \"x-api-key\"",
+				return c.JSON(http.StatusUnauthorized, errs.ErrorResponse{
+					Message:   "Missing required header \"x-api-key\"",
+					ErrorCode: errs.ErrMissingAPIKey,
 				})
 			}
 
 			// Validate the format of the provided API key
 			if !apiKeyPattern.MatchString(apiKey) {
-				return c.JSON(http.StatusUnauthorized, map[string]interface{}{
-					"message": "Invalid API key format",
+				return c.JSON(http.StatusUnauthorized, errs.ErrorResponse{
+					Message:   "Invalid API key format",
+					ErrorCode: errs.ErrInvalidAPIKeyFormat,
 				})
 			}
 
@@ -45,8 +49,9 @@ func APIKeyMiddleware() echo.MiddlewareFunc {
 
 			// If neither key is active (properly configured), reject the request
 			if !blueActive && !greenActive {
-				return c.JSON(http.StatusServiceUnavailable, map[string]interface{}{
-					"message": "API keys are not properly configured",
+				return c.JSON(http.StatusServiceUnavailable, errs.ErrorResponse{
+					Message:   "API keys are not properly configured",
+					ErrorCode: errs.ErrAPIKeysNotConfigured,
 				})
 			}
 
@@ -60,8 +65,9 @@ func APIKeyMiddleware() echo.MiddlewareFunc {
 			}
 
 			if !keyValid {
-				return c.JSON(http.StatusUnauthorized, map[string]interface{}{
-					"message": "Invalid API key",
+				return c.JSON(http.StatusUnauthorized, errs.ErrorResponse{
+					Message:   "Invalid API key",
+					ErrorCode: errs.ErrInvalidAPIKey,
 				})
 			}
 
