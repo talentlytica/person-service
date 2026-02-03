@@ -9,7 +9,8 @@
       "Bash(go tool cover:*)",
       "Bash(make test-integration:*)",
       "Bash(make test-all:*)",
-      "Bash(make test-mutation:*)"
+      "Bash(make test-mutation:*)",
+      "Bash(wc:*)"
     ]
   }
 }
