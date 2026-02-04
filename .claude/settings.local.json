@@ -21,7 +21,11 @@
       "Bash(go env:*)",
       "Bash(/Users/ramad/go/bin/gremlins unleash:*)",
       "Bash(/Users/ramad/go/bin/gremlins:*)",
-      "Bash(go clean:*)"
+      "Bash(go clean:*)",
+      "Bash(ls:*)"
     ]
+  },
+  "remote": {
+    "defaultEnvironmentId": "env_011HTka4tS6pRWHnsffdkhQL"
   }
 }

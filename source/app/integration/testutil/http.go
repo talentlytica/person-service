@@ -150,3 +150,27 @@ func GetJSONField(rec *httptest.ResponseRecorder, field string) (interface{}, er
 	}
 	return result[field], nil
 }
+
+// RequestRaw executes an HTTP request with a raw body string
+func (ts *TestServer) RequestRaw(method, path string, rawBody string, headers map[string]string) *httptest.ResponseRecorder {
+	var reqBody io.Reader
+	if rawBody != "" {
+		reqBody = bytes.NewReader([]byte(rawBody))
+	}
+
+	req := httptest.NewRequest(method, path, reqBody)
+	req.Header.Set("Content-Type", "application/json")
+
+	for k, v := range headers {
+		req.Header.Set(k, v)
+	}
+
+	rec := httptest.NewRecorder()
+	ts.Echo.ServeHTTP(rec, req)
+	return rec
+}
+
+// POSTRaw executes a POST request with a raw body string
+func (ts *TestServer) POSTRaw(path string, rawBody string, headers map[string]string) *httptest.ResponseRecorder {
+	return ts.RequestRaw(http.MethodPost, path, rawBody, headers)
+}

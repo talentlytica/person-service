@@ -139,3 +139,22 @@ func CountRequestLogs(ctx context.Context, pool *pgxpool.Pool, traceID string) (
 	}
 	return count, nil
 }
+
+// DeleteKeyValueDirect deletes a key-value pair directly from the database
+func DeleteKeyValueDirect(ctx context.Context, pool *pgxpool.Pool, key string) error {
+	_, err := pool.Exec(ctx, `DELETE FROM key_value WHERE key = $1`, key)
+	if err != nil {
+		return fmt.Errorf("failed to delete key-value: %w", err)
+	}
+	return nil
+}
+
+// KeyValueExists checks if a key exists in the database
+func KeyValueExists(ctx context.Context, pool *pgxpool.Pool, key string) (bool, error) {
+	var exists bool
+	err := pool.QueryRow(ctx, `SELECT EXISTS(SELECT 1 FROM key_value WHERE key = $1)`, key).Scan(&exists)
+	if err != nil {
+		return false, fmt.Errorf("failed to check key existence: %w", err)
+	}
+	return exists, nil
+}
