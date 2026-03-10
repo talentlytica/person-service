@@ -25,7 +25,7 @@ describe('Person Attributes - API + Database Verification', () => {
   let dbClient;
   let testPersonId;
   let createdAttributeId;
-  const encryptionKey = process.env.ENCRYPTION_KEY || 'test-encryption-key-12345';
+  const encryptionKey = process.env.ENCRYPTION_KEY_1 || 'default-key-for-dev';
   
   beforeAll(async () => {
     console.log('\n🚀 Starting Person Attributes Test with DB Verification...\n');
@@ -134,12 +134,18 @@ describe('Person Attributes - API + Database Verification', () => {
     console.log(`   ID: ${attributeInDb.id}`);
     console.log(`   Person ID: ${attributeInDb.person_id}`);
     console.log(`   Attribute Key: ${attributeInDb.attribute_key}`);
-    console.log(`   Encrypted Value: ${attributeInDb.encrypted_value.substring(0, 50)}...`);
+    const encryptedHex = Buffer.isBuffer(attributeInDb.encrypted_value)
+      ? attributeInDb.encrypted_value.toString('hex').substring(0, 50)
+      : String(attributeInDb.encrypted_value).substring(0, 50);
+    console.log(`   Encrypted Value: ${encryptedHex}...`);
     console.log(`   Created At: ${attributeInDb.created_at}`);
     
-    // Step 5: Verify encryption
-    expect(attributeInDb.encrypted_value).not.toBe('test@example.com'); // Should be encrypted
-    expect(attributeInDb.encrypted_value).toContain('\\x'); // pgcrypto format starts with \x
+    // Step 5: Verify encryption - encrypted_value is a Buffer (BYTEA)
+    const encryptedStr = Buffer.isBuffer(attributeInDb.encrypted_value)
+      ? attributeInDb.encrypted_value.toString('utf8')
+      : String(attributeInDb.encrypted_value);
+    expect(encryptedStr).not.toBe('test@example.com'); // Should be encrypted
+    expect(Buffer.isBuffer(attributeInDb.encrypted_value)).toBe(true); // pgcrypto returns BYTEA
     
     // Step 6: Decrypt and verify
     console.log('\n🔓 Step 3: Decrypting value from database...');
@@ -350,7 +356,7 @@ describe('Person Attributes - API + Database Verification', () => {
     );
     
     dbResult.rows.forEach(row => {
-      expect(row.encrypted_value).toContain('\\x'); // Should be encrypted
+      expect(Buffer.isBuffer(row.encrypted_value)).toBe(true); // Should be encrypted BYTEA
     });
     
     console.log(`✅ All ${dbResult.rows.length} attributes are encrypted in database`);

@@ -19,6 +19,7 @@ import (
 	key_value "person-service/key_value"
 	"person-service/logging"
 	"person-service/middleware"
+	person "person-service/person"
 	person_attributes "person-service/person_attributes"
 )
 
@@ -138,6 +139,14 @@ func main() {
 	e.POST("/api/key-value", keyValueHandler.SetValue)
 	e.GET("/api/key-value/:key", keyValueHandler.GetValue)
 	e.DELETE("/api/key-value/:key", keyValueHandler.DeleteValue)
+
+	// Person CRUD API routes - protected with Bearer token middleware
+	personHandler := person.NewPersonHandler(queries)
+	personGroup := e.Group("/api/person", middleware.BearerMiddleware())
+	personGroup.POST("", personHandler.CreatePerson)
+	personGroup.GET("/:id", personHandler.GetPerson)
+	personGroup.PATCH("/:id", personHandler.UpdatePerson)
+	personGroup.DELETE("/:id", personHandler.DeletePerson)
 
 	// Person attributes API routes - protected with API key middleware
 	personAttributesGroup := e.Group("/persons", middleware.APIKeyMiddleware())

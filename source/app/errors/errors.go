@@ -61,6 +61,25 @@ const (
 	ErrInvalidAPIKey        = "API_004_INVALID_API_KEY"
 )
 
+// Error codes for Person CRUD endpoints
+const (
+	ErrPersonInvalidRequestBody = "P_001_INVALID_REQUEST_BODY"
+	ErrPersonMissingClientID    = "P_002_MISSING_CLIENT_ID"
+	ErrPersonInvalidID          = "P_003_INVALID_PERSON_ID"
+	ErrPersonNotFoundCRUD       = "P_101_PERSON_NOT_FOUND"
+	ErrPersonFailedCreate       = "P_201_FAILED_CREATE"
+	ErrPersonFailedUpdate       = "P_202_FAILED_UPDATE"
+	ErrPersonFailedDelete       = "P_203_FAILED_DELETE"
+	ErrPersonFailedRetrieve     = "P_204_FAILED_RETRIEVE"
+	ErrPersonDuplicateClientID  = "P_205_DUPLICATE_CLIENT_ID"
+)
+
+// Error codes for Bearer token middleware
+const (
+	ErrMissingBearerToken  = "API_005_MISSING_BEARER_TOKEN"
+	ErrInvalidBearerFormat = "API_006_INVALID_BEARER_FORMAT"
+)
+
 // Error codes for Health Check
 const (
 	// Health check errors (4000-4099)
