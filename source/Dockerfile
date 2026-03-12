@@ -3,6 +3,8 @@
 # Stage 1: Builder
 FROM golang:1.24-alpine AS builder
 
+ARG APP_VERSION=dev
+
 # Set working directory
 WORKDIR /build
 
@@ -17,9 +19,9 @@ RUN go mod download
 WORKDIR /build
 COPY app/ ./app/
 
-# Build the binary
+# Build the binary with version injected via ldflags
 WORKDIR /build/app
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -cover -o /build/person-service .
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -cover -ldflags="-X main.Version=${APP_VERSION}" -o /build/person-service .
 
 # Stage 2: Runtime
 FROM alpine:3.18

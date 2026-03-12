@@ -80,7 +80,7 @@ lint-migrations:
 
 # build the docker image and npm install in the specs folder. Make this the default target
 build:
-	cd source && docker compose build
+	cd source && APP_VERSION=$$(cat ../VERSION | tr -d '\n') docker compose build
 	cd specs && npm install
 
 # Start the backend and the web UI (nginx proxy) for local development

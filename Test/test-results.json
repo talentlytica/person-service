@@ -1,14 +1,14 @@
 {
-  "numFailedTestSuites": 2,
-  "numFailedTests": 7,
-  "numPassedTestSuites": 24,
-  "numPassedTests": 222,
+  "numFailedTestSuites": 0,
+  "numFailedTests": 0,
+  "numPassedTestSuites": 27,
+  "numPassedTests": 232,
   "numPendingTestSuites": 0,
   "numPendingTests": 0,
   "numRuntimeErrorTestSuites": 0,
   "numTodoTests": 0,
-  "numTotalTestSuites": 26,
-  "numTotalTests": 229,
+  "numTotalTestSuites": 27,
+  "numTotalTests": 232,
   "openHandles": [],
   "snapshot": {
     "added": 0,
@@ -26,299 +26,9 @@
     "unmatched": 0,
     "updated": 0
   },
-  "startTime": 1771901094658,
+  "startTime": 1773281776106,
   "success": false,
   "testResults": [
-    {
-      "leaks": false,
-      "numFailingTests": 3,
-      "numPassingTests": 2,
-      "numPendingTests": 0,
-      "numTodoTests": 0,
-      "openHandles": [],
-      "perfStats": {
-        "end": 1771901094848,
-        "runtime": 182,
-        "slow": false,
-        "start": 1771901094666
-      },
-      "skipped": false,
-      "snapshot": {
-        "added": 0,
-        "fileDeleted": false,
-        "matched": 0,
-        "unchecked": 0,
-        "uncheckedKeys": [],
-        "unmatched": 0,
-        "updated": 0
-      },
-      "testFilePath": "/Users/ramad/Works/Gti/person-services/person-service/Test/steps/person_attributes_with_db.test.js",
-      "testResults": [
-        {
-          "ancestorTitles": [
-            "Person Attributes - API + Database Verification"
-          ],
-          "duration": 19,
-          "failureDetails": [
-            {}
-          ],
-          "failureMessages": [
-            "TypeError: attributeInDb.encrypted_value.substring is not a function\n    at Object.<anonymous> (/Users/ramad/Works/Gti/person-services/person-service/Test/steps/person_attributes_with_db.test.js:137:70)\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)"
-          ],
-          "fullName": "Person Attributes - API + Database Verification 1. CREATE attribute via API and verify in database (ENCRYPTED)",
-          "invocations": 1,
-          "location": null,
-          "numPassingAsserts": 5,
-          "retryReasons": [],
-          "status": "failed",
-          "title": "1. CREATE attribute via API and verify in database (ENCRYPTED)"
-        },
-        {
-          "ancestorTitles": [
-            "Person Attributes - API + Database Verification"
-          ],
-          "duration": 6,
-          "failureDetails": [],
-          "failureMessages": [],
-          "fullName": "Person Attributes - API + Database Verification 2. GET attribute via API and verify decryption",
-          "invocations": 1,
-          "location": null,
-          "numPassingAsserts": 5,
-          "retryReasons": [],
-          "status": "passed",
-          "title": "2. GET attribute via API and verify decryption"
-        },
-        {
-          "ancestorTitles": [
-            "Person Attributes - API + Database Verification"
-          ],
-          "duration": 10,
-          "failureDetails": [
-            {
-              "length": 80,
-              "name": "error",
-              "severity": "ERROR",
-              "code": "39000",
-              "file": "px.c",
-              "line": "106",
-              "routine": "px_THROW_ERROR"
-            }
-          ],
-          "failureMessages": [
-            "error: Wrong key or corrupt data\n    at /Users/ramad/Works/Gti/person-services/person-service/Test/node_modules/pg/lib/client.js:624:17\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at Object.<anonymous> (/Users/ramad/Works/Gti/person-services/person-service/Test/steps/person_attributes_with_db.test.js:240:27)"
-          ],
-          "fullName": "Person Attributes - API + Database Verification 3. UPDATE attribute via API and verify in database",
-          "invocations": 1,
-          "location": null,
-          "numPassingAsserts": 3,
-          "retryReasons": [],
-          "status": "failed",
-          "title": "3. UPDATE attribute via API and verify in database"
-        },
-        {
-          "ancestorTitles": [
-            "Person Attributes - API + Database Verification"
-          ],
-          "duration": 6,
-          "failureDetails": [],
-          "failureMessages": [],
-          "fullName": "Person Attributes - API + Database Verification 4. DELETE attribute via API and verify in database",
-          "invocations": 1,
-          "location": null,
-          "numPassingAsserts": 3,
-          "retryReasons": [],
-          "status": "passed",
-          "title": "4. DELETE attribute via API and verify in database"
-        },
-        {
-          "ancestorTitles": [
-            "Person Attributes - API + Database Verification"
-          ],
-          "duration": 22,
-          "failureDetails": [
-            {
-              "matcherResult": {
-                "message": "expect(received).toContain(expected) // indexOf\n\nExpected value:  \"\\\\x\"\nReceived object: {\"data\": [195, 13, 4, 7, 3, 2, 72, 31, 238, 110, …], \"type\": \"Buffer\"}",
-                "pass": false
-              }
-            }
-          ],
-          "failureMessages": [
-            "Error: expect(received).toContain(expected) // indexOf\n\nExpected value:  \"\\\\x\"\nReceived object: {\"data\": [195, 13, 4, 7, 3, 2, 72, 31, 238, 110, …], \"type\": \"Buffer\"}\n    at /Users/ramad/Works/Gti/person-services/person-service/Test/steps/person_attributes_with_db.test.js:353:35\n    at Array.forEach (<anonymous>)\n    at Object.<anonymous> (/Users/ramad/Works/Gti/person-services/person-service/Test/steps/person_attributes_with_db.test.js:352:19)\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)"
-          ],
-          "fullName": "Person Attributes - API + Database Verification 5. GET ALL attributes for person",
-          "invocations": 1,
-          "location": null,
-          "numPassingAsserts": 6,
-          "retryReasons": [],
-          "status": "failed",
-          "title": "5. GET ALL attributes for person"
-        }
-      ],
-      "failureMessage": "  ● Person Attributes - API + Database Verification › 1. CREATE attribute via API and verify in database (ENCRYPTED)\n\n    TypeError: attributeInDb.encrypted_value.substring is not a function\n\n      135 |     console.log(`   Person ID: ${attributeInDb.person_id}`);\n      136 |     console.log(`   Attribute Key: ${attributeInDb.attribute_key}`);\n    > 137 |     console.log(`   Encrypted Value: ${attributeInDb.encrypted_value.substring(0, 50)}...`);\n          |                                                                      ^\n      138 |     console.log(`   Created At: ${attributeInDb.created_at}`);\n      139 |     \n      140 |     // Step 5: Verify encryption\n\n      at Object.<anonymous> (steps/person_attributes_with_db.test.js:137:70)\n\n  ● Person Attributes - API + Database Verification › 3. UPDATE attribute via API and verify in database\n\n    error: Wrong key or corrupt data\n\n      238 |     // Step 3: Decrypt and verify in database\n      239 |     console.log('🔍 Step 2: Querying database to verify update...');\n    > 240 |     const decryptResult = await dbClient.query(`\n          |                           ^\n      241 |       SELECT pgp_sym_decrypt(encrypted_value::bytea, $1) as decrypted_value\n      242 |       FROM person_attributes\n      243 |       WHERE id = $2\n\n      at node_modules/pg/lib/client.js:624:17\n      at Object.<anonymous> (steps/person_attributes_with_db.test.js:240:27)\n\n  ● Person Attributes - API + Database Verification › 5. GET ALL attributes for person\n\n    expect(received).toContain(expected) // indexOf\n\n    Expected value:  \"\\\\x\"\n    Received object: {\"data\": [195, 13, 4, 7, 3, 2, 72, 31, 238, 110, …], \"type\": \"Buffer\"}\n\n      351 |     \n      352 |     dbResult.rows.forEach(row => {\n    > 353 |       expect(row.encrypted_value).toContain('\\\\x'); // Should be encrypted\n          |                                   ^\n      354 |     });\n      355 |     \n      356 |     console.log(`✅ All ${dbResult.rows.length} attributes are encrypted in database`);\n\n      at steps/person_attributes_with_db.test.js:353:35\n          at Array.forEach (<anonymous>)\n      at Object.<anonymous> (steps/person_attributes_with_db.test.js:352:19)\n"
-    },
-    {
-      "leaks": false,
-      "numFailingTests": 4,
-      "numPassingTests": 0,
-      "numPendingTests": 0,
-      "numTodoTests": 0,
-      "openHandles": [],
-      "perfStats": {
-        "end": 1771901094909,
-        "runtime": 59,
-        "slow": false,
-        "start": 1771901094850
-      },
-      "skipped": false,
-      "snapshot": {
-        "added": 0,
-        "fileDeleted": false,
-        "matched": 0,
-        "unchecked": 0,
-        "uncheckedKeys": [],
-        "unmatched": 0,
-        "updated": 0
-      },
-      "testFilePath": "/Users/ramad/Works/Gti/person-services/person-service/Test/steps/person_crud_with_db.test.js",
-      "testResults": [
-        {
-          "ancestorTitles": [
-            "Person Service - CRUD with Database Verification"
-          ],
-          "duration": 5,
-          "failureDetails": [
-            {
-              "name": "AxiosError",
-              "isAxiosError": true,
-              "code": "ERR_BAD_REQUEST",
-              "config": {
-                "transitional": {
-                  "silentJSONParsing": true,
-                  "forcedJSONParsing": true,
-                  "clarifyTimeoutError": false,
-                  "legacyInterceptorReqResOrdering": true
-                },
-                "adapter": [
-                  "xhr",
-                  "http",
-                  "fetch"
-                ],
-                "transformRequest": [
-                  null
-                ],
-                "transformResponse": [
-                  null
-                ],
-                "timeout": 10000,
-                "xsrfCookieName": "XSRF-TOKEN",
-                "xsrfHeaderName": "X-XSRF-TOKEN",
-                "maxContentLength": -1,
-                "maxBodyLength": -1,
-                "env": {},
-                "headers": {
-                  "Accept": "application/json, text/plain, */*",
-                  "Content-Type": "application/json",
-                  "Authorization": "Bearer person-service-key-fb9c8f02-cff0-45a0-b1c3-39b4a7c0c75c",
-                  "User-Agent": "axios/1.13.5",
-                  "Content-Length": "34",
-                  "Accept-Encoding": "gzip, compress, deflate, br"
-                },
-                "baseURL": "http://localhost:3000",
-                "method": "post",
-                "url": "/api/person",
-                "data": "{\"client_id\":\"test-1771901094896\"}",
-                "allowAbsoluteUrls": true
-              },
-              "status": 404
-            }
-          ],
-          "failureMessages": [
-            "AxiosError: Request failed with status code 404\n    at settle (/Users/ramad/Works/Gti/person-services/person-service/Test/node_modules/axios/lib/core/settle.js:19:12)\n    at IncomingMessage.handleStreamEnd (/Users/ramad/Works/Gti/person-services/person-service/Test/node_modules/axios/lib/adapters/http.js:798:11)\n    at IncomingMessage.emit (node:events:530:35)\n    at endReadableNT (node:internal/streams/readable:1698:12)\n    at processTicksAndRejections (node:internal/process/task_queues:90:21)\n    at Axios.request (/Users/ramad/Works/Gti/person-services/person-service/Test/node_modules/axios/lib/core/Axios.js:46:41)\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at Object.<anonymous> (/Users/ramad/Works/Gti/person-services/person-service/Test/steps/person_crud_with_db.test.js:82:21)"
-          ],
-          "fullName": "Person Service - CRUD with Database Verification 1. CREATE person via API and verify in database",
-          "invocations": 1,
-          "location": null,
-          "numPassingAsserts": 0,
-          "retryReasons": [],
-          "status": "failed",
-          "title": "1. CREATE person via API and verify in database"
-        },
-        {
-          "ancestorTitles": [
-            "Person Service - CRUD with Database Verification"
-          ],
-          "duration": 1,
-          "failureDetails": [
-            {
-              "matcherResult": {
-                "message": "expect(received).toBeDefined()\n\nReceived: undefined",
-                "pass": false
-              }
-            }
-          ],
-          "failureMessages": [
-            "Error: expect(received).toBeDefined()\n\nReceived: undefined\n    at Object.<anonymous> (/Users/ramad/Works/Gti/person-services/person-service/Test/steps/person_crud_with_db.test.js:133:29)\n    at Promise.then.completed (/Users/ramad/Works/Gti/person-services/person-service/Test/node_modules/jest-circus/build/utils.js:298:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (/Users/ramad/Works/Gti/person-services/person-service/Test/node_modules/jest-circus/build/utils.js:231:10)\n    at _callCircusTest (/Users/ramad/Works/Gti/person-services/person-service/Test/node_modules/jest-circus/build/run.js:316:40)\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at _runTest (/Users/ramad/Works/Gti/person-services/person-service/Test/node_modules/jest-circus/build/run.js:252:3)\n    at _runTestsForDescribeBlock (/Users/ramad/Works/Gti/person-services/person-service/Test/node_modules/jest-circus/build/run.js:126:9)\n    at _runTestsForDescribeBlock (/Users/ramad/Works/Gti/person-services/person-service/Test/node_modules/jest-circus/build/run.js:121:9)\n    at run (/Users/ramad/Works/Gti/person-services/person-service/Test/node_modules/jest-circus/build/run.js:71:3)\n    at runAndTransformResultsToJestFormat (/Users/ramad/Works/Gti/person-services/person-service/Test/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)\n    at jestAdapter (/Users/ramad/Works/Gti/person-services/person-service/Test/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)\n    at runTestInternal (/Users/ramad/Works/Gti/person-services/person-service/Test/node_modules/jest-runner/build/runTest.js:367:16)\n    at runTest (/Users/ramad/Works/Gti/person-services/person-service/Test/node_modules/jest-runner/build/runTest.js:444:34)"
-          ],
-          "fullName": "Person Service - CRUD with Database Verification 2. UPDATE person via API and verify in database",
-          "invocations": 1,
-          "location": null,
-          "numPassingAsserts": 0,
-          "retryReasons": [],
-          "status": "failed",
-          "title": "2. UPDATE person via API and verify in database"
-        },
-        {
-          "ancestorTitles": [
-            "Person Service - CRUD with Database Verification"
-          ],
-          "duration": 0,
-          "failureDetails": [
-            {
-              "matcherResult": {
-                "message": "expect(received).toBeDefined()\n\nReceived: undefined",
-                "pass": false
-              }
-            }
-          ],
-          "failureMessages": [
-            "Error: expect(received).toBeDefined()\n\nReceived: undefined\n    at Object.<anonymous> (/Users/ramad/Works/Gti/person-services/person-service/Test/steps/person_crud_with_db.test.js:183:29)\n    at Promise.then.completed (/Users/ramad/Works/Gti/person-services/person-service/Test/node_modules/jest-circus/build/utils.js:298:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (/Users/ramad/Works/Gti/person-services/person-service/Test/node_modules/jest-circus/build/utils.js:231:10)\n    at _callCircusTest (/Users/ramad/Works/Gti/person-services/person-service/Test/node_modules/jest-circus/build/run.js:316:40)\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at _runTest (/Users/ramad/Works/Gti/person-services/person-service/Test/node_modules/jest-circus/build/run.js:252:3)\n    at _runTestsForDescribeBlock (/Users/ramad/Works/Gti/person-services/person-service/Test/node_modules/jest-circus/build/run.js:126:9)\n    at _runTestsForDescribeBlock (/Users/ramad/Works/Gti/person-services/person-service/Test/node_modules/jest-circus/build/run.js:121:9)\n    at run (/Users/ramad/Works/Gti/person-services/person-service/Test/node_modules/jest-circus/build/run.js:71:3)\n    at runAndTransformResultsToJestFormat (/Users/ramad/Works/Gti/person-services/person-service/Test/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)\n    at jestAdapter (/Users/ramad/Works/Gti/person-services/person-service/Test/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)\n    at runTestInternal (/Users/ramad/Works/Gti/person-services/person-service/Test/node_modules/jest-runner/build/runTest.js:367:16)\n    at runTest (/Users/ramad/Works/Gti/person-services/person-service/Test/node_modules/jest-runner/build/runTest.js:444:34)"
-          ],
-          "fullName": "Person Service - CRUD with Database Verification 3. SOFT DELETE person via API and verify in database",
-          "invocations": 1,
-          "location": null,
-          "numPassingAsserts": 0,
-          "retryReasons": [],
-          "status": "failed",
-          "title": "3. SOFT DELETE person via API and verify in database"
-        },
-        {
-          "ancestorTitles": [
-            "Person Service - CRUD with Database Verification"
-          ],
-          "duration": 0,
-          "failureDetails": [
-            {
-              "matcherResult": {
-                "message": "expect(received).toBeDefined()\n\nReceived: undefined",
-                "pass": false
-              }
-            }
-          ],
-          "failureMessages": [
-            "Error: expect(received).toBeDefined()\n\nReceived: undefined\n    at Object.<anonymous> (/Users/ramad/Works/Gti/person-services/person-service/Test/steps/person_crud_with_db.test.js:229:29)\n    at Promise.then.completed (/Users/ramad/Works/Gti/person-services/person-service/Test/node_modules/jest-circus/build/utils.js:298:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (/Users/ramad/Works/Gti/person-services/person-service/Test/node_modules/jest-circus/build/utils.js:231:10)\n    at _callCircusTest (/Users/ramad/Works/Gti/person-services/person-service/Test/node_modules/jest-circus/build/run.js:316:40)\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at _runTest (/Users/ramad/Works/Gti/person-services/person-service/Test/node_modules/jest-circus/build/run.js:252:3)\n    at _runTestsForDescribeBlock (/Users/ramad/Works/Gti/person-services/person-service/Test/node_modules/jest-circus/build/run.js:126:9)\n    at _runTestsForDescribeBlock (/Users/ramad/Works/Gti/person-services/person-service/Test/node_modules/jest-circus/build/run.js:121:9)\n    at run (/Users/ramad/Works/Gti/person-services/person-service/Test/node_modules/jest-circus/build/run.js:71:3)\n    at runAndTransformResultsToJestFormat (/Users/ramad/Works/Gti/person-services/person-service/Test/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)\n    at jestAdapter (/Users/ramad/Works/Gti/person-services/person-service/Test/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)\n    at runTestInternal (/Users/ramad/Works/Gti/person-services/person-service/Test/node_modules/jest-runner/build/runTest.js:367:16)\n    at runTest (/Users/ramad/Works/Gti/person-services/person-service/Test/node_modules/jest-runner/build/runTest.js:444:34)"
-          ],
-          "fullName": "Person Service - CRUD with Database Verification 4. VERIFY soft deleted person NOT returned by GET",
-          "invocations": 1,
-          "location": null,
-          "numPassingAsserts": 0,
-          "retryReasons": [],
-          "status": "failed",
-          "title": "4. VERIFY soft deleted person NOT returned by GET"
-        }
-      ],
-      "failureMessage": "  ● Person Service - CRUD with Database Verification › 1. CREATE person via API and verify in database\n\n    AxiosError: Request failed with status code 404\n\n      80 |     let apiResponse;\n      81 |     try {\n    > 82 |       apiResponse = await apiClient.post('/api/person', createData);\n         |                     ^\n      83 |     } catch (error) {\n      84 |       if (error.response) {\n      85 |         console.log('❌ API Error:', error.response.status, error.response.data);\n\n      at settle (node_modules/axios/lib/core/settle.js:19:12)\n      at IncomingMessage.handleStreamEnd (node_modules/axios/lib/adapters/http.js:798:11)\n      at Axios.request (node_modules/axios/lib/core/Axios.js:46:41)\n      at Object.<anonymous> (steps/person_crud_with_db.test.js:82:21)\n\n  ● Person Service - CRUD with Database Verification › 2. UPDATE person via API and verify in database\n\n    expect(received).toBeDefined()\n\n    Received: undefined\n\n      131 |     console.log('📝 Test 2: UPDATE Person\\n');\n      132 |     \n    > 133 |     expect(createdPersonId).toBeDefined();\n          |                             ^\n      134 |     \n      135 |     // Step 1: Update person via API\n      136 |     console.log('🔵 Step 1: Sending PATCH request to update person...');\n\n      at Object.<anonymous> (steps/person_crud_with_db.test.js:133:29)\n\n  ● Person Service - CRUD with Database Verification › 3. SOFT DELETE person via API and verify in database\n\n    expect(received).toBeDefined()\n\n    Received: undefined\n\n      181 |     console.log('📝 Test 3: SOFT DELETE Person\\n');\n      182 |     \n    > 183 |     expect(createdPersonId).toBeDefined();\n          |                             ^\n      184 |     \n      185 |     // Step 1: Soft delete person via API\n      186 |     console.log('🔵 Step 1: Sending DELETE request to soft delete person...');\n\n      at Object.<anonymous> (steps/person_crud_with_db.test.js:183:29)\n\n  ● Person Service - CRUD with Database Verification › 4. VERIFY soft deleted person NOT returned by GET\n\n    expect(received).toBeDefined()\n\n    Received: undefined\n\n      227 |     console.log('📝 Test 4: VERIFY Soft Delete Behavior\\n');\n      228 |     \n    > 229 |     expect(createdPersonId).toBeDefined();\n          |                             ^\n      230 |     \n      231 |     // Step 1: Try to GET soft deleted person\n      232 |     console.log('🔵 Step 1: Sending GET request for soft deleted person...');\n\n      at Object.<anonymous> (steps/person_crud_with_db.test.js:229:29)\n"
-    },
     {
       "leaks": false,
       "numFailingTests": 0,
@@ -327,10 +37,10 @@
       "numTodoTests": 0,
       "openHandles": [],
       "perfStats": {
-        "end": 1771901096089,
-        "runtime": 1179,
+        "end": 1773281777589,
+        "runtime": 1458,
         "slow": false,
-        "start": 1771901094910
+        "start": 1773281776131
       },
       "skipped": false,
       "snapshot": {
@@ -348,7 +58,7 @@
           "ancestorTitles": [
             "SPECIFICATION: Person Attributes - Business Logic"
           ],
-          "duration": 22,
+          "duration": 62,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "SPECIFICATION: Person Attributes - Business Logic SPEC: Should create audit trail for all operations",
@@ -363,7 +73,7 @@
           "ancestorTitles": [
             "SPECIFICATION: Person Attributes - Business Logic"
           ],
-          "duration": 21,
+          "duration": 60,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "SPECIFICATION: Person Attributes - Business Logic SPEC: Should handle concurrent updates gracefully",
@@ -378,7 +88,7 @@
           "ancestorTitles": [
             "SPECIFICATION: Person Attributes - Business Logic"
           ],
-          "duration": 37,
+          "duration": 24,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "SPECIFICATION: Person Attributes - Business Logic SPEC: Should cascade delete attributes when person is deleted",
@@ -393,7 +103,7 @@
           "ancestorTitles": [
             "SPECIFICATION: Person Attributes - Business Logic"
           ],
-          "duration": 1022,
+          "duration": 1032,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "SPECIFICATION: Person Attributes - Business Logic SPEC: Should maintain consistent timestamps",
@@ -408,7 +118,7 @@
           "ancestorTitles": [
             "SPECIFICATION: Person Attributes - Business Logic"
           ],
-          "duration": 6,
+          "duration": 9,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "SPECIFICATION: Person Attributes - Business Logic SPEC: Should maintain data integrity on failures",
@@ -423,7 +133,7 @@
           "ancestorTitles": [
             "SPECIFICATION: Person Attributes - Business Logic"
           ],
-          "duration": 19,
+          "duration": 17,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "SPECIFICATION: Person Attributes - Business Logic SPEC: Should enforce attribute key uniqueness per person",
@@ -445,10 +155,10 @@
       "numTodoTests": 0,
       "openHandles": [],
       "perfStats": {
-        "end": 1771901096635,
-        "runtime": 544,
+        "end": 1773281778419,
+        "runtime": 826,
         "slow": false,
-        "start": 1771901096091
+        "start": 1773281777593
       },
       "skipped": false,
       "snapshot": {
@@ -466,7 +176,7 @@
           "ancestorTitles": [
             "SPECIFICATION: Person Attributes - Security & Edge Cases"
           ],
-          "duration": 37,
+          "duration": 51,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "SPECIFICATION: Person Attributes - Security & Edge Cases SPEC: Should prevent SQL injection in attribute key",
@@ -481,7 +191,7 @@
           "ancestorTitles": [
             "SPECIFICATION: Person Attributes - Security & Edge Cases"
           ],
-          "duration": 50,
+          "duration": 71,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "SPECIFICATION: Person Attributes - Security & Edge Cases SPEC: Should sanitize XSS payloads in values",
@@ -496,7 +206,7 @@
           "ancestorTitles": [
             "SPECIFICATION: Person Attributes - Security & Edge Cases"
           ],
-          "duration": 7,
+          "duration": 13,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "SPECIFICATION: Person Attributes - Security & Edge Cases SPEC: Should handle extremely long attribute keys",
@@ -511,7 +221,7 @@
           "ancestorTitles": [
             "SPECIFICATION: Person Attributes - Security & Edge Cases"
           ],
-          "duration": 83,
+          "duration": 120,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "SPECIFICATION: Person Attributes - Security & Edge Cases SPEC: Should handle extremely long attribute values",
@@ -526,7 +236,7 @@
           "ancestorTitles": [
             "SPECIFICATION: Person Attributes - Security & Edge Cases"
           ],
-          "duration": 217,
+          "duration": 348,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "SPECIFICATION: Person Attributes - Security & Edge Cases SPEC: Should handle Unicode and special characters",
@@ -541,7 +251,7 @@
           "ancestorTitles": [
             "SPECIFICATION: Person Attributes - Security & Edge Cases"
           ],
-          "duration": 21,
+          "duration": 28,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "SPECIFICATION: Person Attributes - Security & Edge Cases SPEC: Should prevent accessing other person's attributes",
@@ -556,7 +266,7 @@
           "ancestorTitles": [
             "SPECIFICATION: Person Attributes - Security & Edge Cases"
           ],
-          "duration": 9,
+          "duration": 12,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "SPECIFICATION: Person Attributes - Security & Edge Cases SPEC: Should handle duplicate attribute keys correctly",
@@ -571,7 +281,7 @@
           "ancestorTitles": [
             "SPECIFICATION: Person Attributes - Security & Edge Cases"
           ],
-          "duration": 59,
+          "duration": 91,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "SPECIFICATION: Person Attributes - Security & Edge Cases SPEC: Should handle null and empty values appropriately",
@@ -593,10 +303,10 @@
       "numTodoTests": 0,
       "openHandles": [],
       "perfStats": {
-        "end": 1771901096807,
-        "runtime": 170,
+        "end": 1773281778656,
+        "runtime": 233,
         "slow": false,
-        "start": 1771901096637
+        "start": 1773281778423
       },
       "skipped": false,
       "snapshot": {
@@ -614,7 +324,7 @@
           "ancestorTitles": [
             "NEGATIVE: POST /persons/:personId/attributes - Create Attribute"
           ],
-          "duration": 4,
+          "duration": 8,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: POST /persons/:personId/attributes - Create Attribute Should reject request without API key",
@@ -629,7 +339,7 @@
           "ancestorTitles": [
             "NEGATIVE: POST /persons/:personId/attributes - Create Attribute"
           ],
-          "duration": 1,
+          "duration": 2,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: POST /persons/:personId/attributes - Create Attribute Should reject request with invalid API key",
@@ -644,7 +354,7 @@
           "ancestorTitles": [
             "NEGATIVE: POST /persons/:personId/attributes - Create Attribute"
           ],
-          "duration": 0,
+          "duration": 1,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: POST /persons/:personId/attributes - Create Attribute Should reject request with expired/wrong format API key",
@@ -659,7 +369,7 @@
           "ancestorTitles": [
             "NEGATIVE: POST /persons/:personId/attributes - Create Attribute"
           ],
-          "duration": 1,
+          "duration": 2,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: POST /persons/:personId/attributes - Create Attribute Should reject request with non-existent personId",
@@ -674,7 +384,7 @@
           "ancestorTitles": [
             "NEGATIVE: POST /persons/:personId/attributes - Create Attribute"
           ],
-          "duration": 1,
+          "duration": 2,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: POST /persons/:personId/attributes - Create Attribute Should reject request with invalid UUID format for personId",
@@ -719,7 +429,7 @@
           "ancestorTitles": [
             "NEGATIVE: POST /persons/:personId/attributes - Create Attribute"
           ],
-          "duration": 0,
+          "duration": 4,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: POST /persons/:personId/attributes - Create Attribute Should reject request without meta field",
@@ -734,7 +444,7 @@
           "ancestorTitles": [
             "NEGATIVE: POST /persons/:personId/attributes - Create Attribute"
           ],
-          "duration": 1,
+          "duration": 3,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: POST /persons/:personId/attributes - Create Attribute Should reject request with empty meta object",
@@ -749,7 +459,7 @@
           "ancestorTitles": [
             "NEGATIVE: POST /persons/:personId/attributes - Create Attribute"
           ],
-          "duration": 0,
+          "duration": 1,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: POST /persons/:personId/attributes - Create Attribute Should reject request without entire body",
@@ -779,7 +489,7 @@
           "ancestorTitles": [
             "NEGATIVE: POST /persons/:personId/attributes - Create Attribute"
           ],
-          "duration": 2,
+          "duration": 1,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: POST /persons/:personId/attributes - Create Attribute Should reject null as key",
@@ -809,7 +519,7 @@
           "ancestorTitles": [
             "NEGATIVE: POST /persons/:personId/attributes - Create Attribute"
           ],
-          "duration": 0,
+          "duration": 1,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: POST /persons/:personId/attributes - Create Attribute Should reject number as key",
@@ -869,7 +579,7 @@
           "ancestorTitles": [
             "NEGATIVE: POST /persons/:personId/attributes - Create Attribute"
           ],
-          "duration": 0,
+          "duration": 1,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: POST /persons/:personId/attributes - Create Attribute Should reject wrong Content-Type",
@@ -899,7 +609,7 @@
           "ancestorTitles": [
             "NEGATIVE: POST /persons/:personId/attributes - Create Attribute"
           ],
-          "duration": 63,
+          "duration": 73,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: POST /persons/:personId/attributes - Create Attribute Should handle or reject extremely long value",
@@ -914,7 +624,7 @@
           "ancestorTitles": [
             "NEGATIVE: POST /persons/:personId/attributes - Create Attribute"
           ],
-          "duration": 17,
+          "duration": 24,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: POST /persons/:personId/attributes - Create Attribute Should reject GET method on POST endpoint",
@@ -951,10 +661,10 @@
       "numTodoTests": 0,
       "openHandles": [],
       "perfStats": {
-        "end": 1771901096927,
-        "runtime": 119,
+        "end": 1773281778868,
+        "runtime": 209,
         "slow": false,
-        "start": 1771901096808
+        "start": 1773281778659
       },
       "skipped": false,
       "snapshot": {
@@ -972,7 +682,7 @@
           "ancestorTitles": [
             "Person Attributes API - Full Verification with Encryption"
           ],
-          "duration": 14,
+          "duration": 23,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "Person Attributes API - Full Verification with Encryption 1. CREATE attribute via API and verify ENCRYPTION in database",
@@ -987,7 +697,7 @@
           "ancestorTitles": [
             "Person Attributes API - Full Verification with Encryption"
           ],
-          "duration": 9,
+          "duration": 17,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "Person Attributes API - Full Verification with Encryption 2. GET attribute via API and verify DECRYPTION",
@@ -1002,7 +712,7 @@
           "ancestorTitles": [
             "Person Attributes API - Full Verification with Encryption"
           ],
-          "duration": 15,
+          "duration": 20,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "Person Attributes API - Full Verification with Encryption 3. UPDATE attribute and verify RE-ENCRYPTION in database",
@@ -1017,7 +727,7 @@
           "ancestorTitles": [
             "Person Attributes API - Full Verification with Encryption"
           ],
-          "duration": 13,
+          "duration": 24,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "Person Attributes API - Full Verification with Encryption 4. DELETE attribute and verify complete removal from database",
@@ -1032,7 +742,7 @@
           "ancestorTitles": [
             "Person Attributes API - Full Verification with Encryption"
           ],
-          "duration": 15,
+          "duration": 29,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "Person Attributes API - Full Verification with Encryption 5. FULL CRUD LIFECYCLE with encryption at each step",
@@ -1054,10 +764,10 @@
       "numTodoTests": 0,
       "openHandles": [],
       "perfStats": {
-        "end": 1771901097058,
-        "runtime": 130,
+        "end": 1773281779063,
+        "runtime": 192,
         "slow": false,
-        "start": 1771901096928
+        "start": 1773281778871
       },
       "skipped": false,
       "snapshot": {
@@ -1075,7 +785,7 @@
           "ancestorTitles": [
             "NEGATIVE: POST /api/key-value - Create/Update Key-Value"
           ],
-          "duration": 4,
+          "duration": 8,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: POST /api/key-value - Create/Update Key-Value Should reject request with missing key field",
@@ -1120,7 +830,7 @@
           "ancestorTitles": [
             "NEGATIVE: POST /api/key-value - Create/Update Key-Value"
           ],
-          "duration": 1,
+          "duration": 2,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: POST /api/key-value - Create/Update Key-Value Should reject empty string as key",
@@ -1180,7 +890,7 @@
           "ancestorTitles": [
             "NEGATIVE: POST /api/key-value - Create/Update Key-Value"
           ],
-          "duration": 1,
+          "duration": 2,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: POST /api/key-value - Create/Update Key-Value Should reject number as key",
@@ -1195,7 +905,7 @@
           "ancestorTitles": [
             "NEGATIVE: POST /api/key-value - Create/Update Key-Value"
           ],
-          "duration": 1,
+          "duration": 2,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: POST /api/key-value - Create/Update Key-Value Should reject object as key",
@@ -1210,7 +920,7 @@
           "ancestorTitles": [
             "NEGATIVE: POST /api/key-value - Create/Update Key-Value"
           ],
-          "duration": 1,
+          "duration": 2,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: POST /api/key-value - Create/Update Key-Value Should reject array as key",
@@ -1240,7 +950,7 @@
           "ancestorTitles": [
             "NEGATIVE: POST /api/key-value - Create/Update Key-Value"
           ],
-          "duration": 1,
+          "duration": 2,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: POST /api/key-value - Create/Update Key-Value Should reject invalid JSON",
@@ -1270,7 +980,7 @@
           "ancestorTitles": [
             "NEGATIVE: POST /api/key-value - Create/Update Key-Value"
           ],
-          "duration": 4,
+          "duration": 5,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: POST /api/key-value - Create/Update Key-Value Should handle or reject extremely long key (10KB)",
@@ -1285,7 +995,7 @@
           "ancestorTitles": [
             "NEGATIVE: POST /api/key-value - Create/Update Key-Value"
           ],
-          "duration": 51,
+          "duration": 52,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: POST /api/key-value - Create/Update Key-Value Should handle or reject extremely long value (1MB)",
@@ -1315,7 +1025,7 @@
           "ancestorTitles": [
             "NEGATIVE: POST /api/key-value - Create/Update Key-Value"
           ],
-          "duration": 3,
+          "duration": 5,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: POST /api/key-value - Create/Update Key-Value Should handle or reject key with special characters",
@@ -1330,7 +1040,7 @@
           "ancestorTitles": [
             "NEGATIVE: POST /api/key-value - Create/Update Key-Value"
           ],
-          "duration": 1,
+          "duration": 3,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: POST /api/key-value - Create/Update Key-Value Should handle extra fields in request body",
@@ -1347,15 +1057,118 @@
     {
       "leaks": false,
       "numFailingTests": 0,
+      "numPassingTests": 5,
+      "numPendingTests": 0,
+      "numTodoTests": 0,
+      "openHandles": [],
+      "perfStats": {
+        "end": 1773281779325,
+        "runtime": 259,
+        "slow": false,
+        "start": 1773281779066
+      },
+      "skipped": false,
+      "snapshot": {
+        "added": 0,
+        "fileDeleted": false,
+        "matched": 0,
+        "unchecked": 0,
+        "uncheckedKeys": [],
+        "unmatched": 0,
+        "updated": 0
+      },
+      "testFilePath": "/Users/ramad/Works/Gti/person-services/person-service/Test/API_Tests/comprehensive_tests/key_value_full_verification.test.js",
+      "testResults": [
+        {
+          "ancestorTitles": [
+            "Key-Value API - Full CRUD with Database Verification"
+          ],
+          "duration": 23,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Key-Value API - Full CRUD with Database Verification 1. CREATE key-value via API and verify in database",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 10,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "1. CREATE key-value via API and verify in database"
+        },
+        {
+          "ancestorTitles": [
+            "Key-Value API - Full CRUD with Database Verification"
+          ],
+          "duration": 9,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Key-Value API - Full CRUD with Database Verification 2. GET key-value via API and verify response matches database",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 5,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "2. GET key-value via API and verify response matches database"
+        },
+        {
+          "ancestorTitles": [
+            "Key-Value API - Full CRUD with Database Verification"
+          ],
+          "duration": 11,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Key-Value API - Full CRUD with Database Verification 3. UPDATE key-value via API and verify in database",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 5,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "3. UPDATE key-value via API and verify in database"
+        },
+        {
+          "ancestorTitles": [
+            "Key-Value API - Full CRUD with Database Verification"
+          ],
+          "duration": 13,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Key-Value API - Full CRUD with Database Verification 4. DELETE key-value via API and verify removal from database",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 4,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "4. DELETE key-value via API and verify removal from database"
+        },
+        {
+          "ancestorTitles": [
+            "Key-Value API - Full CRUD with Database Verification"
+          ],
+          "duration": 20,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Key-Value API - Full CRUD with Database Verification 5. FULL CRUD LIFECYCLE with step-by-step database verification",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 6,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "5. FULL CRUD LIFECYCLE with step-by-step database verification"
+        }
+      ],
+      "failureMessage": null
+    },
+    {
+      "leaks": false,
+      "numFailingTests": 0,
       "numPassingTests": 20,
       "numPendingTests": 0,
       "numTodoTests": 0,
       "openHandles": [],
       "perfStats": {
-        "end": 1771901097151,
-        "runtime": 92,
+        "end": 1773281779509,
+        "runtime": 182,
         "slow": false,
-        "start": 1771901097059
+        "start": 1773281779327
       },
       "skipped": false,
       "snapshot": {
@@ -1373,7 +1186,7 @@
           "ancestorTitles": [
             "NEGATIVE: PUT /persons/:personId/attributes/:attributeId"
           ],
-          "duration": 4,
+          "duration": 11,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: PUT /persons/:personId/attributes/:attributeId Should reject request without API key",
@@ -1388,7 +1201,7 @@
           "ancestorTitles": [
             "NEGATIVE: PUT /persons/:personId/attributes/:attributeId"
           ],
-          "duration": 1,
+          "duration": 3,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: PUT /persons/:personId/attributes/:attributeId Should reject request with invalid API key",
@@ -1403,7 +1216,7 @@
           "ancestorTitles": [
             "NEGATIVE: PUT /persons/:personId/attributes/:attributeId"
           ],
-          "duration": 2,
+          "duration": 3,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: PUT /persons/:personId/attributes/:attributeId Should return 404 for non-existent personId",
@@ -1418,7 +1231,7 @@
           "ancestorTitles": [
             "NEGATIVE: PUT /persons/:personId/attributes/:attributeId"
           ],
-          "duration": 1,
+          "duration": 3,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: PUT /persons/:personId/attributes/:attributeId Should return 404 for non-existent attributeId",
@@ -1448,7 +1261,7 @@
           "ancestorTitles": [
             "NEGATIVE: PUT /persons/:personId/attributes/:attributeId"
           ],
-          "duration": 1,
+          "duration": 2,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: PUT /persons/:personId/attributes/:attributeId Should reject invalid UUID format for attributeId",
@@ -1478,7 +1291,7 @@
           "ancestorTitles": [
             "NEGATIVE: PUT /persons/:personId/attributes/:attributeId"
           ],
-          "duration": 1,
+          "duration": 2,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: PUT /persons/:personId/attributes/:attributeId Should reject empty body",
@@ -1523,7 +1336,7 @@
           "ancestorTitles": [
             "NEGATIVE: PUT /persons/:personId/attributes/:attributeId"
           ],
-          "duration": 0,
+          "duration": 1,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: PUT /persons/:personId/attributes/:attributeId Should reject null as value",
@@ -1568,7 +1381,7 @@
           "ancestorTitles": [
             "NEGATIVE: PUT /persons/:personId/attributes/:attributeId"
           ],
-          "duration": 0,
+          "duration": 1,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: PUT /persons/:personId/attributes/:attributeId Should reject object as value",
@@ -1628,7 +1441,7 @@
           "ancestorTitles": [
             "NEGATIVE: PUT /persons/:personId/attributes/:attributeId"
           ],
-          "duration": 18,
+          "duration": 47,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: PUT /persons/:personId/attributes/:attributeId Should handle or reject extremely long value",
@@ -1643,7 +1456,7 @@
           "ancestorTitles": [
             "NEGATIVE: PUT /persons/:personId/attributes/:attributeId"
           ],
-          "duration": 0,
+          "duration": 2,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: PUT /persons/:personId/attributes/:attributeId Should reject POST method on PUT endpoint",
@@ -1680,10 +1493,10 @@
       "numTodoTests": 0,
       "openHandles": [],
       "perfStats": {
-        "end": 1771901097249,
-        "runtime": 96,
+        "end": 1773281779681,
+        "runtime": 169,
         "slow": false,
-        "start": 1771901097153
+        "start": 1773281779512
       },
       "skipped": false,
       "snapshot": {
@@ -1695,82 +1508,82 @@
         "unmatched": 0,
         "updated": 0
       },
-      "testFilePath": "/Users/ramad/Works/Gti/person-services/person-service/Test/API_Tests/comprehensive_tests/key_value_full_verification.test.js",
+      "testFilePath": "/Users/ramad/Works/Gti/person-services/person-service/Test/steps/person_attributes_with_db.test.js",
       "testResults": [
         {
           "ancestorTitles": [
-            "Key-Value API - Full CRUD with Database Verification"
+            "Person Attributes - API + Database Verification"
           ],
-          "duration": 11,
+          "duration": 24,
           "failureDetails": [],
           "failureMessages": [],
-          "fullName": "Key-Value API - Full CRUD with Database Verification 1. CREATE key-value via API and verify in database",
+          "fullName": "Person Attributes - API + Database Verification 1. CREATE attribute via API and verify in database (ENCRYPTED)",
           "invocations": 1,
           "location": null,
-          "numPassingAsserts": 10,
+          "numPassingAsserts": 8,
           "retryReasons": [],
           "status": "passed",
-          "title": "1. CREATE key-value via API and verify in database"
+          "title": "1. CREATE attribute via API and verify in database (ENCRYPTED)"
         },
         {
           "ancestorTitles": [
-            "Key-Value API - Full CRUD with Database Verification"
+            "Person Attributes - API + Database Verification"
           ],
-          "duration": 4,
+          "duration": 6,
           "failureDetails": [],
           "failureMessages": [],
-          "fullName": "Key-Value API - Full CRUD with Database Verification 2. GET key-value via API and verify response matches database",
-          "invocations": 1,
-          "location": null,
-          "numPassingAsserts": 5,
-          "retryReasons": [],
-          "status": "passed",
-          "title": "2. GET key-value via API and verify response matches database"
-        },
-        {
-          "ancestorTitles": [
-            "Key-Value API - Full CRUD with Database Verification"
-          ],
-          "duration": 10,
-          "failureDetails": [],
-          "failureMessages": [],
-          "fullName": "Key-Value API - Full CRUD with Database Verification 3. UPDATE key-value via API and verify in database",
+          "fullName": "Person Attributes - API + Database Verification 2. GET attribute via API and verify decryption",
           "invocations": 1,
           "location": null,
           "numPassingAsserts": 5,
           "retryReasons": [],
           "status": "passed",
-          "title": "3. UPDATE key-value via API and verify in database"
+          "title": "2. GET attribute via API and verify decryption"
         },
         {
           "ancestorTitles": [
-            "Key-Value API - Full CRUD with Database Verification"
+            "Person Attributes - API + Database Verification"
           ],
-          "duration": 11,
+          "duration": 9,
           "failureDetails": [],
           "failureMessages": [],
-          "fullName": "Key-Value API - Full CRUD with Database Verification 4. DELETE key-value via API and verify removal from database",
+          "fullName": "Person Attributes - API + Database Verification 3. UPDATE attribute via API and verify in database",
           "invocations": 1,
           "location": null,
           "numPassingAsserts": 4,
           "retryReasons": [],
           "status": "passed",
-          "title": "4. DELETE key-value via API and verify removal from database"
+          "title": "3. UPDATE attribute via API and verify in database"
         },
         {
           "ancestorTitles": [
-            "Key-Value API - Full CRUD with Database Verification"
+            "Person Attributes - API + Database Verification"
           ],
-          "duration": 13,
+          "duration": 7,
           "failureDetails": [],
           "failureMessages": [],
-          "fullName": "Key-Value API - Full CRUD with Database Verification 5. FULL CRUD LIFECYCLE with step-by-step database verification",
+          "fullName": "Person Attributes - API + Database Verification 4. DELETE attribute via API and verify in database",
           "invocations": 1,
           "location": null,
-          "numPassingAsserts": 6,
+          "numPassingAsserts": 3,
           "retryReasons": [],
           "status": "passed",
-          "title": "5. FULL CRUD LIFECYCLE with step-by-step database verification"
+          "title": "4. DELETE attribute via API and verify in database"
+        },
+        {
+          "ancestorTitles": [
+            "Person Attributes - API + Database Verification"
+          ],
+          "duration": 27,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Person Attributes - API + Database Verification 5. GET ALL attributes for person",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 9,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "5. GET ALL attributes for person"
         }
       ],
       "failureMessage": null
@@ -1783,10 +1596,10 @@
       "numTodoTests": 0,
       "openHandles": [],
       "perfStats": {
-        "end": 1771901097345,
-        "runtime": 94,
+        "end": 1773281779835,
+        "runtime": 152,
         "slow": false,
-        "start": 1771901097251
+        "start": 1773281779683
       },
       "skipped": false,
       "snapshot": {
@@ -1804,7 +1617,7 @@
           "ancestorTitles": [
             "DELETE /persons/:personId/attributes/:attributeId - Delete Attribute"
           ],
-          "duration": 12,
+          "duration": 15,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "DELETE /persons/:personId/attributes/:attributeId - Delete Attribute Delete an existing attribute",
@@ -1819,7 +1632,7 @@
           "ancestorTitles": [
             "DELETE /persons/:personId/attributes/:attributeId - Delete Attribute"
           ],
-          "duration": 9,
+          "duration": 11,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "DELETE /persons/:personId/attributes/:attributeId - Delete Attribute Verify attribute is deleted from database",
@@ -1834,7 +1647,7 @@
           "ancestorTitles": [
             "DELETE /persons/:personId/attributes/:attributeId - Delete Attribute"
           ],
-          "duration": 2,
+          "duration": 3,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "DELETE /persons/:personId/attributes/:attributeId - Delete Attribute Delete non-existent attribute",
@@ -1849,7 +1662,7 @@
           "ancestorTitles": [
             "DELETE /persons/:personId/attributes/:attributeId - Delete Attribute"
           ],
-          "duration": 4,
+          "duration": 7,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "DELETE /persons/:personId/attributes/:attributeId - Delete Attribute Delete without API key",
@@ -1864,7 +1677,7 @@
           "ancestorTitles": [
             "DELETE /persons/:personId/attributes/:attributeId - Delete Attribute"
           ],
-          "duration": 16,
+          "duration": 21,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "DELETE /persons/:personId/attributes/:attributeId - Delete Attribute Full CRUD lifecycle",
@@ -1881,251 +1694,15 @@
     {
       "leaks": false,
       "numFailingTests": 0,
-      "numPassingTests": 6,
-      "numPendingTests": 0,
-      "numTodoTests": 0,
-      "openHandles": [],
-      "perfStats": {
-        "end": 1771901097428,
-        "runtime": 81,
-        "slow": false,
-        "start": 1771901097347
-      },
-      "skipped": false,
-      "snapshot": {
-        "added": 0,
-        "fileDeleted": false,
-        "matched": 0,
-        "unchecked": 0,
-        "uncheckedKeys": [],
-        "unmatched": 0,
-        "updated": 0
-      },
-      "testFilePath": "/Users/ramad/Works/Gti/person-services/person-service/Test/API_Tests/tests/DELETE_api_key-value_key.test.js",
-      "testResults": [
-        {
-          "ancestorTitles": [
-            "DELETE /api/key-value/:key - Delete Key-Value"
-          ],
-          "duration": 8,
-          "failureDetails": [],
-          "failureMessages": [],
-          "fullName": "DELETE /api/key-value/:key - Delete Key-Value Delete an existing key-value pair",
-          "invocations": 1,
-          "location": null,
-          "numPassingAsserts": 2,
-          "retryReasons": [],
-          "status": "passed",
-          "title": "Delete an existing key-value pair"
-        },
-        {
-          "ancestorTitles": [
-            "DELETE /api/key-value/:key - Delete Key-Value"
-          ],
-          "duration": 5,
-          "failureDetails": [],
-          "failureMessages": [],
-          "fullName": "DELETE /api/key-value/:key - Delete Key-Value Verify key is deleted from database",
-          "invocations": 1,
-          "location": null,
-          "numPassingAsserts": 2,
-          "retryReasons": [],
-          "status": "passed",
-          "title": "Verify key is deleted from database"
-        },
-        {
-          "ancestorTitles": [
-            "DELETE /api/key-value/:key - Delete Key-Value"
-          ],
-          "duration": 2,
-          "failureDetails": [],
-          "failureMessages": [],
-          "fullName": "DELETE /api/key-value/:key - Delete Key-Value Delete non-existent key",
-          "invocations": 1,
-          "location": null,
-          "numPassingAsserts": 1,
-          "retryReasons": [],
-          "status": "passed",
-          "title": "Delete non-existent key"
-        },
-        {
-          "ancestorTitles": [
-            "DELETE /api/key-value/:key - Delete Key-Value"
-          ],
-          "duration": 5,
-          "failureDetails": [],
-          "failureMessages": [],
-          "fullName": "DELETE /api/key-value/:key - Delete Key-Value Delete same key twice",
-          "invocations": 1,
-          "location": null,
-          "numPassingAsserts": 2,
-          "retryReasons": [],
-          "status": "passed",
-          "title": "Delete same key twice"
-        },
-        {
-          "ancestorTitles": [
-            "DELETE /api/key-value/:key - Delete Key-Value"
-          ],
-          "duration": 8,
-          "failureDetails": [],
-          "failureMessages": [],
-          "fullName": "DELETE /api/key-value/:key - Delete Key-Value Delete multiple keys sequentially",
-          "invocations": 1,
-          "location": null,
-          "numPassingAsserts": 4,
-          "retryReasons": [],
-          "status": "passed",
-          "title": "Delete multiple keys sequentially"
-        },
-        {
-          "ancestorTitles": [
-            "DELETE /api/key-value/:key - Delete Key-Value"
-          ],
-          "duration": 9,
-          "failureDetails": [],
-          "failureMessages": [],
-          "fullName": "DELETE /api/key-value/:key - Delete Key-Value CRUD lifecycle",
-          "invocations": 1,
-          "location": null,
-          "numPassingAsserts": 7,
-          "retryReasons": [],
-          "status": "passed",
-          "title": "CRUD lifecycle"
-        }
-      ],
-      "failureMessage": null
-    },
-    {
-      "leaks": false,
-      "numFailingTests": 0,
-      "numPassingTests": 6,
-      "numPendingTests": 0,
-      "numTodoTests": 0,
-      "openHandles": [],
-      "perfStats": {
-        "end": 1771901097505,
-        "runtime": 76,
-        "slow": false,
-        "start": 1771901097429
-      },
-      "skipped": false,
-      "snapshot": {
-        "added": 0,
-        "fileDeleted": false,
-        "matched": 0,
-        "unchecked": 0,
-        "uncheckedKeys": [],
-        "unmatched": 0,
-        "updated": 0
-      },
-      "testFilePath": "/Users/ramad/Works/Gti/person-services/person-service/Test/API_Tests/tests/GET_api_key-value_key.test.js",
-      "testResults": [
-        {
-          "ancestorTitles": [
-            "GET /api/key-value/:key - Retrieve Value"
-          ],
-          "duration": 7,
-          "failureDetails": [],
-          "failureMessages": [],
-          "fullName": "GET /api/key-value/:key - Retrieve Value Get an existing key-value pair",
-          "invocations": 1,
-          "location": null,
-          "numPassingAsserts": 5,
-          "retryReasons": [],
-          "status": "passed",
-          "title": "Get an existing key-value pair"
-        },
-        {
-          "ancestorTitles": [
-            "GET /api/key-value/:key - Retrieve Value"
-          ],
-          "duration": 2,
-          "failureDetails": [],
-          "failureMessages": [],
-          "fullName": "GET /api/key-value/:key - Retrieve Value Get non-existent key",
-          "invocations": 1,
-          "location": null,
-          "numPassingAsserts": 2,
-          "retryReasons": [],
-          "status": "passed",
-          "title": "Get non-existent key"
-        },
-        {
-          "ancestorTitles": [
-            "GET /api/key-value/:key - Retrieve Value"
-          ],
-          "duration": 3,
-          "failureDetails": [],
-          "failureMessages": [],
-          "fullName": "GET /api/key-value/:key - Retrieve Value Get key with special characters",
-          "invocations": 1,
-          "location": null,
-          "numPassingAsserts": 2,
-          "retryReasons": [],
-          "status": "passed",
-          "title": "Get key with special characters"
-        },
-        {
-          "ancestorTitles": [
-            "GET /api/key-value/:key - Retrieve Value"
-          ],
-          "duration": 5,
-          "failureDetails": [],
-          "failureMessages": [],
-          "fullName": "GET /api/key-value/:key - Retrieve Value Get key returns latest value after update",
-          "invocations": 1,
-          "location": null,
-          "numPassingAsserts": 2,
-          "retryReasons": [],
-          "status": "passed",
-          "title": "Get key returns latest value after update"
-        },
-        {
-          "ancestorTitles": [
-            "GET /api/key-value/:key - Retrieve Value"
-          ],
-          "duration": 5,
-          "failureDetails": [],
-          "failureMessages": [],
-          "fullName": "GET /api/key-value/:key - Retrieve Value Get multiple different keys",
-          "invocations": 1,
-          "location": null,
-          "numPassingAsserts": 3,
-          "retryReasons": [],
-          "status": "passed",
-          "title": "Get multiple different keys"
-        },
-        {
-          "ancestorTitles": [
-            "GET /api/key-value/:key - Retrieve Value"
-          ],
-          "duration": 3,
-          "failureDetails": [],
-          "failureMessages": [],
-          "fullName": "GET /api/key-value/:key - Retrieve Value Verify timestamps are valid",
-          "invocations": 1,
-          "location": null,
-          "numPassingAsserts": 4,
-          "retryReasons": [],
-          "status": "passed",
-          "title": "Verify timestamps are valid"
-        }
-      ],
-      "failureMessage": null
-    },
-    {
-      "leaks": false,
-      "numFailingTests": 0,
       "numPassingTests": 19,
       "numPendingTests": 0,
       "numTodoTests": 0,
       "openHandles": [],
       "perfStats": {
-        "end": 1771901097590,
-        "runtime": 83,
+        "end": 1773281779978,
+        "runtime": 139,
         "slow": false,
-        "start": 1771901097507
+        "start": 1773281779839
       },
       "skipped": false,
       "snapshot": {
@@ -2143,7 +1720,7 @@
           "ancestorTitles": [
             "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId"
           ],
-          "duration": 4,
+          "duration": 9,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId Should reject request without API key",
@@ -2158,7 +1735,7 @@
           "ancestorTitles": [
             "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId"
           ],
-          "duration": 1,
+          "duration": 2,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId Should reject request with invalid API key",
@@ -2173,7 +1750,7 @@
           "ancestorTitles": [
             "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId"
           ],
-          "duration": 1,
+          "duration": 3,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId Should return 404 for non-existent personId",
@@ -2188,7 +1765,7 @@
           "ancestorTitles": [
             "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId"
           ],
-          "duration": 2,
+          "duration": 3,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId Should return 404 for non-existent attributeId",
@@ -2203,7 +1780,7 @@
           "ancestorTitles": [
             "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId"
           ],
-          "duration": 5,
+          "duration": 4,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId Should handle DELETE of already deleted attribute (idempotent)",
@@ -2218,7 +1795,7 @@
           "ancestorTitles": [
             "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId"
           ],
-          "duration": 0,
+          "duration": 1,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId Should reject invalid UUID format for personId",
@@ -2248,7 +1825,7 @@
           "ancestorTitles": [
             "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId"
           ],
-          "duration": 1,
+          "duration": 3,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId Should reject both IDs with invalid format",
@@ -2293,7 +1870,7 @@
           "ancestorTitles": [
             "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId"
           ],
-          "duration": 2,
+          "duration": 3,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId Should ignore request body on DELETE",
@@ -2308,7 +1885,7 @@
           "ancestorTitles": [
             "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId"
           ],
-          "duration": 0,
+          "duration": 1,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId Should handle SQL injection in personId",
@@ -2338,7 +1915,7 @@
           "ancestorTitles": [
             "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId"
           ],
-          "duration": 0,
+          "duration": 1,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId Should prevent path traversal",
@@ -2353,7 +1930,7 @@
           "ancestorTitles": [
             "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId"
           ],
-          "duration": 2,
+          "duration": 1,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId Should handle XSS payload in IDs",
@@ -2368,7 +1945,7 @@
           "ancestorTitles": [
             "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId"
           ],
-          "duration": 0,
+          "duration": 1,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId Should reject POST method on DELETE endpoint",
@@ -2398,7 +1975,7 @@
           "ancestorTitles": [
             "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId"
           ],
-          "duration": 3,
+          "duration": 5,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: DELETE /persons/:personId/attributes/:attributeId Should handle multiple concurrent DELETEs of same attribute",
@@ -2430,15 +2007,339 @@
     {
       "leaks": false,
       "numFailingTests": 0,
+      "numPassingTests": 6,
+      "numPendingTests": 0,
+      "numTodoTests": 0,
+      "openHandles": [],
+      "perfStats": {
+        "end": 1773281780120,
+        "runtime": 139,
+        "slow": false,
+        "start": 1773281779981
+      },
+      "skipped": false,
+      "snapshot": {
+        "added": 0,
+        "fileDeleted": false,
+        "matched": 0,
+        "unchecked": 0,
+        "uncheckedKeys": [],
+        "unmatched": 0,
+        "updated": 0
+      },
+      "testFilePath": "/Users/ramad/Works/Gti/person-services/person-service/Test/API_Tests/tests/GET_api_key-value_key.test.js",
+      "testResults": [
+        {
+          "ancestorTitles": [
+            "GET /api/key-value/:key - Retrieve Value"
+          ],
+          "duration": 13,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "GET /api/key-value/:key - Retrieve Value Get an existing key-value pair",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 5,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Get an existing key-value pair"
+        },
+        {
+          "ancestorTitles": [
+            "GET /api/key-value/:key - Retrieve Value"
+          ],
+          "duration": 4,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "GET /api/key-value/:key - Retrieve Value Get non-existent key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Get non-existent key"
+        },
+        {
+          "ancestorTitles": [
+            "GET /api/key-value/:key - Retrieve Value"
+          ],
+          "duration": 7,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "GET /api/key-value/:key - Retrieve Value Get key with special characters",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Get key with special characters"
+        },
+        {
+          "ancestorTitles": [
+            "GET /api/key-value/:key - Retrieve Value"
+          ],
+          "duration": 8,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "GET /api/key-value/:key - Retrieve Value Get key returns latest value after update",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Get key returns latest value after update"
+        },
+        {
+          "ancestorTitles": [
+            "GET /api/key-value/:key - Retrieve Value"
+          ],
+          "duration": 7,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "GET /api/key-value/:key - Retrieve Value Get multiple different keys",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 3,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Get multiple different keys"
+        },
+        {
+          "ancestorTitles": [
+            "GET /api/key-value/:key - Retrieve Value"
+          ],
+          "duration": 3,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "GET /api/key-value/:key - Retrieve Value Verify timestamps are valid",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 4,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Verify timestamps are valid"
+        }
+      ],
+      "failureMessage": null
+    },
+    {
+      "leaks": false,
+      "numFailingTests": 0,
+      "numPassingTests": 6,
+      "numPendingTests": 0,
+      "numTodoTests": 0,
+      "openHandles": [],
+      "perfStats": {
+        "end": 1773281780254,
+        "runtime": 132,
+        "slow": false,
+        "start": 1773281780122
+      },
+      "skipped": false,
+      "snapshot": {
+        "added": 0,
+        "fileDeleted": false,
+        "matched": 0,
+        "unchecked": 0,
+        "uncheckedKeys": [],
+        "unmatched": 0,
+        "updated": 0
+      },
+      "testFilePath": "/Users/ramad/Works/Gti/person-services/person-service/Test/API_Tests/tests/DELETE_api_key-value_key.test.js",
+      "testResults": [
+        {
+          "ancestorTitles": [
+            "DELETE /api/key-value/:key - Delete Key-Value"
+          ],
+          "duration": 11,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "DELETE /api/key-value/:key - Delete Key-Value Delete an existing key-value pair",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Delete an existing key-value pair"
+        },
+        {
+          "ancestorTitles": [
+            "DELETE /api/key-value/:key - Delete Key-Value"
+          ],
+          "duration": 11,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "DELETE /api/key-value/:key - Delete Key-Value Verify key is deleted from database",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Verify key is deleted from database"
+        },
+        {
+          "ancestorTitles": [
+            "DELETE /api/key-value/:key - Delete Key-Value"
+          ],
+          "duration": 3,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "DELETE /api/key-value/:key - Delete Key-Value Delete non-existent key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Delete non-existent key"
+        },
+        {
+          "ancestorTitles": [
+            "DELETE /api/key-value/:key - Delete Key-Value"
+          ],
+          "duration": 8,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "DELETE /api/key-value/:key - Delete Key-Value Delete same key twice",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Delete same key twice"
+        },
+        {
+          "ancestorTitles": [
+            "DELETE /api/key-value/:key - Delete Key-Value"
+          ],
+          "duration": 9,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "DELETE /api/key-value/:key - Delete Key-Value Delete multiple keys sequentially",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 4,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Delete multiple keys sequentially"
+        },
+        {
+          "ancestorTitles": [
+            "DELETE /api/key-value/:key - Delete Key-Value"
+          ],
+          "duration": 9,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "DELETE /api/key-value/:key - Delete Key-Value CRUD lifecycle",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 7,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "CRUD lifecycle"
+        }
+      ],
+      "failureMessage": null
+    },
+    {
+      "leaks": false,
+      "numFailingTests": 0,
       "numPassingTests": 4,
       "numPendingTests": 0,
       "numTodoTests": 0,
       "openHandles": [],
       "perfStats": {
-        "end": 1771901097665,
-        "runtime": 71,
+        "end": 1773281780382,
+        "runtime": 125,
         "slow": false,
-        "start": 1771901097594
+        "start": 1773281780257
+      },
+      "skipped": false,
+      "snapshot": {
+        "added": 0,
+        "fileDeleted": false,
+        "matched": 0,
+        "unchecked": 0,
+        "uncheckedKeys": [],
+        "unmatched": 0,
+        "updated": 0
+      },
+      "testFilePath": "/Users/ramad/Works/Gti/person-services/person-service/Test/steps/person_crud_with_db.test.js",
+      "testResults": [
+        {
+          "ancestorTitles": [
+            "Person Service - CRUD with Database Verification"
+          ],
+          "duration": 16,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Person Service - CRUD with Database Verification 1. CREATE person via API and verify in database",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 8,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "1. CREATE person via API and verify in database"
+        },
+        {
+          "ancestorTitles": [
+            "Person Service - CRUD with Database Verification"
+          ],
+          "duration": 10,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Person Service - CRUD with Database Verification 2. UPDATE person via API and verify in database",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 4,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "2. UPDATE person via API and verify in database"
+        },
+        {
+          "ancestorTitles": [
+            "Person Service - CRUD with Database Verification"
+          ],
+          "duration": 7,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Person Service - CRUD with Database Verification 3. SOFT DELETE person via API and verify in database",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 4,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "3. SOFT DELETE person via API and verify in database"
+        },
+        {
+          "ancestorTitles": [
+            "Person Service - CRUD with Database Verification"
+          ],
+          "duration": 5,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Person Service - CRUD with Database Verification 4. VERIFY soft deleted person NOT returned by GET",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 4,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "4. VERIFY soft deleted person NOT returned by GET"
+        }
+      ],
+      "failureMessage": null
+    },
+    {
+      "leaks": false,
+      "numFailingTests": 0,
+      "numPassingTests": 4,
+      "numPendingTests": 0,
+      "numTodoTests": 0,
+      "openHandles": [],
+      "perfStats": {
+        "end": 1773281780503,
+        "runtime": 119,
+        "slow": false,
+        "start": 1773281780384
       },
       "skipped": false,
       "snapshot": {
@@ -2456,7 +2357,7 @@
           "ancestorTitles": [
             "PUT /persons/:personId/attributes/:attributeId - Update Attribute"
           ],
-          "duration": 12,
+          "duration": 17,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "PUT /persons/:personId/attributes/:attributeId - Update Attribute Update attribute value only",
@@ -2471,7 +2372,7 @@
           "ancestorTitles": [
             "PUT /persons/:personId/attributes/:attributeId - Update Attribute"
           ],
-          "duration": 3,
+          "duration": 5,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "PUT /persons/:personId/attributes/:attributeId - Update Attribute Update non-existent attribute",
@@ -2486,7 +2387,7 @@
           "ancestorTitles": [
             "PUT /persons/:personId/attributes/:attributeId - Update Attribute"
           ],
-          "duration": 1,
+          "duration": 2,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "PUT /persons/:personId/attributes/:attributeId - Update Attribute Update without API key",
@@ -2501,7 +2402,7 @@
           "ancestorTitles": [
             "PUT /persons/:personId/attributes/:attributeId - Update Attribute"
           ],
-          "duration": 5,
+          "duration": 6,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "PUT /persons/:personId/attributes/:attributeId - Update Attribute Update without meta information (meta is optional for UPDATE)",
@@ -2523,10 +2424,10 @@
       "numTodoTests": 0,
       "openHandles": [],
       "perfStats": {
-        "end": 1771901097738,
-        "runtime": 72,
+        "end": 1773281780626,
+        "runtime": 120,
         "slow": false,
-        "start": 1771901097666
+        "start": 1773281780506
       },
       "skipped": false,
       "snapshot": {
@@ -2544,7 +2445,7 @@
           "ancestorTitles": [
             "POST /api/key-value - Create/Update Key-Value"
           ],
-          "duration": 6,
+          "duration": 10,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "POST /api/key-value - Create/Update Key-Value Create a new key-value pair",
@@ -2559,7 +2460,7 @@
           "ancestorTitles": [
             "POST /api/key-value - Create/Update Key-Value"
           ],
-          "duration": 6,
+          "duration": 8,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "POST /api/key-value - Create/Update Key-Value Update an existing key-value pair",
@@ -2574,7 +2475,7 @@
           "ancestorTitles": [
             "POST /api/key-value - Create/Update Key-Value"
           ],
-          "duration": 2,
+          "duration": 3,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "POST /api/key-value - Create/Update Key-Value Create key-value with special characters",
@@ -2604,7 +2505,7 @@
           "ancestorTitles": [
             "POST /api/key-value - Create/Update Key-Value"
           ],
-          "duration": 1,
+          "duration": 2,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "POST /api/key-value - Create/Update Key-Value Missing required field - value",
@@ -2634,7 +2535,7 @@
           "ancestorTitles": [
             "POST /api/key-value - Create/Update Key-Value"
           ],
-          "duration": 1,
+          "duration": 2,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "POST /api/key-value - Create/Update Key-Value Empty value",
@@ -2649,7 +2550,7 @@
           "ancestorTitles": [
             "POST /api/key-value - Create/Update Key-Value"
           ],
-          "duration": 4,
+          "duration": 5,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "POST /api/key-value - Create/Update Key-Value Create multiple key-value pairs",
@@ -2666,133 +2567,15 @@
     {
       "leaks": false,
       "numFailingTests": 0,
-      "numPassingTests": 6,
-      "numPendingTests": 0,
-      "numTodoTests": 0,
-      "openHandles": [],
-      "perfStats": {
-        "end": 1771901097814,
-        "runtime": 75,
-        "slow": false,
-        "start": 1771901097739
-      },
-      "skipped": false,
-      "snapshot": {
-        "added": 0,
-        "fileDeleted": false,
-        "matched": 0,
-        "unchecked": 0,
-        "uncheckedKeys": [],
-        "unmatched": 0,
-        "updated": 0
-      },
-      "testFilePath": "/Users/ramad/Works/Gti/person-services/person-service/Test/API_Tests/tests/PUT_persons_personId_attributes.test.js",
-      "testResults": [
-        {
-          "ancestorTitles": [
-            "PUT /persons/:personId/attributes - Create/Update Single Attribute"
-          ],
-          "duration": 7,
-          "failureDetails": [],
-          "failureMessages": [],
-          "fullName": "PUT /persons/:personId/attributes - Create/Update Single Attribute Create/update attribute using PUT",
-          "invocations": 1,
-          "location": null,
-          "numPassingAsserts": 3,
-          "retryReasons": [],
-          "status": "passed",
-          "title": "Create/update attribute using PUT"
-        },
-        {
-          "ancestorTitles": [
-            "PUT /persons/:personId/attributes - Create/Update Single Attribute"
-          ],
-          "duration": 10,
-          "failureDetails": [],
-          "failureMessages": [],
-          "fullName": "PUT /persons/:personId/attributes - Create/Update Single Attribute Update existing attribute using PUT",
-          "invocations": 1,
-          "location": null,
-          "numPassingAsserts": 2,
-          "retryReasons": [],
-          "status": "passed",
-          "title": "Update existing attribute using PUT"
-        },
-        {
-          "ancestorTitles": [
-            "PUT /persons/:personId/attributes - Create/Update Single Attribute"
-          ],
-          "duration": 5,
-          "failureDetails": [],
-          "failureMessages": [],
-          "fullName": "PUT /persons/:personId/attributes - Create/Update Single Attribute PUT creates new attribute if not exists",
-          "invocations": 1,
-          "location": null,
-          "numPassingAsserts": 3,
-          "retryReasons": [],
-          "status": "passed",
-          "title": "PUT creates new attribute if not exists"
-        },
-        {
-          "ancestorTitles": [
-            "PUT /persons/:personId/attributes - Create/Update Single Attribute"
-          ],
-          "duration": 1,
-          "failureDetails": [],
-          "failureMessages": [],
-          "fullName": "PUT /persons/:personId/attributes - Create/Update Single Attribute PUT without API key",
-          "invocations": 1,
-          "location": null,
-          "numPassingAsserts": 1,
-          "retryReasons": [],
-          "status": "passed",
-          "title": "PUT without API key"
-        },
-        {
-          "ancestorTitles": [
-            "PUT /persons/:personId/attributes - Create/Update Single Attribute"
-          ],
-          "duration": 1,
-          "failureDetails": [],
-          "failureMessages": [],
-          "fullName": "PUT /persons/:personId/attributes - Create/Update Single Attribute PUT without meta",
-          "invocations": 1,
-          "location": null,
-          "numPassingAsserts": 1,
-          "retryReasons": [],
-          "status": "passed",
-          "title": "PUT without meta"
-        },
-        {
-          "ancestorTitles": [
-            "PUT /persons/:personId/attributes - Create/Update Single Attribute"
-          ],
-          "duration": 1,
-          "failureDetails": [],
-          "failureMessages": [],
-          "fullName": "PUT /persons/:personId/attributes - Create/Update Single Attribute PUT with empty key",
-          "invocations": 1,
-          "location": null,
-          "numPassingAsserts": 1,
-          "retryReasons": [],
-          "status": "passed",
-          "title": "PUT with empty key"
-        }
-      ],
-      "failureMessage": null
-    },
-    {
-      "leaks": false,
-      "numFailingTests": 0,
       "numPassingTests": 5,
       "numPendingTests": 0,
       "numTodoTests": 0,
       "openHandles": [],
       "perfStats": {
-        "end": 1771901097883,
-        "runtime": 68,
+        "end": 1773281780754,
+        "runtime": 125,
         "slow": false,
-        "start": 1771901097815
+        "start": 1773281780629
       },
       "skipped": false,
       "snapshot": {
@@ -2810,7 +2593,7 @@
           "ancestorTitles": [
             "GET /persons/:personId/attributes/:attributeId - Get Single Attribute"
           ],
-          "duration": 2,
+          "duration": 5,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "GET /persons/:personId/attributes/:attributeId - Get Single Attribute Get existing attribute by ID",
@@ -2825,7 +2608,7 @@
           "ancestorTitles": [
             "GET /persons/:personId/attributes/:attributeId - Get Single Attribute"
           ],
-          "duration": 2,
+          "duration": 5,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "GET /persons/:personId/attributes/:attributeId - Get Single Attribute Get non-existent attribute",
@@ -2840,7 +2623,7 @@
           "ancestorTitles": [
             "GET /persons/:personId/attributes/:attributeId - Get Single Attribute"
           ],
-          "duration": 1,
+          "duration": 2,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "GET /persons/:personId/attributes/:attributeId - Get Single Attribute Get attribute without API key",
@@ -2855,7 +2638,7 @@
           "ancestorTitles": [
             "GET /persons/:personId/attributes/:attributeId - Get Single Attribute"
           ],
-          "duration": 2,
+          "duration": 5,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "GET /persons/:personId/attributes/:attributeId - Get Single Attribute Verify attribute value is decrypted",
@@ -2870,7 +2653,7 @@
           "ancestorTitles": [
             "GET /persons/:personId/attributes/:attributeId - Get Single Attribute"
           ],
-          "duration": 2,
+          "duration": 3,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "GET /persons/:personId/attributes/:attributeId - Get Single Attribute Verify response includes all fields",
@@ -2887,88 +2670,15 @@
     {
       "leaks": false,
       "numFailingTests": 0,
-      "numPassingTests": 3,
-      "numPendingTests": 0,
-      "numTodoTests": 0,
-      "openHandles": [],
-      "perfStats": {
-        "end": 1771901097956,
-        "runtime": 72,
-        "slow": false,
-        "start": 1771901097884
-      },
-      "skipped": false,
-      "snapshot": {
-        "added": 0,
-        "fileDeleted": false,
-        "matched": 0,
-        "unchecked": 0,
-        "uncheckedKeys": [],
-        "unmatched": 0,
-        "updated": 0
-      },
-      "testFilePath": "/Users/ramad/Works/Gti/person-services/person-service/Test/API_Tests/tests/GET_persons_personId_attributes.test.js",
-      "testResults": [
-        {
-          "ancestorTitles": [
-            "GET /persons/:personId/attributes - Get All Attributes"
-          ],
-          "duration": 13,
-          "failureDetails": [],
-          "failureMessages": [],
-          "fullName": "GET /persons/:personId/attributes - Get All Attributes Get all attributes for person with multiple attributes",
-          "invocations": 1,
-          "location": null,
-          "numPassingAsserts": 3,
-          "retryReasons": [],
-          "status": "passed",
-          "title": "Get all attributes for person with multiple attributes"
-        },
-        {
-          "ancestorTitles": [
-            "GET /persons/:personId/attributes - Get All Attributes"
-          ],
-          "duration": 1,
-          "failureDetails": [],
-          "failureMessages": [],
-          "fullName": "GET /persons/:personId/attributes - Get All Attributes Get attributes without API key",
-          "invocations": 1,
-          "location": null,
-          "numPassingAsserts": 1,
-          "retryReasons": [],
-          "status": "passed",
-          "title": "Get attributes without API key"
-        },
-        {
-          "ancestorTitles": [
-            "GET /persons/:personId/attributes - Get All Attributes"
-          ],
-          "duration": 5,
-          "failureDetails": [],
-          "failureMessages": [],
-          "fullName": "GET /persons/:personId/attributes - Get All Attributes Verify all attributes are decrypted",
-          "invocations": 1,
-          "location": null,
-          "numPassingAsserts": 7,
-          "retryReasons": [],
-          "status": "passed",
-          "title": "Verify all attributes are decrypted"
-        }
-      ],
-      "failureMessage": null
-    },
-    {
-      "leaks": false,
-      "numFailingTests": 0,
       "numPassingTests": 16,
       "numPendingTests": 0,
       "numTodoTests": 0,
       "openHandles": [],
       "perfStats": {
-        "end": 1771901098024,
-        "runtime": 67,
+        "end": 1773281780872,
+        "runtime": 116,
         "slow": false,
-        "start": 1771901097957
+        "start": 1773281780756
       },
       "skipped": false,
       "snapshot": {
@@ -2986,7 +2696,7 @@
           "ancestorTitles": [
             "NEGATIVE: GET /persons/:personId/attributes/:attributeId"
           ],
-          "duration": 5,
+          "duration": 7,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: GET /persons/:personId/attributes/:attributeId Should reject request without API key",
@@ -3001,7 +2711,7 @@
           "ancestorTitles": [
             "NEGATIVE: GET /persons/:personId/attributes/:attributeId"
           ],
-          "duration": 1,
+          "duration": 2,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: GET /persons/:personId/attributes/:attributeId Should reject request with invalid API key",
@@ -3031,7 +2741,7 @@
           "ancestorTitles": [
             "NEGATIVE: GET /persons/:personId/attributes/:attributeId"
           ],
-          "duration": 1,
+          "duration": 3,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: GET /persons/:personId/attributes/:attributeId Should return 404 for non-existent attributeId",
@@ -3091,7 +2801,7 @@
           "ancestorTitles": [
             "NEGATIVE: GET /persons/:personId/attributes/:attributeId"
           ],
-          "duration": 0,
+          "duration": 1,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: GET /persons/:personId/attributes/:attributeId Should reject empty personId",
@@ -3106,7 +2816,7 @@
           "ancestorTitles": [
             "NEGATIVE: GET /persons/:personId/attributes/:attributeId"
           ],
-          "duration": 1,
+          "duration": 2,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: GET /persons/:personId/attributes/:attributeId Should reject empty attributeId",
@@ -3121,7 +2831,7 @@
           "ancestorTitles": [
             "NEGATIVE: GET /persons/:personId/attributes/:attributeId"
           ],
-          "duration": 0,
+          "duration": 1,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: GET /persons/:personId/attributes/:attributeId Should reject POST method on GET endpoint",
@@ -3136,7 +2846,7 @@
           "ancestorTitles": [
             "NEGATIVE: GET /persons/:personId/attributes/:attributeId"
           ],
-          "duration": 0,
+          "duration": 1,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: GET /persons/:personId/attributes/:attributeId Should reject PATCH method",
@@ -3181,7 +2891,7 @@
           "ancestorTitles": [
             "NEGATIVE: GET /persons/:personId/attributes/:attributeId"
           ],
-          "duration": 0,
+          "duration": 1,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: GET /persons/:personId/attributes/:attributeId Should prevent path traversal",
@@ -3196,7 +2906,7 @@
           "ancestorTitles": [
             "NEGATIVE: GET /persons/:personId/attributes/:attributeId"
           ],
-          "duration": 2,
+          "duration": 1,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: GET /persons/:personId/attributes/:attributeId Should ignore request body on GET",
@@ -3211,7 +2921,7 @@
           "ancestorTitles": [
             "NEGATIVE: GET /persons/:personId/attributes/:attributeId"
           ],
-          "duration": 1,
+          "duration": 3,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: GET /persons/:personId/attributes/:attributeId Should handle invalid Accept header",
@@ -3228,15 +2938,133 @@
     {
       "leaks": false,
       "numFailingTests": 0,
+      "numPassingTests": 6,
+      "numPendingTests": 0,
+      "numTodoTests": 0,
+      "openHandles": [],
+      "perfStats": {
+        "end": 1773281781001,
+        "runtime": 126,
+        "slow": false,
+        "start": 1773281780875
+      },
+      "skipped": false,
+      "snapshot": {
+        "added": 0,
+        "fileDeleted": false,
+        "matched": 0,
+        "unchecked": 0,
+        "uncheckedKeys": [],
+        "unmatched": 0,
+        "updated": 0
+      },
+      "testFilePath": "/Users/ramad/Works/Gti/person-services/person-service/Test/API_Tests/tests/PUT_persons_personId_attributes.test.js",
+      "testResults": [
+        {
+          "ancestorTitles": [
+            "PUT /persons/:personId/attributes - Create/Update Single Attribute"
+          ],
+          "duration": 14,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PUT /persons/:personId/attributes - Create/Update Single Attribute Create/update attribute using PUT",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 3,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Create/update attribute using PUT"
+        },
+        {
+          "ancestorTitles": [
+            "PUT /persons/:personId/attributes - Create/Update Single Attribute"
+          ],
+          "duration": 12,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PUT /persons/:personId/attributes - Create/Update Single Attribute Update existing attribute using PUT",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Update existing attribute using PUT"
+        },
+        {
+          "ancestorTitles": [
+            "PUT /persons/:personId/attributes - Create/Update Single Attribute"
+          ],
+          "duration": 4,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PUT /persons/:personId/attributes - Create/Update Single Attribute PUT creates new attribute if not exists",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 3,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "PUT creates new attribute if not exists"
+        },
+        {
+          "ancestorTitles": [
+            "PUT /persons/:personId/attributes - Create/Update Single Attribute"
+          ],
+          "duration": 3,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PUT /persons/:personId/attributes - Create/Update Single Attribute PUT without API key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "PUT without API key"
+        },
+        {
+          "ancestorTitles": [
+            "PUT /persons/:personId/attributes - Create/Update Single Attribute"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PUT /persons/:personId/attributes - Create/Update Single Attribute PUT without meta",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "PUT without meta"
+        },
+        {
+          "ancestorTitles": [
+            "PUT /persons/:personId/attributes - Create/Update Single Attribute"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PUT /persons/:personId/attributes - Create/Update Single Attribute PUT with empty key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "PUT with empty key"
+        }
+      ],
+      "failureMessage": null
+    },
+    {
+      "leaks": false,
+      "numFailingTests": 0,
       "numPassingTests": 12,
       "numPendingTests": 0,
       "numTodoTests": 0,
       "openHandles": [],
       "perfStats": {
-        "end": 1771901098088,
-        "runtime": 62,
+        "end": 1773281781120,
+        "runtime": 117,
         "slow": false,
-        "start": 1771901098026
+        "start": 1773281781003
       },
       "skipped": false,
       "snapshot": {
@@ -3254,7 +3082,7 @@
           "ancestorTitles": [
             "NEGATIVE: GET /persons/:personId/attributes - Get All Attributes"
           ],
-          "duration": 4,
+          "duration": 8,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: GET /persons/:personId/attributes - Get All Attributes Should reject request without API key",
@@ -3269,7 +3097,7 @@
           "ancestorTitles": [
             "NEGATIVE: GET /persons/:personId/attributes - Get All Attributes"
           ],
-          "duration": 1,
+          "duration": 2,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: GET /persons/:personId/attributes - Get All Attributes Should reject request with invalid API key",
@@ -3284,7 +3112,7 @@
           "ancestorTitles": [
             "NEGATIVE: GET /persons/:personId/attributes - Get All Attributes"
           ],
-          "duration": 2,
+          "duration": 3,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: GET /persons/:personId/attributes - Get All Attributes Should return empty or 404 for non-existent personId",
@@ -3314,7 +3142,7 @@
           "ancestorTitles": [
             "NEGATIVE: GET /persons/:personId/attributes - Get All Attributes"
           ],
-          "duration": 1,
+          "duration": 2,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: GET /persons/:personId/attributes - Get All Attributes Should reject empty personId",
@@ -3329,7 +3157,7 @@
           "ancestorTitles": [
             "NEGATIVE: GET /persons/:personId/attributes - Get All Attributes"
           ],
-          "duration": 0,
+          "duration": 1,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: GET /persons/:personId/attributes - Get All Attributes Should reject personId with special characters",
@@ -3359,7 +3187,7 @@
           "ancestorTitles": [
             "NEGATIVE: GET /persons/:personId/attributes - Get All Attributes"
           ],
-          "duration": 1,
+          "duration": 0,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: GET /persons/:personId/attributes - Get All Attributes Should reject PATCH method",
@@ -3404,7 +3232,7 @@
           "ancestorTitles": [
             "NEGATIVE: GET /persons/:personId/attributes - Get All Attributes"
           ],
-          "duration": 1,
+          "duration": 2,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: GET /persons/:personId/attributes - Get All Attributes Should ignore invalid query parameters",
@@ -3436,15 +3264,88 @@
     {
       "leaks": false,
       "numFailingTests": 0,
+      "numPassingTests": 3,
+      "numPendingTests": 0,
+      "numTodoTests": 0,
+      "openHandles": [],
+      "perfStats": {
+        "end": 1773281781239,
+        "runtime": 116,
+        "slow": false,
+        "start": 1773281781123
+      },
+      "skipped": false,
+      "snapshot": {
+        "added": 0,
+        "fileDeleted": false,
+        "matched": 0,
+        "unchecked": 0,
+        "uncheckedKeys": [],
+        "unmatched": 0,
+        "updated": 0
+      },
+      "testFilePath": "/Users/ramad/Works/Gti/person-services/person-service/Test/API_Tests/tests/GET_persons_personId_attributes.test.js",
+      "testResults": [
+        {
+          "ancestorTitles": [
+            "GET /persons/:personId/attributes - Get All Attributes"
+          ],
+          "duration": 17,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "GET /persons/:personId/attributes - Get All Attributes Get all attributes for person with multiple attributes",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 3,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Get all attributes for person with multiple attributes"
+        },
+        {
+          "ancestorTitles": [
+            "GET /persons/:personId/attributes - Get All Attributes"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "GET /persons/:personId/attributes - Get All Attributes Get attributes without API key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Get attributes without API key"
+        },
+        {
+          "ancestorTitles": [
+            "GET /persons/:personId/attributes - Get All Attributes"
+          ],
+          "duration": 4,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "GET /persons/:personId/attributes - Get All Attributes Verify all attributes are decrypted",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 7,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Verify all attributes are decrypted"
+        }
+      ],
+      "failureMessage": null
+    },
+    {
+      "leaks": false,
+      "numFailingTests": 0,
       "numPassingTests": 5,
       "numPendingTests": 0,
       "numTodoTests": 0,
       "openHandles": [],
       "perfStats": {
-        "end": 1771901098155,
-        "runtime": 66,
+        "end": 1773281781365,
+        "runtime": 124,
         "slow": false,
-        "start": 1771901098089
+        "start": 1773281781241
       },
       "skipped": false,
       "snapshot": {
@@ -3462,7 +3363,7 @@
           "ancestorTitles": [
             "POST /persons/:personId/attributes - Create Attribute"
           ],
-          "duration": 9,
+          "duration": 14,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "POST /persons/:personId/attributes - Create Attribute Create a single attribute",
@@ -3477,7 +3378,7 @@
           "ancestorTitles": [
             "POST /persons/:personId/attributes - Create Attribute"
           ],
-          "duration": 2,
+          "duration": 3,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "POST /persons/:personId/attributes - Create Attribute Create attribute without API key",
@@ -3507,7 +3408,7 @@
           "ancestorTitles": [
             "POST /persons/:personId/attributes - Create Attribute"
           ],
-          "duration": 1,
+          "duration": 2,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "POST /persons/:personId/attributes - Create Attribute Create attribute without meta information",
@@ -3539,268 +3440,15 @@
     {
       "leaks": false,
       "numFailingTests": 0,
-      "numPassingTests": 15,
-      "numPendingTests": 0,
-      "numTodoTests": 0,
-      "openHandles": [],
-      "perfStats": {
-        "end": 1771901098218,
-        "runtime": 62,
-        "slow": false,
-        "start": 1771901098156
-      },
-      "skipped": false,
-      "snapshot": {
-        "added": 0,
-        "fileDeleted": false,
-        "matched": 0,
-        "unchecked": 0,
-        "uncheckedKeys": [],
-        "unmatched": 0,
-        "updated": 0
-      },
-      "testFilePath": "/Users/ramad/Works/Gti/person-services/person-service/Test/API_Tests/negative_tests/DELETE_api_key-value_key_negative.test.js",
-      "testResults": [
-        {
-          "ancestorTitles": [
-            "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value"
-          ],
-          "duration": 5,
-          "failureDetails": [],
-          "failureMessages": [],
-          "fullName": "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value Should handle DELETE of non-existent key",
-          "invocations": 1,
-          "location": null,
-          "numPassingAsserts": 1,
-          "retryReasons": [],
-          "status": "passed",
-          "title": "Should handle DELETE of non-existent key"
-        },
-        {
-          "ancestorTitles": [
-            "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value"
-          ],
-          "duration": 3,
-          "failureDetails": [],
-          "failureMessages": [],
-          "fullName": "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value Should handle DELETE of already deleted key",
-          "invocations": 1,
-          "location": null,
-          "numPassingAsserts": 2,
-          "retryReasons": [],
-          "status": "passed",
-          "title": "Should handle DELETE of already deleted key"
-        },
-        {
-          "ancestorTitles": [
-            "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value"
-          ],
-          "duration": 1,
-          "failureDetails": [],
-          "failureMessages": [],
-          "fullName": "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value Should reject DELETE with empty key",
-          "invocations": 1,
-          "location": null,
-          "numPassingAsserts": 1,
-          "retryReasons": [],
-          "status": "passed",
-          "title": "Should reject DELETE with empty key"
-        },
-        {
-          "ancestorTitles": [
-            "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value"
-          ],
-          "duration": 1,
-          "failureDetails": [],
-          "failureMessages": [],
-          "fullName": "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value Should reject DELETE with whitespace-only key",
-          "invocations": 1,
-          "location": null,
-          "numPassingAsserts": 1,
-          "retryReasons": [],
-          "status": "passed",
-          "title": "Should reject DELETE with whitespace-only key"
-        },
-        {
-          "ancestorTitles": [
-            "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value"
-          ],
-          "duration": 1,
-          "failureDetails": [],
-          "failureMessages": [],
-          "fullName": "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value Should reject GET on DELETE endpoint",
-          "invocations": 1,
-          "location": null,
-          "numPassingAsserts": 1,
-          "retryReasons": [],
-          "status": "passed",
-          "title": "Should reject GET on DELETE endpoint"
-        },
-        {
-          "ancestorTitles": [
-            "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value"
-          ],
-          "duration": 1,
-          "failureDetails": [],
-          "failureMessages": [],
-          "fullName": "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value Should reject PATCH method",
-          "invocations": 1,
-          "location": null,
-          "numPassingAsserts": 1,
-          "retryReasons": [],
-          "status": "passed",
-          "title": "Should reject PATCH method"
-        },
-        {
-          "ancestorTitles": [
-            "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value"
-          ],
-          "duration": 2,
-          "failureDetails": [],
-          "failureMessages": [],
-          "fullName": "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value Should ignore request body on DELETE",
-          "invocations": 1,
-          "location": null,
-          "numPassingAsserts": 1,
-          "retryReasons": [],
-          "status": "passed",
-          "title": "Should ignore request body on DELETE"
-        },
-        {
-          "ancestorTitles": [
-            "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value"
-          ],
-          "duration": 1,
-          "failureDetails": [],
-          "failureMessages": [],
-          "fullName": "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value Should handle DELETE with SQL injection pattern in key",
-          "invocations": 1,
-          "location": null,
-          "numPassingAsserts": 1,
-          "retryReasons": [],
-          "status": "passed",
-          "title": "Should handle DELETE with SQL injection pattern in key"
-        },
-        {
-          "ancestorTitles": [
-            "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value"
-          ],
-          "duration": 1,
-          "failureDetails": [],
-          "failureMessages": [],
-          "fullName": "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value Should handle DELETE with path traversal attempt",
-          "invocations": 1,
-          "location": null,
-          "numPassingAsserts": 1,
-          "retryReasons": [],
-          "status": "passed",
-          "title": "Should handle DELETE with path traversal attempt"
-        },
-        {
-          "ancestorTitles": [
-            "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value"
-          ],
-          "duration": 1,
-          "failureDetails": [],
-          "failureMessages": [],
-          "fullName": "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value Should handle DELETE with XSS payload in key",
-          "invocations": 1,
-          "location": null,
-          "numPassingAsserts": 1,
-          "retryReasons": [],
-          "status": "passed",
-          "title": "Should handle DELETE with XSS payload in key"
-        },
-        {
-          "ancestorTitles": [
-            "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value"
-          ],
-          "duration": 4,
-          "failureDetails": [],
-          "failureMessages": [],
-          "fullName": "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value Should handle multiple concurrent DELETEs of same key",
-          "invocations": 1,
-          "location": null,
-          "numPassingAsserts": 0,
-          "retryReasons": [],
-          "status": "passed",
-          "title": "Should handle multiple concurrent DELETEs of same key"
-        },
-        {
-          "ancestorTitles": [
-            "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value"
-          ],
-          "duration": 1,
-          "failureDetails": [],
-          "failureMessages": [],
-          "fullName": "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value Should ignore invalid Content-Type header on DELETE",
-          "invocations": 1,
-          "location": null,
-          "numPassingAsserts": 1,
-          "retryReasons": [],
-          "status": "passed",
-          "title": "Should ignore invalid Content-Type header on DELETE"
-        },
-        {
-          "ancestorTitles": [
-            "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value"
-          ],
-          "duration": 1,
-          "failureDetails": [],
-          "failureMessages": [],
-          "fullName": "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value Should handle DELETE without Accept header",
-          "invocations": 1,
-          "location": null,
-          "numPassingAsserts": 1,
-          "retryReasons": [],
-          "status": "passed",
-          "title": "Should handle DELETE without Accept header"
-        },
-        {
-          "ancestorTitles": [
-            "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value"
-          ],
-          "duration": 1,
-          "failureDetails": [],
-          "failureMessages": [],
-          "fullName": "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value Should handle URL-encoded key in DELETE",
-          "invocations": 1,
-          "location": null,
-          "numPassingAsserts": 1,
-          "retryReasons": [],
-          "status": "passed",
-          "title": "Should handle URL-encoded key in DELETE"
-        },
-        {
-          "ancestorTitles": [
-            "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value"
-          ],
-          "duration": 2,
-          "failureDetails": [],
-          "failureMessages": [],
-          "fullName": "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value Should handle special URL characters",
-          "invocations": 1,
-          "location": null,
-          "numPassingAsserts": 1,
-          "retryReasons": [],
-          "status": "passed",
-          "title": "Should handle special URL characters"
-        }
-      ],
-      "failureMessage": null
-    },
-    {
-      "leaks": false,
-      "numFailingTests": 0,
       "numPassingTests": 14,
       "numPendingTests": 0,
       "numTodoTests": 0,
       "openHandles": [],
       "perfStats": {
-        "end": 1771901098279,
-        "runtime": 60,
+        "end": 1773281781481,
+        "runtime": 113,
         "slow": false,
-        "start": 1771901098219
+        "start": 1773281781368
       },
       "skipped": false,
       "snapshot": {
@@ -3818,7 +3466,7 @@
           "ancestorTitles": [
             "NEGATIVE: GET /api/key-value/:key - Retrieve Value"
           ],
-          "duration": 5,
+          "duration": 9,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: GET /api/key-value/:key - Retrieve Value Should return 404 for non-existent key",
@@ -3833,7 +3481,7 @@
           "ancestorTitles": [
             "NEGATIVE: GET /api/key-value/:key - Retrieve Value"
           ],
-          "duration": 2,
+          "duration": 3,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: GET /api/key-value/:key - Retrieve Value Should return 404 for random UUID as key",
@@ -3863,7 +3511,7 @@
           "ancestorTitles": [
             "NEGATIVE: GET /api/key-value/:key - Retrieve Value"
           ],
-          "duration": 1,
+          "duration": 2,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: GET /api/key-value/:key - Retrieve Value Should handle URL-encoded special characters in key",
@@ -3878,7 +3526,7 @@
           "ancestorTitles": [
             "NEGATIVE: GET /api/key-value/:key - Retrieve Value"
           ],
-          "duration": 1,
+          "duration": 2,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: GET /api/key-value/:key - Retrieve Value Should handle key with slashes (path traversal attempt)",
@@ -3893,7 +3541,7 @@
           "ancestorTitles": [
             "NEGATIVE: GET /api/key-value/:key - Retrieve Value"
           ],
-          "duration": 1,
+          "duration": 2,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: GET /api/key-value/:key - Retrieve Value Should reject PUT method on GET endpoint",
@@ -3923,7 +3571,7 @@
           "ancestorTitles": [
             "NEGATIVE: GET /api/key-value/:key - Retrieve Value"
           ],
-          "duration": 1,
+          "duration": 2,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: GET /api/key-value/:key - Retrieve Value Should handle invalid Accept header",
@@ -3938,7 +3586,7 @@
           "ancestorTitles": [
             "NEGATIVE: GET /api/key-value/:key - Retrieve Value"
           ],
-          "duration": 2,
+          "duration": 4,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: GET /api/key-value/:key - Retrieve Value Should reject request with body (GET should not have body)",
@@ -3983,7 +3631,7 @@
           "ancestorTitles": [
             "NEGATIVE: GET /api/key-value/:key - Retrieve Value"
           ],
-          "duration": 1,
+          "duration": 2,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: GET /api/key-value/:key - Retrieve Value Should handle key with null byte",
@@ -3998,7 +3646,7 @@
           "ancestorTitles": [
             "NEGATIVE: GET /api/key-value/:key - Retrieve Value"
           ],
-          "duration": 2,
+          "duration": 4,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: GET /api/key-value/:key - Retrieve Value Should handle very long key in URL",
@@ -4013,7 +3661,7 @@
           "ancestorTitles": [
             "NEGATIVE: GET /api/key-value/:key - Retrieve Value"
           ],
-          "duration": 1,
+          "duration": 3,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: GET /api/key-value/:key - Retrieve Value Should handle case sensitivity in key lookup",
@@ -4030,15 +3678,268 @@
     {
       "leaks": false,
       "numFailingTests": 0,
+      "numPassingTests": 15,
+      "numPendingTests": 0,
+      "numTodoTests": 0,
+      "openHandles": [],
+      "perfStats": {
+        "end": 1773281781591,
+        "runtime": 107,
+        "slow": false,
+        "start": 1773281781484
+      },
+      "skipped": false,
+      "snapshot": {
+        "added": 0,
+        "fileDeleted": false,
+        "matched": 0,
+        "unchecked": 0,
+        "uncheckedKeys": [],
+        "unmatched": 0,
+        "updated": 0
+      },
+      "testFilePath": "/Users/ramad/Works/Gti/person-services/person-service/Test/API_Tests/negative_tests/DELETE_api_key-value_key_negative.test.js",
+      "testResults": [
+        {
+          "ancestorTitles": [
+            "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value"
+          ],
+          "duration": 9,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value Should handle DELETE of non-existent key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should handle DELETE of non-existent key"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value"
+          ],
+          "duration": 5,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value Should handle DELETE of already deleted key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should handle DELETE of already deleted key"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value Should reject DELETE with empty key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject DELETE with empty key"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value Should reject DELETE with whitespace-only key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject DELETE with whitespace-only key"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value Should reject GET on DELETE endpoint",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject GET on DELETE endpoint"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value Should reject PATCH method",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should reject PATCH method"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value Should ignore request body on DELETE",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should ignore request body on DELETE"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value"
+          ],
+          "duration": 3,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value Should handle DELETE with SQL injection pattern in key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should handle DELETE with SQL injection pattern in key"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value Should handle DELETE with path traversal attempt",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should handle DELETE with path traversal attempt"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value Should handle DELETE with XSS payload in key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should handle DELETE with XSS payload in key"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value"
+          ],
+          "duration": 4,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value Should handle multiple concurrent DELETEs of same key",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should handle multiple concurrent DELETEs of same key"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value Should ignore invalid Content-Type header on DELETE",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should ignore invalid Content-Type header on DELETE"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value Should handle DELETE without Accept header",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should handle DELETE without Accept header"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value Should handle URL-encoded key in DELETE",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should handle URL-encoded key in DELETE"
+        },
+        {
+          "ancestorTitles": [
+            "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "NEGATIVE: DELETE /api/key-value/:key - Delete Key-Value Should handle special URL characters",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Should handle special URL characters"
+        }
+      ],
+      "failureMessage": null
+    },
+    {
+      "leaks": false,
+      "numFailingTests": 0,
       "numPassingTests": 6,
       "numPendingTests": 0,
       "numTodoTests": 0,
       "openHandles": [],
       "perfStats": {
-        "end": 1771901098331,
-        "runtime": 51,
+        "end": 1773281781688,
+        "runtime": 94,
         "slow": false,
-        "start": 1771901098280
+        "start": 1773281781594
       },
       "skipped": false,
       "snapshot": {
@@ -4056,7 +3957,7 @@
           "ancestorTitles": [
             "GET /health - Health Check API"
           ],
-          "duration": 5,
+          "duration": 8,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "GET /health - Health Check API Health endpoint returns 200 OK",
@@ -4071,7 +3972,7 @@
           "ancestorTitles": [
             "GET /health - Health Check API"
           ],
-          "duration": 2,
+          "duration": 3,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "GET /health - Health Check API Health response contains status field",
@@ -4101,7 +4002,7 @@
           "ancestorTitles": [
             "GET /health - Health Check API"
           ],
-          "duration": 1,
+          "duration": 2,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "GET /health - Health Check API Health check responds within acceptable time",
@@ -4116,7 +4017,7 @@
           "ancestorTitles": [
             "GET /health - Health Check API"
           ],
-          "duration": 3,
+          "duration": 6,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "GET /health - Health Check API Multiple health checks are consistent",
@@ -4153,10 +4054,10 @@
       "numTodoTests": 0,
       "openHandles": [],
       "perfStats": {
-        "end": 1771901098381,
-        "runtime": 49,
+        "end": 1773281781779,
+        "runtime": 89,
         "slow": false,
-        "start": 1771901098332
+        "start": 1773281781690
       },
       "skipped": false,
       "snapshot": {
@@ -4174,7 +4075,7 @@
           "ancestorTitles": [
             "Person Service API - Simple Test"
           ],
-          "duration": 6,
+          "duration": 10,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "Person Service API - Simple Test Health check endpoint returns 200",
@@ -4196,10 +4097,10 @@
       "numTodoTests": 0,
       "openHandles": [],
       "perfStats": {
-        "end": 1771901098430,
-        "runtime": 48,
+        "end": 1773281781869,
+        "runtime": 87,
         "slow": false,
-        "start": 1771901098382
+        "start": 1773281781782
       },
       "skipped": false,
       "snapshot": {
@@ -4217,7 +4118,7 @@
           "ancestorTitles": [
             "NEGATIVE: GET /health - Health Check Endpoint"
           ],
-          "duration": 4,
+          "duration": 7,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: GET /health - Health Check Endpoint Should handle invalid HTTP method (POST instead of GET)",
@@ -4232,7 +4133,7 @@
           "ancestorTitles": [
             "NEGATIVE: GET /health - Health Check Endpoint"
           ],
-          "duration": 1,
+          "duration": 2,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: GET /health - Health Check Endpoint Should handle invalid path (/healths instead of /health)",
@@ -4247,7 +4148,7 @@
           "ancestorTitles": [
             "NEGATIVE: GET /health - Health Check Endpoint"
           ],
-          "duration": 1,
+          "duration": 2,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: GET /health - Health Check Endpoint Should handle path with query parameters",
@@ -4277,7 +4178,7 @@
           "ancestorTitles": [
             "NEGATIVE: GET /health - Health Check Endpoint"
           ],
-          "duration": 1,
+          "duration": 2,
           "failureDetails": [],
           "failureMessages": [],
           "fullName": "NEGATIVE: GET /health - Health Check Endpoint Should handle malformed Accept header",
@@ -4287,6 +4188,79 @@
           "retryReasons": [],
           "status": "passed",
           "title": "Should handle malformed Accept header"
+        }
+      ],
+      "failureMessage": null
+    },
+    {
+      "leaks": false,
+      "numFailingTests": 0,
+      "numPassingTests": 3,
+      "numPendingTests": 0,
+      "numTodoTests": 0,
+      "openHandles": [],
+      "perfStats": {
+        "end": 1773281781954,
+        "runtime": 82,
+        "slow": false,
+        "start": 1773281781872
+      },
+      "skipped": false,
+      "snapshot": {
+        "added": 0,
+        "fileDeleted": false,
+        "matched": 0,
+        "unchecked": 0,
+        "uncheckedKeys": [],
+        "unmatched": 0,
+        "updated": 0
+      },
+      "testFilePath": "/Users/ramad/Works/Gti/person-services/person-service/Test/API_Tests/tests/GET_version.test.js",
+      "testResults": [
+        {
+          "ancestorTitles": [
+            "GET /version - Service Version"
+          ],
+          "duration": 7,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "GET /version - Service Version Version endpoint returns 200 with version field",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 2,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Version endpoint returns 200 with version field"
+        },
+        {
+          "ancestorTitles": [
+            "GET /version - Service Version"
+          ],
+          "duration": 2,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "GET /version - Service Version Version matches the VERSION file",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Version matches the VERSION file"
+        },
+        {
+          "ancestorTitles": [
+            "GET /version - Service Version"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "GET /version - Service Version Version follows v<major>.<minor>.<patch> format",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "Version follows v<major>.<minor>.<patch> format"
         }
       ],
       "failureMessage": null

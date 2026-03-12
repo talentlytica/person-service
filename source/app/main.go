@@ -23,6 +23,9 @@ import (
 	person_attributes "person-service/person_attributes"
 )
 
+// Version is set at build time via ldflags
+var Version = "dev"
+
 // ============================================================================
 // MAIN - Application Entry Point
 // ============================================================================
@@ -134,6 +137,9 @@ func main() {
 
 	// Setup routes
 	e.GET("/health", healthHandler.Check)
+	e.GET("/version", func(c echo.Context) error {
+		return c.JSON(http.StatusOK, map[string]string{"version": Version})
+	})
 
 	// Key-value API routes
 	e.POST("/api/key-value", keyValueHandler.SetValue)

@@ -17,6 +17,7 @@
     "test:report:negative": "npm run test:negative && node generate-report.js",
     "report": "node generate-report.js",
     "report:open": "node generate-report.js && start TESTING_REPORT_LATEST.html",
+    "test:version": "node --experimental-vm-modules node_modules/jest/bin/jest.js API_Tests/tests/GET_version.test.js --runInBand",
     "test:health": "node --experimental-vm-modules node_modules/jest/bin/jest.js API_Tests/tests/GET_health.test.js --runInBand",
     "test:keyvalue": "node --experimental-vm-modules node_modules/jest/bin/jest.js API_Tests/tests/*key-value*.test.js --runInBand",
     "test:attributes": "node --experimental-vm-modules node_modules/jest/bin/jest.js API_Tests/tests/*attributes*.test.js --runInBand",
